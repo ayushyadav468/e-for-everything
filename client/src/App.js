@@ -6,7 +6,6 @@ import Index from './components/index';
 
 const App = () => {
 	// var [response, setResponse] = useState('');
-
 	// useEffect(() => {
 	// 	const fetchData = async () => {
 	// 		const result = await axios.get('/');
@@ -15,7 +14,6 @@ const App = () => {
 	// 	};
 	// 	fetchData();
 	// }, [response]);
-
 	// var content = (
 	// 	<div>
 	// 		<Index />
@@ -24,6 +22,8 @@ const App = () => {
 
 	return (
 		<div className={styles.App}>
+			{/* SPINNER AND OTHER FEATURE TO BE ADDED */}
+			{/* INDEX CONTAIN ALL UI */}
 			<Index />
 		</div>
 	);
