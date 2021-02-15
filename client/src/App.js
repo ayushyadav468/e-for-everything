@@ -1,31 +1,32 @@
-import { useState, useEffect } from 'react';
+// import { useState, useEffect } from 'react';
 import styles from './App.module.css';
-import axios from './axios';
-import Spinner from './components/UI/Spinner/Spinner';
+// import axios from './axios';
+// import Spinner from './components/UI/Spinner/Spinner';
+import Index from './components/index';
 
 const App = () => {
-	var [response, setResponse] = useState('');
+	// var [response, setResponse] = useState('');
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const result = await axios.get('/');
-			setResponse(result.data);
-			return response;
-		};
-		fetchData();
-	}, [response]);
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		const result = await axios.get('/');
+	// 		setResponse(result.data);
+	// 		return response;
+	// 	};
+	// 	fetchData();
+	// }, [response]);
 
-	var content = <Spinner />;
-	if (response !== '') {
-		content = (
-			<div>
-				<h1>React is running</h1>
-				<p>{response}</p>
-			</div>
-		);
-	}
+	// var content = (
+	// 	<div>
+	// 		<Index />
+	// 	</div>
+	// );
 
-	return <div className={styles.App}>{content}</div>;
+	return (
+		<div className={styles.App}>
+			<Index />
+		</div>
+	);
 };
 
 export default App;
