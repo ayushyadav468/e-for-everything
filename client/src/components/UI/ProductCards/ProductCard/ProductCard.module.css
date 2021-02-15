@@ -1,3 +1,54 @@
-.ProductCard {
+.productCard {
 	text-align: center;
+	width: 95%;
+	margin: 0 auto 1.2rem auto;
+	background-color: #fcfaea;
+	border-radius: 10px;
+}
+
+.productCard:hover {
+	box-shadow: 0 0px 12px rgba(0, 0, 0, 0.5);
+}
+
+.productImage {
+	width: 100%;
+	height: 276.67px;
+	object-fit: cover;
+	border-radius: 10px 10px 0 0;
+}
+
+.productName {
+	margin: 0.8rem 0;
+	font-size: 1.6rem;
+	font-family: 'Playfair Display';
+}
+
+.productPrice {
+	margin: 0 0 0.9rem 0;
+	font-size: 1rem;
+	font-family: 'Montserrat';
+}
+
+@media screen and (min-width: 481px) {
+	.productCard {
+		width: 80%;
+	}
+}
+
+@media screen and (min-width: 601px) {
+	.productCard {
+		width: 48%;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.productCard {
+		width: 31%;
+	}
+}
+
+@media screen and (min-width: 1080px) {
+	.productCard {
+		width: 23%;
+	}
 }

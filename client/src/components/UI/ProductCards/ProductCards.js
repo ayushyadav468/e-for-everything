@@ -30,7 +30,12 @@ const ProductCards = () => {
 		});
 	}
 
-	return <div className={styles.ProductCards}>{cards}</div>;
+	return (
+		<div className='Project_Card_Container'>
+			<h2 className={styles.productHeading}>Featured Products</h2>
+			<div className={styles.productCards}>{cards}</div>
+		</div>
+	);
 };
 
 export default ProductCards;
