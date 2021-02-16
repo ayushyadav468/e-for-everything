@@ -1,8 +1,8 @@
 // import { useState, useEffect } from 'react';
-import styles from './App.module.css';
-// import axios from './axios';
+// import axios from './axiosInstance';
 // import Spinner from './components/UI/Spinner/Spinner';
-import Index from './components/index';
+import Index from './components/Index';
+import styles from './App.module.css';
 
 const App = () => {
 	// var [response, setResponse] = useState('');
