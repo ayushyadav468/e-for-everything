@@ -1,10 +1,11 @@
 import styles from './ProductCard.module.css';
+import { Link } from 'react-router-dom';
 
 const ProductCard = (props) => {
 	const srcSet = props.bigImage + ' 1280w,' + props.smallImage + ' 640w';
 
 	return (
-		<div className={styles.productCard}>
+		<Link to={'/productID:' + props.id} className={styles.productCard}>
 			<img
 				className={styles.productImage}
 				src={props.smallImage}
@@ -16,7 +17,7 @@ const ProductCard = (props) => {
 			<p className={styles.productPrice}>
 				<strong>Rs.</strong> {props.price}
 			</p>
-		</div>
+		</Link>
 	);
 };
 
