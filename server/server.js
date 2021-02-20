@@ -1,6 +1,6 @@
 var express = require('express');
 var cors = require('cors');
-const data = require('./data/data');
+const data = require('./src/data/data');
 
 var app = express();
 
@@ -10,8 +10,14 @@ app.get('/', (req, res) => {
 	res.send('Hello World!');
 });
 
-app.get('/data', (req, res) => {
+app.get('/products', (req, res) => {
 	res.send(JSON.stringify(data));
+});
+
+app.get('/product/:productID', (req, res) => {
+	const productId = req.params.productID;
+	const product = data.products.filter((product) => product.id === productId);
+	res.send(product);
 });
 
 app.listen(8000, () => {

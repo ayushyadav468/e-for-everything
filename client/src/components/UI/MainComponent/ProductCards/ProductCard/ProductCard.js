@@ -5,7 +5,7 @@ const ProductCard = (props) => {
 	const srcSet = props.bigImage + ' 1280w,' + props.smallImage + ' 640w';
 
 	return (
-		<Link to={'/productID:' + props.id} className={styles.productCard}>
+		<Link to={'/product/' + props.id} className={styles.productCard}>
 			<img
 				className={styles.productImage}
 				src={props.smallImage}

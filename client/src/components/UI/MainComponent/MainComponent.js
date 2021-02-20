@@ -7,7 +7,7 @@ const MainComponent = (props) => {
 		<div>
 			<Switch>
 				<Route path='/' exact component={ProductCards} />
-				<Route path='/productID:id' component={DiscriptionCard} />
+				<Route path='/product/:productID' component={DiscriptionCard} />
 			</Switch>
 		</div>
 	);

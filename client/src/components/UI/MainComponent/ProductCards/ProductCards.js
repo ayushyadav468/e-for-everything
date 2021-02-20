@@ -4,17 +4,21 @@ import styles from './ProductCards.module.css';
 import ProductCard from './ProductCard/ProductCard';
 import Spinner from '../../Spinner/Spinner';
 
-const ProductCards = () => {
+const ProductCards = (props) => {
+	const [isLoading, setIsLoading] = useState(true);
 	const [products, setProducts] = useState([]);
-	const [isLoading, setIsLoading] = useState(false);
 
 	const fetchData = async () => {
-		setIsLoading(false);
-		const result = await axios.get('/data');
-		if (result.status === 200) {
-			setProducts(result.data.products);
-		}
 		setIsLoading(true);
+		const result = await axios
+			.get('/products')
+			.then((response) => {
+				setProducts(response.data.products);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+		setIsLoading(false);
 		return result;
 	};
 
@@ -23,7 +27,7 @@ const ProductCards = () => {
 	}, []);
 
 	let cards;
-	if (!isLoading) {
+	if (isLoading) {
 		cards = <Spinner />;
 	} else {
 		cards = products.map((product) => {
@@ -32,7 +36,7 @@ const ProductCards = () => {
 	}
 
 	return (
-		<div className='Project_Card_Container' style={{ width: '100%' }}>
+		<div className='Product_Card_Container' style={{ width: '100%' }}>
 			<h2 className={styles.productHeading}>Featured Products</h2>
 			<div className={styles.productCards}>{cards}</div>
 		</div>
