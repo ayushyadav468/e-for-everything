@@ -1,0 +1,55 @@
+.reviewCard {
+	width: 90%;
+	margin: 1rem 5%;
+	padding: 0.5rem 0.2rem;
+	display: flex;
+	flex-direction: row;
+}
+
+.reviewCardImageDiv {
+	flex: 1;
+	padding: 0.8rem 0.4rem;
+}
+
+.reviewCardImage {
+	width: 60px;
+	height: 60px;
+	margin: 0.2rem auto;
+	padding: 0.8rem 0;
+	font-size: 1.5rem;
+	background-color: #fff000;
+	border-radius: 50%;
+}
+
+.reviewCardUserName {
+	margin-top: 0.4rem;
+	font-size: 1rem;
+}
+
+.reviewCardReviewDiv {
+	flex: 3;
+}
+
+.reviewCardReview {
+	padding: 0.6rem 1rem;
+	text-align: start;
+	flex-wrap: wrap;
+	background-color: #fcfaea;
+	font-size: 1rem;
+	line-height: 1.3rem;
+}
+
+.reviewCardBtnDiv {
+	display: flex;
+	justify-content: space-between;
+	margin: 0.8rem 0.2rem;
+}
+
+.reviewCardBtn {
+	padding: 0.6rem 1rem;
+	font-size: 1.1rem;
+	background-color: #fcfaea;
+	border-radius: 10px;
+	border: none;
+	outline: none;
+}

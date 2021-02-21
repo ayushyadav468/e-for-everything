@@ -1,0 +1,10 @@
+.reviewCards {
+	width: 100%;
+	margin-top: 1.6rem;
+}
+
+.reviewCardsHeading {
+	text-align: left;
+	font-size: 2.2rem;
+	margin-left: 5%;
+}

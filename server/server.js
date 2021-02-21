@@ -1,6 +1,6 @@
 var express = require('express');
 var cors = require('cors');
-const data = require('./src/data/data');
+const data = require('./src/data/productData');
 
 var app = express();
 
