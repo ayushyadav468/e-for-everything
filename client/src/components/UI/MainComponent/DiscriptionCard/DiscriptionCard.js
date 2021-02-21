@@ -11,23 +11,23 @@ const DiscriptionCard = (props) => {
 	// getting product id from URL
 	const productID = props.match.params.productID;
 
-	const fetchData = async () => {
-		setIsLoading(true);
-		const result = await axios
-			.get('/product/' + productID)
-			.then((response) => {
-				setProduct(response.data[0]);
-			})
-			.catch((err) => {
-				console.log(err.data);
-			});
-		setIsLoading(false);
-		return result;
-	};
-
 	useEffect(() => {
+		const fetchData = async () => {
+			setIsLoading(true);
+			const result = await axios
+				.get('/product/' + productID)
+				.then((response) => {
+					setProduct(response.data[0]);
+				})
+				.catch((err) => {
+					console.log(err.data);
+				});
+			setIsLoading(false);
+			return result;
+		};
+
 		fetchData();
-	}, []);
+	}, [productID]);
 
 	const onQuantityChange = (type) => {
 		switch (type) {
@@ -53,46 +53,64 @@ const DiscriptionCard = (props) => {
 	} else {
 		const srcSet = product.bigImage + ' 1280w,' + product.smallImage + ' 640w';
 		discriptionCard = (
-			<div>
-				<img
-					className={styles.productImage}
-					src={product.smallImage}
-					alt={product.productName}
-					sizes='(min-width:769px) 1280px, 640px'
-					srcSet={srcSet}
-				/>
-				<h3 className={styles.productName}>{product.productName}</h3>
-				<p className={styles.productDiscription}>{product.disp}</p>
-				<p className={styles.productPrice}>
-					<strong>Rs.</strong> {product.price}
-				</p>
-				<p className={styles.productRating}>
-					<strong>{product.rating}</strong>/5.0
-				</p>
-				<div className={styles.productQuantity}>
-					<button
-						className={styles.productQuantitySign}
-						onClick={() => onQuantityChange('-')}
-					>
-						-
-					</button>
-					<p className={styles.productQuantityDisplay}>{productQuantity}</p>
-					<button
-						className={styles.productQuantitySign}
-						onClick={() => onQuantityChange('+')}
-					>
-						+
-					</button>
+			<div className={styles.productDiscriptionCard}>
+				<div className={styles.productDiscriptionImageDiv}>
+					<img
+						className={styles.productImage}
+						src={product.smallImage}
+						alt={product.productName}
+						sizes='(min-width:769px) 1280px, 640px'
+						srcSet={srcSet}
+					/>
 				</div>
-				<button className={styles.productAddToCartBtn}>Add to cart</button>
-				<button className={styles.productBuyNowBtn}>Buy Now</button>
+				<div className={styles.productDiscriptionDiv}>
+					<h3 className={styles.productName}>{product.productName}</h3>
+					<p className={styles.productDiscription}>{product.disp}</p>
+					<div className={styles.productPriceAndRatingDiv}>
+						<p className={styles.productPrice}>
+							<strong>Rs.</strong> {product.price}
+						</p>
+						<p className={styles.productRating}>
+							<strong>{product.rating}</strong>/5.0
+						</p>
+					</div>
+					<div className={styles.productQuantity}>
+						<button
+							className={styles.productQuantityBtn}
+							onClick={() => onQuantityChange('-')}
+						>
+							<strong>-</strong>
+						</button>
+						<p className={styles.productQuantityDisplay}>{productQuantity}</p>
+						<button
+							className={styles.productQuantityBtn}
+							onClick={() => onQuantityChange('+')}
+						>
+							<strong>+</strong>
+						</button>
+					</div>
+					<div className={styles.productBtnDiv}>
+						<button
+							className={[styles.productBtn, styles.productAddToCartBtn].join(
+								' '
+							)}
+						>
+							Add to Cart
+						</button>
+						<button
+							className={[styles.productBtn, styles.productBuyNowBtn].join(' ')}
+						>
+							Buy Now
+						</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div>
-			<h1>Product Discription</h1>
+		<div className={styles.productDiscriptionPage}>
+			<h1 className={styles.productDiscriptionHeading}>Product Discription</h1>
 			{discriptionCard}
 			<ReviewCards reviews={product.reviews} />
 		</div>
