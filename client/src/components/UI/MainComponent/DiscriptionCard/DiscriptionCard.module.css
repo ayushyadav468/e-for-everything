@@ -11,6 +11,9 @@
 
 .productDiscriptionCard {
 	width: 100%;
+	height: auto;
+	background-color: #fcfaea;
+	color: #333;
 	display: flex;
 	flex-direction: column;
 }
@@ -19,16 +22,17 @@
 	width: 100%;
 }
 
+.productImage {
+	width: 90%;
+	height: 340px;
+	margin: 0.8rem 5%;
+	object-fit: cover;
+}
+
 .productDiscriptionDiv {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-}
-
-.productImage {
-	width: 90%;
-	margin: 0.8rem 5%;
-	object-fit: cover;
 }
 
 .productName {
@@ -52,7 +56,6 @@
 .productPrice {
 	font-family: 'Montserrat';
 	font-size: 1.8rem;
-	color: #ffff00;
 }
 
 .productPrice strong {
@@ -117,6 +120,82 @@
 	background-color: #ffff00;
 }
 
+.productAddToCartBtn:hover {
+	background-color: #fff;
+	border-color: #fff;
+	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
 .productBuyNowBtn {
 	background-color: #fff;
+}
+
+.productBuyNowBtn:hover {
+	background-color: #ffff00;
+	box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (min-width: 601px) {
+	.productDiscriptionCard {
+		width: 80%;
+		margin: auto;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.productDiscriptionCard {
+		width: 90%;
+		height: 630px;
+		margin: auto;
+		flex-direction: row;
+		box-shadow: 4px 2px 4px 2px rgba(51, 49, 19, 0.35);
+	}
+	.productDiscriptionImageDiv {
+		width: 40%;
+	}
+	.productImage {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+	.productDiscriptionDiv {
+		width: 60%;
+		margin: 5% 0;
+	}
+	.productName {
+		text-align: left;
+		margin: 0 0 1rem 5%;
+		font-size: 3rem;
+	}
+	.productDiscription {
+		text-align: left;
+		font-size: 1.4rem;
+		line-height: 2.2rem;
+	}
+	.productPriceAndRatingDiv {
+		width: 80%;
+		margin: 0.6rem 5% 0.2rem 5%;
+	}
+	.productPrice {
+		font-size: 2.2rem;
+	}
+	.productPrice strong {
+		font-size: 2.4rem;
+	}
+	.productRating {
+		font-size: 1.6rem;
+	}
+	.productQuantityBtn {
+		font-size: 1.8rem;
+	}
+	.productQuantityDisplay {
+		font-size: 1.6rem;
+	}
+	.productBtnDiv {
+		width: 25rem;
+		margin: 1rem 5% 1rem 5%;
+	}
+	.productBtn {
+		font-size: 1.6rem;
+	}
 }
