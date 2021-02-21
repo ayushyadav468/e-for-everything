@@ -1,0 +1,17 @@
+.footerDiv {
+	width: 100%;
+	margin: 0;
+	padding: 5rem 7rem;
+	background-color: #333113;
+}
+
+.footerContent {
+	text-align: left;
+	color: #fff;
+	font-size: 2rem;
+	line-height: 2.8rem;
+}
+
+.footerContent strong {
+	color: #fff000;
+}
