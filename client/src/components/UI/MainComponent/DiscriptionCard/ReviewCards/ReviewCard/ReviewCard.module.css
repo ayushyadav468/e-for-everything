@@ -50,6 +50,7 @@
 	font-size: 1.1rem;
 	background-color: #fcfaea;
 	border-radius: 10px;
+	cursor: pointer;
 	border: none;
 	outline: none;
 }

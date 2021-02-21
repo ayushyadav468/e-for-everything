@@ -38,7 +38,7 @@
 
 .productDiscription {
 	text-align: justify;
-	margin: 0 1rem 0.5rem 1rem;
+	margin: 0 5% 0.5rem 5%;
 }
 
 .productPriceAndRatingDiv {
@@ -107,7 +107,8 @@
 	border: none;
 	outline: none;
 	padding: 0.4rem 1.2rem;
-	border: 2px #ffff00 solid;
+	cursor: pointer;
+	border: 3px #ffff00 solid;
 	border-radius: 15px;
 	color: #333113;
 }

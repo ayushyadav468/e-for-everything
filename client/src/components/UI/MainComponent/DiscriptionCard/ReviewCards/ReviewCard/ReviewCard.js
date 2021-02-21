@@ -5,7 +5,7 @@ const ReviewCard = (props) => {
 	return (
 		<div className={styles.reviewCard}>
 			<div className={styles.reviewCardImageDiv}>
-				<div className={styles.reviewCardImage}>E</div>
+				<div className={styles.reviewCardImage}>e</div>
 				<p className={styles.reviewCardUserName}>{reviewData.userName}</p>
 			</div>
 			<div className={styles.reviewCardReviewDiv}>
