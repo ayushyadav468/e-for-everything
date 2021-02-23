@@ -1,7 +1,7 @@
 .footerDiv {
 	width: 100%;
 	margin: 0;
-	padding: 5rem 4rem;
+	padding: 3rem 4rem;
 	background-color: #333113;
 }
 
@@ -18,7 +18,7 @@
 
 @media screen and (min-width: 601px) {
 	.footerDiv {
-		padding: 5rem 7rem;
+		padding: 3.5rem 7rem;
 	}
 }
 

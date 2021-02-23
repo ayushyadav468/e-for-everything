@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from '../../../../axiosInstance';
 import styles from './ProductCards.module.css';
+import Banner from '../Banner/Banner';
 import ProductCard from './ProductCard/ProductCard';
 import Spinner from '../../Spinner/Spinner';
 
@@ -37,6 +38,7 @@ const ProductCards = (props) => {
 
 	return (
 		<div className='Product_Card_Container' style={{ width: '100%' }}>
+			<Banner />
 			<h2 className={styles.productHeading}>Featured Products</h2>
 			<div className={styles.productCards}>{cards}</div>
 		</div>
