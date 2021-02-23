@@ -1,11 +1,12 @@
+import { Route, Switch } from 'react-router-dom';
 import Index from './components/Index';
-import styles from './App.module.css';
 
 const App = () => {
 	return (
-		<div className={styles.App}>
-			<Index />
-		</div>
+		<Switch>
+			<Route path='/product/:productID' component={Index} />
+			<Route path='/' component={Index} />
+		</Switch>
 	);
 };
 

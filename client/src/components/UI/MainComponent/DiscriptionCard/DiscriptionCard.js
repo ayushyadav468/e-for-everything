@@ -9,6 +9,7 @@ const DiscriptionCard = (props) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [productQuantity, setProductQuantity] = useState(0);
 	// getting product id from URL
+	console.log(props);
 	const productID = props.match.params.productID;
 
 	useEffect(() => {

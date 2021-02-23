@@ -7,6 +7,7 @@
 }
 
 .reviewCardImageDiv {
+	text-align: center;
 	flex: 1;
 	padding: 0.8rem 0.4rem;
 }
@@ -21,10 +22,10 @@
 	border-radius: 50%;
 }
 
-.reviewCardUserName {
+/* .reviewCardUserName {
 	margin-top: 0.4rem;
 	font-size: 1rem;
-}
+} */
 
 .reviewCardReviewDiv {
 	flex: 3;
@@ -40,6 +41,7 @@
 }
 
 .reviewCardBtnDiv {
+	width: 100%;
 	display: flex;
 	justify-content: space-between;
 	margin: 0.8rem 0.2rem;
@@ -53,4 +55,19 @@
 	cursor: pointer;
 	border: none;
 	outline: none;
+}
+
+@media screen and (min-width: 768px) {
+	.reviewCard {
+		margin: 1rem auto;
+	}
+	.reviewCardBtnDiv {
+		width: 70%;
+	}
+}
+
+@media screen and (min-width: 1080px) {
+	.reviewCardBtnDiv {
+		width: 50%;
+	}
 }

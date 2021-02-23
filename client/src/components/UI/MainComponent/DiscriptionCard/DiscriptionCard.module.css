@@ -36,6 +36,7 @@
 }
 
 .productName {
+	margin-left: 5%;
 	margin-bottom: 0.5rem;
 	font-size: 1.8rem;
 }
@@ -137,7 +138,7 @@
 
 @media screen and (min-width: 601px) {
 	.productDiscriptionCard {
-		width: 80%;
+		width: 90%;
 		margin: auto;
 	}
 }

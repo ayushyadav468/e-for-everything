@@ -6,7 +6,6 @@ const ReviewCard = (props) => {
 		<div className={styles.reviewCard}>
 			<div className={styles.reviewCardImageDiv}>
 				<div className={styles.reviewCardImage}>e</div>
-				<p className={styles.reviewCardUserName}>{reviewData.userName}</p>
 			</div>
 			<div className={styles.reviewCardReviewDiv}>
 				<p className={styles.reviewCardReview}>{reviewData.review}</p>
