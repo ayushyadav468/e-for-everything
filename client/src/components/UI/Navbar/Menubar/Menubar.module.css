@@ -1,0 +1,23 @@
+.menuBar {
+	width: 100%;
+	margin: 0.6rem auto 0 auto;
+	display: flex;
+	justify-content: center;
+	background-color: #fcfaea;
+}
+
+.menuBar li {
+	padding: 0.6rem 0;
+	margin: 0 6rem;
+	width: 10%;
+	text-align: center;
+}
+
+.menuBar li:hover {
+	background-color: #fff000;
+}
+
+.menuBar li a {
+	font-size: 1.4rem;
+	color: #333113;
+}

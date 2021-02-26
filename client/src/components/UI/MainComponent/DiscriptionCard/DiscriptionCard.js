@@ -111,7 +111,7 @@ const DiscriptionCard = (props) => {
 
 	return (
 		<div className={styles.productDiscriptionPage}>
-			<h1 className={styles.productDiscriptionHeading}>Product Discription</h1>
+			{/* <h1 className={styles.productDiscriptionHeading}>Product Discription</h1> */}
 			{discriptionCard}
 			<ReviewCards reviews={product.reviews} />
 		</div>

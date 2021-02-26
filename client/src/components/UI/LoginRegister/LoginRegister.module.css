@@ -1,0 +1,107 @@
+.page {
+	width: 100%;
+	height: 100vh;
+}
+
+.logInCard {
+	width: 50%;
+	height: 70%;
+	position: absolute;
+	top: 15%;
+	left: 25%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #fcfaea;
+	box-shadow: -5px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.logInHeading {
+	color: #333113;
+	margin-bottom: 1.8rem;
+	font-size: 2rem;
+	font-family: 'PlayFair Display';
+}
+
+.logInHeading span {
+	color: #ffff00;
+	font-size: 2.2rem;
+	font-weight: 700;
+}
+
+.form {
+	color: #333113;
+	width: 70%;
+	font-size: 1.4rem;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 2rem;
+}
+
+.form label {
+	margin-bottom: 0.8rem;
+}
+
+.form input {
+	width: 100%;
+	font-size: 1.2rem;
+	margin-top: 0.4rem;
+	padding: 0.4rem 0.6rem;
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+.form input[type='submit'] {
+	margin: auto;
+	width: fit-content;
+	padding: 0.6rem 1.8rem;
+	background-color: #ffff00;
+	border: 2px solid #ffff00;
+}
+
+.form input[type='submit']:hover,
+.form input[type='submit']:active {
+	box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.3);
+}
+
+.form > * {
+	margin-bottom: 0.8rem;
+}
+
+.form a {
+	font-size: 1.1rem;
+	color: #4e4e4e;
+	outline: none;
+}
+
+.RegisterDiv {
+	width: 70%;
+	text-align: center;
+}
+
+.RegisterPara {
+	font-size: 1.1rem;
+	color: #4e4e4e;
+	margin-bottom: 1rem;
+}
+
+.RegisterPara span {
+	font-size: 1.4rem;
+	font-weight: 700;
+	color: #ffff00;
+}
+
+.RegisterBtn {
+	color: #333113;
+	background-color: #fff;
+	border: 2px solid #333113;
+	border-radius: 5px;
+	font-size: 1.1rem;
+	padding: 0.6rem 1.4rem;
+}
+
+.RegisterBtn:hover,
+.RegisterBtn:active {
+	box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.3);
+}

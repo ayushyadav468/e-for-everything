@@ -1,0 +1,119 @@
+.searchBar {
+	width: 90%;
+	margin: 0.2rem auto;
+	padding: 0.4rem;
+	display: flex;
+	justify-content: space-between;
+}
+
+.searchBar li {
+	display: flex;
+	justify-content: center;
+	align-self: center;
+}
+
+.searchBar li a {
+	color: black;
+}
+
+.logo {
+	font-size: 2rem;
+	font-weight: 600;
+	flex: 1;
+}
+
+.searchForm {
+	flex: 5;
+	display: flex;
+	justify-content: space-around;
+}
+
+.searchForm form {
+	width: 90%;
+	border: 1px solid black;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+}
+
+.searchBar form:focus-within {
+	border: none;
+}
+
+.searchForm input[type='text'] {
+	width: 90%;
+	font-size: 1.2rem;
+	font-family: 'PlayFair Display';
+	padding: 0.2rem 0.6rem;
+	border-radius: 5px 0 0 5px;
+	border: none;
+	outline: none;
+}
+
+.searchForm input:focus {
+	border: 2px solid #ffff00;
+	border-right: none;
+}
+
+.searchForm button {
+	width: 10%;
+	background-color: #333113;
+	border: 1px solid #333113;
+	padding: 0.4rem 0.8rem;
+	border-radius: 0 3px 3px 0;
+	border: none;
+	outline: none;
+}
+
+.searchBar button svg {
+	width: 20px;
+	height: 20px;
+	align-self: center;
+}
+
+.signIn {
+	flex: 1;
+	justify-items: center;
+	font-size: 1.3rem;
+}
+
+.signInContent {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	border-radius: 10px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	background-color: #fff;
+}
+
+.signInContent a {
+	font-size: 1rem;
+	border-radius: 7px;
+	display: block;
+	padding: 1rem 4rem 1rem 1rem;
+	text-align: left;
+}
+
+.signInContent a:hover {
+	color: #fff;
+	background-color: #333113;
+}
+
+.signInDiv:hover .signInContent {
+	display: block;
+}
+
+.fav {
+	flex: 0.5;
+	align-content: center;
+}
+
+.cart {
+	flex: 0.5;
+}
+
+.fav svg,
+.cart svg {
+	width: 30px;
+	height: 30px;
+}
