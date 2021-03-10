@@ -32,6 +32,7 @@ yarn-error.log*
 /server/node_modules
 
 # misc
+/server/.env
 /server/.DS_Store
 /server/.env.local
 /server/.env.development.local

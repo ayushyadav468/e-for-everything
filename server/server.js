@@ -1,25 +1,35 @@
-var express = require('express');
-var cors = require('cors');
-const data = require('./src/data/productData');
+// Requirements
+const dotenv = require('dotenv');
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
 
-var app = express();
+// Routes Import
+const userRoutes = require('./src/Routes/UserRoutes');
+const productRoutes = require('./src/Routes/ProductRoutes');
+const reviewRoutes = require('./src/Routes/ReviewRoutes');
 
+const app = express();
 app.use(cors());
+dotenv.config();
 
-app.get('/', (req, res) => {
-	res.send('Hello World!');
-});
+// Connect to Database
+mongoose.connect(
+	process.env.DB_URL,
+	{ useNewUrlParser: true, useUnifiedTopology: true },
+	() => console.log('Database Connected')
+);
 
-app.get('/products', (req, res) => {
-	res.send(JSON.stringify(data));
-});
+// Middlewares
+app.use(express.json());
 
-app.get('/product/:productID', (req, res) => {
-	const productId = req.params.productID;
-	const product = data.products.filter((product) => product.id === productId);
-	res.send(product);
-});
+// Route Middlewares
+app.use('/api/user', userRoutes);
+app.use('/api/product', productRoutes);
+app.use('/api/review', reviewRoutes);
 
-app.listen(8000, () => {
-	console.log('app is listning at http://localhost:8000');
+// Listen
+const port = process.env.PORT || 8000;
+app.listen(port, () => {
+	console.log('app is listning at http://localhost:' + port);
 });
