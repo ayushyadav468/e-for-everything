@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema({
 	seller: {
 		type: Boolean,
 		required: true,
-		default: false,
 	},
 	dateAdded: {
 		type: Date,
