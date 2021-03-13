@@ -96,6 +96,9 @@ router.patch('/:productID', (req, res) => {
 			const ownerID = req.params.userID;
 			// check if the owner of the product is same as the user updating the product
 			if (ownerID == product.ownerID) {
+				// Send patch request as
+				// [{'propName': name of the prop as mention in model schema, 'value': value of the prop }]
+				// If you want to send multiple props add more object to the array
 				const updateProps = {};
 				for (const ops of req.body) {
 					updateProps[ops.popName] = ops.value;
@@ -108,6 +111,7 @@ router.patch('/:productID', (req, res) => {
 				// 	smallImage: req.body.smallImage,
 				// 	largeImage: req.body.largeImage,
 				// };
+
 				// model.findByIdAndUpdate(filter, update, option, callback)
 				// {new: true} returns an updated object otherwise,
 				// default functionality is to return object as it was before update
@@ -124,7 +128,7 @@ router.patch('/:productID', (req, res) => {
 							console.log('Error in patch route of product' + err);
 							res.status(500).json({ error: err });
 						} else {
-							res.status(500).json(result);
+							res.status(200).json(result);
 						}
 					}
 				);

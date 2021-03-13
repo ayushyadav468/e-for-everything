@@ -41,7 +41,30 @@ router.post('/register', (req, res) => {
 
 router.patch('/:userID', (req, res) => {
 	const userID = req.params.userID;
-	res.status(201).json({ message: 'Route not complete contact developer' });
+	// Send patch request as
+	// [{'propName': name of the prop as mention in model schema, 'value': value of the prop }]
+	// If you want to send multiple props add more object to the array
+	const updateProps = {};
+	for (const ops of req.body) {
+		updateProps[ops.popName] = ops.value;
+	}
+	User.findByIdAndUpdate(
+		{ _id: userID },
+		{
+			$set: {
+				updateProps,
+			},
+		},
+		{ new: true },
+		(err, result) => {
+			if (err) {
+				console.log('Error in patch route of user' + err);
+				res.status(500).json({ error: err });
+			} else {
+				res.status(200).json(result);
+			}
+		}
+	);
 });
 
 router.delete('/:userID', (req, res) => {
