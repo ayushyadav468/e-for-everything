@@ -50,6 +50,11 @@ const productSchema = new mongoose.Schema({
 			},
 		},
 	],
+	// USER ID of the person who added this product
+	ownerID: {
+		type: mongoose.Schema.Types.ObjectId,
+		required: true,
+	},
 	dateAdded: {
 		type: Date,
 		default: Date.now,
