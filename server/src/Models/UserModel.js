@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		required: true,
 	},
+	address: {
+		type: String,
+		min: 6,
+		max: 1024,
+	},
 	dateAdded: {
 		type: Date,
 		default: Date.now,

@@ -4,22 +4,34 @@ const User = require('../Models/UserModel');
 
 router.get('/:userID', (req, res) => {
 	const userID = req.params.userID;
-	User.findById(userID, (err, user) => {
-		if (err) {
+	User.findById(userID)
+		.select('-__v -dateAdded')
+		.exec()
+		.then((user) => {
+			if (user) {
+				const response = {
+					user: {
+						...user._doc,
+						request: {
+							type: 'GET',
+							discription: "Get users's information",
+							url: 'http://' + req.get('host') + '/api/user/' + user._id,
+						},
+					},
+				};
+				res.status(200).json(response);
+			} else {
+				res.status(404).json({
+					error: { message: 'No valid entry found for provided ID' },
+				});
+			}
+		})
+		.catch((err) => {
 			console.log(
 				'Error in finding user in get request of user routes ' + err.message
 			);
 			res.status(500).json(err);
-		} else {
-			if (user) {
-				res.status(200).json(user);
-			} else {
-				res
-					.status(404)
-					.json({ error: { message: 'No valid entry found for provided ID' } });
-			}
-		}
-	});
+		});
 });
 
 router.post('/', (req, res) => {
@@ -32,8 +44,19 @@ router.post('/', (req, res) => {
 	});
 	user
 		.save()
-		.then((result) => {
-			res.status(201).json(result);
+		.select('-__v -dateAdded')
+		.then((user) => {
+			const response = {
+				user: {
+					...user._doc,
+					request: {
+						type: 'GET',
+						discription: "Get users's information",
+						url: 'http://' + req.get('host') + '/api/user/' + user._id,
+					},
+				},
+			};
+			res.status(200).json(response);
 		})
 		.catch((err) => {
 			console.log('Error in saving user ' + err.message);
@@ -50,26 +73,29 @@ router.patch('/:userID', (req, res) => {
 	for (const ops of req.body) {
 		updateProps[ops.propName] = ops.value;
 	}
-	User.findByIdAndUpdate(userID, updateProps, { new: true }, (err, result) => {
-		if (err) {
+	User.findByIdAndUpdate(userID, updateProps, { new: true })
+		.select('-__v -dateAdded')
+		.exec()
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => {
 			console.log('Error in patch route of user ' + err.message);
 			res.status(500).json(err);
-		} else {
-			res.status(200).json(result);
-		}
-	});
+		});
 });
 
 router.delete('/:userID', (req, res) => {
 	const userID = req.params.userID;
-	User.findByIdAndDelete(userID, (err, result) => {
-		if (err) {
+	User.findByIdAndDelete(userID)
+		.exec()
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => {
 			console.log('Error in deleting user ' + err.message);
 			res.status(500).json(err);
-		} else {
-			res.status(200).json(result);
-		}
-	});
+		});
 });
 
 module.exports = router;

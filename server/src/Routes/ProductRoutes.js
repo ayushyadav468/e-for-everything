@@ -6,12 +6,57 @@ const User = require('../Models/UserModel');
 // GET all products
 router.get('/', (req, res) => {
 	Product.find()
+		.select('_id productName productPrice smallImage')
 		.exec()
-		.then((result) => {
-			if (result && result.length > 0) {
-				res.status(200).json(result);
+		.then((docs) => {
+			if (docs && docs.length > 0) {
+				const response = {
+					count: docs.length,
+					products: docs.map((doc) => {
+						return {
+							...doc._doc,
+							request: {
+								type: 'GET',
+								discription: 'Get detailed information of product',
+								url: 'http://' + req.get('host') + '/api/product/' + doc._id,
+							},
+						};
+					}),
+				};
+				res.status(200).json(response);
 			} else {
 				res.status(404).json({ error: { message: 'No product avaliable' } });
+			}
+		})
+		.catch((err) => {
+			console.log('Error in get route of product ' + err.message);
+			res.status(500).json(err);
+		});
+});
+
+// GET a product by ID
+router.get('/:productID', (req, res) => {
+	const productID = req.params.productID;
+	Product.findById(productID)
+		.select('-__v -dateAdded')
+		.exec()
+		.then((docs) => {
+			if (docs) {
+				const response = {
+					product: {
+						...docs._doc,
+						request: {
+							type: 'GET',
+							discription: "Get owner's information",
+							url: 'http://' + req.get('host') + '/api/user/' + docs.ownerID,
+						},
+					},
+				};
+				res.status(200).json(response);
+			} else {
+				res
+					.status(404)
+					.json({ error: { message: 'No product found for the provided ID' } });
 			}
 		})
 		.catch((err) => {
@@ -23,7 +68,7 @@ router.get('/', (req, res) => {
 // POST a product
 router.post('/', (req, res) => {
 	// Get details about product from body of request
-	const ownerID = req.body.userID;
+	const ownerID = req.body.ownerID;
 	User.findById(ownerID, (err, user) => {
 		if (err) {
 			console.log('Error in finding user ' + err.message);
@@ -44,8 +89,21 @@ router.post('/', (req, res) => {
 					// .save() returns a promise
 					product
 						.save()
-						.then((result) => {
-							res.status(201).json(result);
+						.select('-__v -dateAdded')
+						.then((docs) => {
+							const response = {
+								count: docs.length,
+								product: {
+									...docs._doc,
+									request: {
+										type: 'GET',
+										discription: "Get this product's information",
+										url:
+											'http://' + req.get('host') + '/api/product/' + docs._id,
+									},
+								},
+							};
+							res.status(201).json(response);
 						})
 						.catch((err) => {
 							console.log('Error in post route of product ' + err.message);
@@ -54,7 +112,7 @@ router.post('/', (req, res) => {
 				} else {
 					res.status(403).json({
 						error: {
-							message: 'user is not a seller',
+							message: 'Permission Denied User is not a seller',
 						},
 					});
 				}
@@ -67,37 +125,17 @@ router.post('/', (req, res) => {
 	});
 });
 
-// GET a product by ID
-router.get('/:productID', (req, res) => {
-	const productID = req.params.productID;
-	Product.findById(productID)
-		.exec()
-		.then((result) => {
-			if (result) {
-				res.status(200).json(result);
-			} else {
-				res
-					.status(404)
-					.json({ error: { message: 'No valid product for provided ID' } });
-			}
-		})
-		.catch((err) => {
-			console.log('Error in get route of product ' + err.message);
-			res.status(500).json(err);
-		});
-});
-
 // PATCH(Update) a product by ID
-router.patch('/:productID', (req, res) => {
+router.patch('/:productID/:ownerID', (req, res) => {
 	const productID = req.params.productID;
 	Product.findById(productID, (err, product) => {
-		if (error) {
+		if (err) {
 			console.log(
 				'Error in finding product in patch route of products ' + err.message
 			);
 			res.status(500).json(err);
 		} else {
-			const ownerID = req.params.userID;
+			const ownerID = req.params.ownerID;
 			// check if the owner of the product is same as the user updating the product
 			if (ownerID == product.ownerID) {
 				// Send patch request as
@@ -107,35 +145,34 @@ router.patch('/:productID', (req, res) => {
 				for (const ops of req.body) {
 					updateProps[ops.propName] = ops.value;
 				}
-				// const product = {
-				// 	productName: req.body.productName,
-				// 	productPrice: req.body.productPrice,
-				// 	productDiscription: req.body.productDiscription,
-				// 	rating: req.body.rating,
-				// 	smallImage: req.body.smallImage,
-				// 	largeImage: req.body.largeImage,
-				// };
-
 				// model.findByIdAndUpdate(filter, update, option, callback)
 				// {new: true} returns an updated object otherwise,
 				// default functionality is to return object as it was before update
-				Product.findByIdAndUpdate(
-					productID,
-					updateProps,
-					{ new: true },
-					(err, result) => {
-						if (err) {
-							console.log('Error in patch route of product ' + err.message);
-							res.status(500).json(err);
-						} else {
-							res.status(200).json(result);
-						}
-					}
-				);
+				Product.findByIdAndUpdate(productID, updateProps, { new: true })
+					.select('-__v -dateAdded')
+					.exec()
+					.then((docs) => {
+						const response = {
+							count: docs.length,
+							product: {
+								...docs._doc,
+								request: {
+									type: 'GET',
+									discription: 'Get this product information',
+									url: 'http://' + req.get('host') + '/api/product/' + docs._id,
+								},
+							},
+						};
+						res.status(200).json(response);
+					})
+					.catch((err) => {
+						console.log('Error in patch route of product ' + err.message);
+						res.status(500).json(err);
+					});
 			} else {
 				res.status(403).json({
 					error: {
-						message: 'user is not the owner of this product',
+						message: 'Permission Denied User is not the owner of this product',
 					},
 				});
 			}
@@ -144,7 +181,7 @@ router.patch('/:productID', (req, res) => {
 });
 
 // DELETE a product by ID
-router.delete('/:productID/:userID', (req, res) => {
+router.delete('/:productID/:ownerID', (req, res) => {
 	const productID = req.params.productID;
 	Product.findById(productID, (err, product) => {
 		if (error) {
@@ -153,17 +190,28 @@ router.delete('/:productID/:userID', (req, res) => {
 			);
 			res.status(500).json(err);
 		} else {
-			const ownerID = req.params.userID;
+			const ownerID = req.params.ownerID;
 			// check if the owner of the product is same as the user updating the product
 			if (ownerID == product.ownerID) {
-				Product.findByIdAndDelete(productID, (err, result) => {
-					if (err) {
+				Product.findByIdAndDelete(productID)
+					.exec()
+					.then((docs) => {
+						const response = {
+							count: docs.length,
+							product: {
+								request: {
+									type: 'GET',
+									discription: 'Get all products',
+									url: 'http://' + req.get('host') + '/api/product/',
+								},
+							},
+						};
+						res.status(200).json(response);
+					})
+					.catch((err) => {
 						console.log('Error in delete route of product ' + err.message);
 						res.send(500).json(err);
-					} else {
-						res.send(200).json(result);
-					}
-				});
+					});
 			} else {
 				res.status(403).json({
 					error: {
