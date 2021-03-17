@@ -5,7 +5,6 @@ import DiscriptionCard from './DiscriptionCard/DiscriptionCard';
 
 const MainComponent = (props) => {
 	const path = props.match.path;
-	console.log(path);
 	let component;
 	if (path === '/') {
 		component = (
@@ -15,7 +14,6 @@ const MainComponent = (props) => {
 			</div>
 		);
 	} else if (path === '/product/:productID') {
-		console.log('Enter else if');
 		component = (
 			<div style={{ widht: '100%' }}>
 				<DiscriptionCard {...props} />

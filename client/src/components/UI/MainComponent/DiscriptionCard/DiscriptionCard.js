@@ -9,16 +9,15 @@ const DiscriptionCard = (props) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [productQuantity, setProductQuantity] = useState(0);
 	// getting product id from URL
-	console.log(props);
 	const productID = props.match.params.productID;
 
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
 			const result = await axios
-				.get('/product/' + productID)
+				.get('/api/product/' + productID)
 				.then((response) => {
-					setProduct(response.data[0]);
+					setProduct(response.data.product);
 				})
 				.catch((err) => {
 					console.log(err.data);
@@ -52,7 +51,8 @@ const DiscriptionCard = (props) => {
 	if (isLoading) {
 		discriptionCard = <Spinner />;
 	} else {
-		const srcSet = product.bigImage + ' 1280w,' + product.smallImage + ' 640w';
+		const srcSet =
+			product.largeImage + ' 1260w,' + product.smallImage + ' 640w';
 		discriptionCard = (
 			<div className={styles.productDiscriptionCard}>
 				<div className={styles.productDiscriptionImageDiv}>
@@ -60,16 +60,18 @@ const DiscriptionCard = (props) => {
 						className={styles.productImage}
 						src={product.smallImage}
 						alt={product.productName}
-						sizes='(min-width:769px) 1280px, 640px'
+						sizes='(min-width:769px) 1260px, 640px'
 						srcSet={srcSet}
 					/>
 				</div>
 				<div className={styles.productDiscriptionDiv}>
 					<h3 className={styles.productName}>{product.productName}</h3>
-					<p className={styles.productDiscription}>{product.disp}</p>
+					<p className={styles.productDiscription}>
+						{product.productDiscription}
+					</p>
 					<div className={styles.productPriceAndRatingDiv}>
 						<p className={styles.productPrice}>
-							<strong>Rs.</strong> {product.price}
+							<strong>Rs.</strong> {product.productPrice}
 						</p>
 						<p className={styles.productRating}>
 							<strong>{product.rating}</strong>/5.0
@@ -111,7 +113,6 @@ const DiscriptionCard = (props) => {
 
 	return (
 		<div className={styles.productDiscriptionPage}>
-			{/* <h1 className={styles.productDiscriptionHeading}>Product Discription</h1> */}
 			{discriptionCard}
 			<ReviewCards reviews={product.reviews} />
 		</div>

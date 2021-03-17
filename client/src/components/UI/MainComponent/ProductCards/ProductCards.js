@@ -11,7 +11,7 @@ const ProductCards = (props) => {
 	const fetchData = async () => {
 		setIsLoading(true);
 		const result = await axios
-			.get('/products')
+			.get('/api/product')
 			.then((response) => {
 				setProducts(response.data.products);
 			})
@@ -31,7 +31,7 @@ const ProductCards = (props) => {
 		cards = <Spinner />;
 	} else {
 		cards = products.map((product) => {
-			return <ProductCard key={product.id} {...product} />;
+			return <ProductCard key={product._id} {...product} />;
 		});
 	}
 

@@ -95,7 +95,7 @@
 .productQuantityDisplay {
 	width: 4rem;
 	font-size: 1.4rem;
-	align-items: center;
+	text-align: center;
 }
 
 .productBtnDiv {

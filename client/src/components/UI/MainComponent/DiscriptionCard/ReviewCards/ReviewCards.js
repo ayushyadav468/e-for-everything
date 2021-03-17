@@ -2,12 +2,16 @@ import styles from './ReviewCards.module.css';
 import ReviewCard from './ReviewCard/ReviewCard';
 
 const ReviewCards = (props) => {
+	let reviewCards = (
+		<p className={styles.reviewCardsPara}>No Reviews Available</p>
+	);
 	const reviewData = props.reviews;
-	let reviewCards = <p>No Review Available</p>;
 	if (reviewData !== undefined) {
-		reviewCards = reviewData.map((review) => {
-			return <ReviewCard key={review.userName} {...review} />;
-		});
+		if (reviewData.length !== 0) {
+			reviewCards = reviewData.map((review) => {
+				return <ReviewCard key={review.userName} {...review} />;
+			});
+		}
 	}
 	return (
 		<div className={styles.reviewCards}>
