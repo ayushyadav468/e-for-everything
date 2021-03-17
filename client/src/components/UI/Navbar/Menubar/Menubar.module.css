@@ -1,23 +1,35 @@
 .menuBar {
 	width: 100%;
-	margin: 0.6rem auto 0 auto;
+	margin-top: 0.6rem;
+	margin-bottom: 0;
 	display: flex;
 	justify-content: center;
 	background-color: #fcfaea;
 }
 
-.menuBar li {
+.menuBar .menuItem {
+	width: 25%;
 	padding: 0.6rem 0;
-	margin: 0 6rem;
-	width: 10%;
 	text-align: center;
 }
 
-.menuBar li:hover {
+.menuBar .menuItem:hover {
 	background-color: #fff000;
 }
 
-.menuBar li a {
-	font-size: 1.4rem;
+.menuBar .menuItem a {
+	font-size: 1rem;
 	color: #333113;
+}
+
+@media screen and (min-width: 601px) {
+	.menuBar .menuItem a {
+		font-size: 1.2rem;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.menuBar .menuItem a {
+		font-size: 1.4rem;
+	}
 }

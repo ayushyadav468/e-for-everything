@@ -17,16 +17,17 @@ const Searchbar = () => {
 			<li className={styles.logo}>
 				<Link to='/'>LOGO</Link>
 			</li>
-			<li className={styles.searchForm}>
-				<form>
+			<li className={styles.searchFormContainer}>
+				<form className={styles.searchForm}>
 					<input
 						type='text'
 						id='search'
 						name='search'
 						placeholder='Search...'
 					/>
-					<button>
+					<button className={styles.searchFormButton}>
 						<svg
+							className={styles.searchFormSvg}
 							width='40'
 							height='40'
 							viewBox='0 0 40 40'

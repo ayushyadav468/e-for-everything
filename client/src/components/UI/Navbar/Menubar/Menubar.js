@@ -4,16 +4,16 @@ import styles from './Menubar.module.css';
 const Menubar = () => {
 	return (
 		<ul className={styles.menuBar}>
-			<li>
+			<li className={styles.menuItem}>
 				<Link to='#'>Feature</Link>
 			</li>
-			<li>
+			<li className={styles.menuItem}>
 				<Link to='#'>Shop</Link>
 			</li>
-			<li>
+			<li className={styles.menuItem}>
 				<Link to='#'>Category</Link>
 			</li>
-			<li>
+			<li className={styles.menuItem}>
 				<Link to='#'>About</Link>
 			</li>
 		</ul>
