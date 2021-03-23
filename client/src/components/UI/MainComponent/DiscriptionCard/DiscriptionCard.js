@@ -3,10 +3,12 @@ import axios from '../../../../axiosInstance';
 import styles from './DiscriptionCard.module.css';
 import Spinner from '../../Spinner/Spinner';
 import ReviewCards from './ReviewCards/ReviewCards';
+import DialogBox from '../../DialogBox/DialogBox';
 
 const DiscriptionCard = (props) => {
 	const [product, setProduct] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [productQuantity, setProductQuantity] = useState(0);
 	// getting product id from URL
 	const productID = props.match.params.productID;
@@ -35,7 +37,10 @@ const DiscriptionCard = (props) => {
 				if (productQuantity > 0) {
 					setProductQuantity(productQuantity - 1);
 				} else {
-					console.log('Can not remove from zero');
+					setShowDialogBox(true);
+					setTimeout(() => {
+						setShowDialogBox(false);
+					}, 1000);
 				}
 				break;
 			case '+':
@@ -107,6 +112,7 @@ const DiscriptionCard = (props) => {
 						</button>
 					</div>
 				</div>
+				<DialogBox show={showDialogBox}>Can't reduce below zero</DialogBox>
 			</div>
 		);
 	}

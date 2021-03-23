@@ -1,0 +1,9 @@
+.mainComponent {
+	margin-top: 170px;
+}
+
+@media screen and (min-width: 992px) {
+	.mainComponent {
+		margin-top: 125px;
+	}
+}

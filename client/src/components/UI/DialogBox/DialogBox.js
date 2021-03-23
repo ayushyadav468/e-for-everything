@@ -1,0 +1,17 @@
+import styles from './DialogBox.module.css';
+
+const DialogBox = (props) => (
+	<div
+		className={styles.dialogBox}
+		show={props.show}
+		clicked={props.clicked}
+		style={{
+			display: props.show ? 'block' : 'none',
+			opacity: props.show ? '1' : '0',
+		}}
+	>
+		<p className={styles.message}>{props.children}</p>
+	</div>
+);
+
+export default DialogBox;

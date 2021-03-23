@@ -4,16 +4,16 @@
 	margin-bottom: 0;
 	display: flex;
 	justify-content: center;
-	background-color: #fcfaea;
 }
 
 .menuBar .menuItem {
-	width: 25%;
-	padding: 0.6rem 0;
+	margin: 0.4rem auto;
+	padding: 10px 15px;
 	text-align: center;
 }
 
 .menuBar .menuItem:hover {
+	border-radius: 10px;
 	background-color: #fff000;
 }
 
@@ -23,6 +23,13 @@
 }
 
 @media screen and (min-width: 601px) {
+	.menuBar {
+		width: 90%;
+		margin: auto;
+	}
+	.menuBar .menuItem {
+		width: 15%;
+	}
 	.menuBar .menuItem a {
 		font-size: 1.2rem;
 	}
