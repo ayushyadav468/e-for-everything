@@ -14,11 +14,7 @@ const MainComponent = (props) => {
 			</div>
 		);
 	} else if (path === '/product/:productID') {
-		component = (
-			<div style={{ widht: '100%' }}>
-				<DiscriptionCard {...props} />
-			</div>
-		);
+		component = <DiscriptionCard {...props} />;
 	} else {
 		component = (
 			<div style={{ widht: '100%' }}>

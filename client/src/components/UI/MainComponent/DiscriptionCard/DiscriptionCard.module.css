@@ -1,6 +1,6 @@
 .productDiscriptionPage {
 	width: 100%;
-	margin-top: 2rem;
+	margin-top: 160px;
 }
 
 /* .productDiscriptionHeading {
@@ -57,22 +57,22 @@
 
 .productPrice {
 	font-family: 'Montserrat';
-	font-size: 1.8rem;
+	font-size: 1.4rem;
 }
 
 .productPrice strong {
-	font-size: 2rem;
+	font-size: 1.4rem;
 }
 
 .productRating {
 	font-family: 'Montserrat';
-	font-size: 1.4rem;
+	font-size: 1.6rem;
 	padding: 0.4rem 0;
 }
 
 .productQuantity {
 	width: 10rem;
-	margin: 0.8rem 5%;
+	margin: 0.2rem 5% 0.8rem 5%;
 	padding: 0.2rem;
 	font-family: 'Montserrat';
 	display: flex;
@@ -138,6 +138,9 @@
 }
 
 @media screen and (min-width: 601px) {
+	.productDiscriptionPage {
+		margin-top: 190px;
+	}
 	.productDiscriptionCard {
 		width: 90%;
 		margin: auto;

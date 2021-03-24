@@ -112,7 +112,7 @@ const DiscriptionCard = (props) => {
 						</button>
 					</div>
 				</div>
-				<DialogBox show={showDialogBox}>Can't reduce below zero</DialogBox>
+				<DialogBox showBox={showDialogBox}>Can't reduce below zero</DialogBox>
 			</div>
 		);
 	}

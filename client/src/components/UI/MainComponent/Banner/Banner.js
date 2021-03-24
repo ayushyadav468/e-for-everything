@@ -1,7 +1,7 @@
 import styles from './Banner.module.css';
 
 const Banner = () => (
-	<div className={styles.banner}>
+	<div className={styles.banner} id='banner'>
 		<h1 className={styles.bannerMainHeading}>
 			Welcome to <strong>e</strong> for everything
 		</h1>

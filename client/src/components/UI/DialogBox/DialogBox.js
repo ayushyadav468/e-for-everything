@@ -6,8 +6,8 @@ const DialogBox = (props) => (
 		show={props.show}
 		clicked={props.clicked}
 		style={{
-			display: props.show ? 'block' : 'none',
-			opacity: props.show ? '1' : '0',
+			display: props.showBox ? 'block' : 'none',
+			opacity: props.showBox ? '1' : '0',
 		}}
 	>
 		<p className={styles.message}>{props.children}</p>

@@ -1,21 +1,24 @@
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import styles from './Searchbar.module.css';
 
 const Searchbar = () => {
 	const signIn = (
-		<div className={styles.signInDiv}>
+		<NavLink
+			to='/login'
+			style={{ display: 'block' }}
+			className={styles.signInDiv}
+		>
 			<p>Sign In/Up</p>
 			<div className={styles.signInContent}>
 				<Link to='#'>Settings</Link>
 				<Link to='#'>Log Out</Link>
 			</div>
-		</div>
+		</NavLink>
 	);
-
 	return (
 		<ul className={styles.searchBar}>
 			<li className={styles.logo}>
-				<Link to='/'>LOGO</Link>
+				<NavLink to='/'>LOGO</NavLink>
 			</li>
 			<li className={styles.searchFormContainer}>
 				<form className={styles.searchForm}>
@@ -42,11 +45,9 @@ const Searchbar = () => {
 					</button>
 				</form>
 			</li>
-			<li className={styles.signIn}>
-				<Link to='/login'>{signIn}</Link>
-			</li>
+			<li className={styles.signIn}>{signIn}</li>
 			<li className={styles.fav}>
-				<Link to='#'>
+				<NavLink to='#'>
 					<svg
 						width='512'
 						height='431'
@@ -59,10 +60,10 @@ const Searchbar = () => {
 							fill='#3A3A3A'
 						/>
 					</svg>
-				</Link>
+				</NavLink>
 			</li>
 			<li className={styles.cart}>
-				<Link to='#'>
+				<NavLink to='#'>
 					<svg
 						width='491'
 						height='471'
@@ -107,7 +108,7 @@ const Searchbar = () => {
 							fill='#3A3A3A'
 						/>
 					</svg>
-				</Link>
+				</NavLink>
 			</li>
 		</ul>
 	);
