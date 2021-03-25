@@ -2,27 +2,23 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = require('../Models/UserModel');
 
-router.get('/:userID', (req, res) => {
-	const userID = req.params.userID;
-	User.findById(userID)
-		.select('-__v -dateAdded')
+router.post('/', (req, res) => {
+	const userEmail = req.body.email;
+	const userPassword = req.body.password;
+	User.findOne({ email: userEmail, password: userPassword })
+		.select('-__v -dateAdded -password')
 		.exec()
 		.then((user) => {
 			if (user) {
 				const response = {
 					user: {
 						...user._doc,
-						request: {
-							type: 'GET',
-							discription: "Get users's information",
-							url: 'http://' + req.get('host') + '/api/user/' + user._id,
-						},
 					},
 				};
 				res.status(200).json(response);
 			} else {
 				res.status(404).json({
-					error: { message: 'No valid entry found for provided ID' },
+					error: { message: 'No valid entry found' },
 				});
 			}
 		})

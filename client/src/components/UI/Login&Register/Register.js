@@ -1,7 +1,7 @@
-// import { Link } from 'react-router-dom';
 import styles from './Register.module.css';
 
 const Register = () => {
+	// Register user
 	return (
 		<main className={styles.page}>
 			<div className={styles.logInCard}>
