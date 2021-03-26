@@ -1,11 +1,13 @@
-import * as actionTypes from '../actions';
+import * as actionTypes from '../action/actions';
 
-const initialState = [];
+const initialState = {};
 
 const productReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.ADD_PRODUCTS:
-			state = [...action.payload];
+		case actionTypes.USER_LOGIN:
+			state = { ...action.payload };
+			break;
+		case actionTypes.USER_LOGOUT:
 			break;
 		default:
 			state = initialState;

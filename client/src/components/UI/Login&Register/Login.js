@@ -1,14 +1,27 @@
+import { connect } from 'react-redux';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import DialogBox from '../DialogBox/DialogBox';
 import axios from '../../../axiosInstance';
+import * as actionTypes from '../../../store/action/actions';
+
+// const mapStateToProps = (state) => {
+// 	return {
+// 		user: state.userState,
+// 	};
+// };
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		userLogin: (user) =>
+			dispatch({ type: actionTypes.USER_LOGIN, payload: user }),
+	};
+};
 
 const Login = (props) => {
-	// Login
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [user, setUser] = useState({});
 	const [error, setError] = useState({
 		message: '',
 	});
@@ -22,26 +35,27 @@ const Login = (props) => {
 			password: password,
 		};
 		await axios
-			.post('/api/user', userData)
+			.post('/api/user/login', userData)
 			.then((response) => {
-				setUser({ ...response.data.user });
+				const user = { ...response.data };
+				// save user in redux state
+				props.userLogin(user);
+				// reset form
+				setEmail('');
+				setPassword('');
+				// redirect to main page
+				props.history.push('/');
 			})
 			.catch((err) => {
 				setError({ message: err.response.data.error.message });
+				// reset form
+				setEmail('');
+				setPassword('');
+				setShowDialogBox(true);
+				setTimeout(() => {
+					setShowDialogBox(false);
+				}, 2000);
 			});
-
-		// reset form
-		setEmail('');
-		setPassword('');
-
-		if (!error.message) {
-			props.history.push('/');
-		} else {
-			setShowDialogBox(true);
-			setTimeout(() => {
-				setShowDialogBox(false);
-			}, 2000);
-		}
 	};
 
 	return (
@@ -85,9 +99,9 @@ const Login = (props) => {
 					</Link>
 				</div>
 			</div>
-			<DialogBox showBox={showDialogBox}>{error.message}</DialogBox>;
+			<DialogBox showBox={showDialogBox}>{error.message}</DialogBox>
 		</main>
 	);
 };
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

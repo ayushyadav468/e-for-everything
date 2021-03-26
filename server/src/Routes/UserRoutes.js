@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = require('../Models/UserModel');
 
-router.post('/', (req, res) => {
+router.post('/login', (req, res) => {
 	const userEmail = req.body.email;
 	const userPassword = req.body.password;
 	User.findOne({ email: userEmail, password: userPassword })
@@ -11,9 +11,7 @@ router.post('/', (req, res) => {
 		.then((user) => {
 			if (user) {
 				const response = {
-					user: {
-						...user._doc,
-					},
+					...user._doc,
 				};
 				res.status(200).json(response);
 			} else {
@@ -30,33 +28,40 @@ router.post('/', (req, res) => {
 		});
 });
 
-router.post('/', (req, res) => {
-	const user = new User({
-		_id: new mongoose.Types.ObjectId(),
-		name: req.body.name,
-		email: req.body.email,
-		password: req.body.password,
-		seller: req.body.seller,
-	});
-	user
-		.save()
-		.select('-__v -dateAdded')
+router.post('/register', (req, res) => {
+	const emailToBeChecked = req.body.email;
+	User.findOne({ email: emailToBeChecked })
+		.exec()
 		.then((user) => {
-			const response = {
-				user: {
-					...user._doc,
-					request: {
-						type: 'GET',
-						discription: "Get users's information",
-						url: 'http://' + req.get('host') + '/api/user/' + user._id,
-					},
-				},
-			};
-			res.status(200).json(response);
+			if (user) {
+				const response = {
+					message: 'Email already registered',
+				};
+				res.status(208).json(response);
+			} else {
+				const user = new User({
+					_id: new mongoose.Types.ObjectId(),
+					name: req.body.name,
+					email: req.body.email,
+					password: req.body.password,
+					seller: req.body.seller,
+				});
+				user
+					.save()
+					.then((user) => {
+						const response = {
+							...user._doc,
+						};
+						res.status(200).json(response);
+					})
+					.catch((err) => {
+						console.log('Error in saving user ' + err.message);
+						res.status(500).json(err);
+					});
+			}
 		})
 		.catch((err) => {
-			console.log('Error in saving user ' + err.message);
-			res.status(500).json(err);
+			console.log('Error in finding duplicate email' + err);
 		});
 });
 
@@ -70,7 +75,7 @@ router.patch('/:userID', (req, res) => {
 		updateProps[ops.propName] = ops.value;
 	}
 	User.findByIdAndUpdate(userID, updateProps, { new: true })
-		.select('-__v -dateAdded')
+		.select('-__v -dateAdded -password')
 		.exec()
 		.then((result) => {
 			res.status(200).json(result);
