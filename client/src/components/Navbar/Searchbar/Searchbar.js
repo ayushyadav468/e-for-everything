@@ -2,8 +2,8 @@ import { connect } from 'react-redux';
 import { useState } from 'react';
 import styles from './Searchbar.module.css';
 import { NavLink, Link } from 'react-router-dom';
-import { USER_LOGOUT } from '../../../../store/action/actions';
-import DialogBox from '../../DialogBox/DialogBox';
+import { USER_LOGOUT } from '../../../store/action/actions';
+import DialogBox from '../../UI/DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
 	return {
@@ -156,7 +156,7 @@ const Searchbar = (props) => {
 					</svg>
 				</NavLink>
 			</li>
-			<DialogBox showDialogBox={showDialogBox}>Logout successful</DialogBox>
+			<DialogBox showBox={showDialogBox}>Logout successful</DialogBox>
 		</ul>
 	);
 };

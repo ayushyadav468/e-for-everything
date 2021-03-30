@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
-import DialogBox from '../DialogBox/DialogBox';
 import axios from '../../../axiosInstance';
 import { USER_LOGIN } from '../../../store/action/actions';
+import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 // To get USER state
 // const mapStateToProps = (state) => {
@@ -99,7 +99,7 @@ const Login = (props) => {
 					</Link>
 				</div>
 			</div>
-			<DialogBox showDialogBox={showDialogBox}>{error.message}</DialogBox>
+			<DialogBox showBox={showDialogBox}>{error.message}</DialogBox>
 		</main>
 	);
 };

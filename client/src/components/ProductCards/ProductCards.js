@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import axios from '../../../../axiosInstance';
+import axios from '../../axiosInstance';
 import styles from './ProductCards.module.css';
 import ProductCard from './ProductCard/ProductCard';
-import Spinner from '../../Spinner/Spinner';
+import Spinner from '../UI/Spinner/Spinner';
 
 const ProductCards = (props) => {
 	const [isLoading, setIsLoading] = useState(true);

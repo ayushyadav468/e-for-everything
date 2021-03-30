@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import axios from '../../../../axiosInstance';
+import axios from '../../axiosInstance';
 import styles from './DiscriptionCard.module.css';
-import Spinner from '../../Spinner/Spinner';
-import ReviewCards from './ReviewCards/ReviewCards';
-import DialogBox from '../../DialogBox/DialogBox';
+import Spinner from '../UI/Spinner/Spinner';
+import ReviewCards from '../ReviewCards/ReviewCards';
+import DialogBox from '../UI/DialogBox/DialogBox';
 
 const DiscriptionCard = (props) => {
 	const [product, setProduct] = useState({});
@@ -112,9 +112,7 @@ const DiscriptionCard = (props) => {
 						</button>
 					</div>
 				</div>
-				<DialogBox showDialogBox={showDialogBox}>
-					Can't reduce below zero
-				</DialogBox>
+				<DialogBox showBox={showDialogBox}>Can't reduce below zero</DialogBox>
 			</div>
 		);
 	}

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { useState } from 'react';
-import DialogBox from '../DialogBox/DialogBox';
+import styles from './Register.module.css';
 import axios from '../../../axiosInstance';
 import { USER_LOGIN } from '../../../store/action/actions';
-import styles from './Register.module.css';
+import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 // To get USER state
 // const mapStateToProps = (state) => {
@@ -146,7 +146,7 @@ const Register = (props) => {
 					<input type='submit' value='Register' />
 				</form>
 			</div>
-			<DialogBox showDialogBox={showDialogBox}>{error.message}</DialogBox>
+			<DialogBox showBox={showDialogBox}>{error.message}</DialogBox>
 		</main>
 	);
 };
