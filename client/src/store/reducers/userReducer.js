@@ -8,6 +8,7 @@ const productReducer = (state = initialState, action) => {
 			state = { ...action.payload };
 			break;
 		case actionTypes.USER_LOGOUT:
+			state = { ...initialState };
 			break;
 		default:
 			state = initialState;

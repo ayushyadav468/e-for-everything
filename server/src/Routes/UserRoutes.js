@@ -50,7 +50,10 @@ router.post('/register', (req, res) => {
 					.save()
 					.then((user) => {
 						const response = {
-							...user._doc,
+							_id: user._doc._id,
+							name: user._doc.name,
+							email: user._doc.email,
+							seller: user._doc.seller,
 						};
 						res.status(200).json(response);
 					})

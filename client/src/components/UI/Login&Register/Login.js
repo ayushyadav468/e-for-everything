@@ -6,9 +6,10 @@ import DialogBox from '../DialogBox/DialogBox';
 import axios from '../../../axiosInstance';
 import * as actionTypes from '../../../store/action/actions';
 
+// To get USER state
 // const mapStateToProps = (state) => {
 // 	return {
-// 		user: state.userState,
+// 		user: state.user,
 // 	};
 // };
 

@@ -5,9 +5,10 @@ import axios from '../../../axiosInstance';
 import * as actionTypes from '../../../store/action/actions';
 import styles from './Register.module.css';
 
+// To get USER state
 // const mapStateToProps = (state) => {
 // 	return {
-// 		user: state.userState,
+// 		user: state.user,
 // 	};
 // };
 
@@ -45,6 +46,7 @@ const Register = (props) => {
 				if (response.status !== 200) {
 					setError({ message: response.data.message });
 					// reset form
+					setName('');
 					setEmail('');
 					setPassword('');
 					setShowDialogBox(true);
@@ -56,14 +58,9 @@ const Register = (props) => {
 						...response.data,
 					};
 					props.userLogin(user);
+					// redirect to main page
+					props.history.push('/');
 				}
-				// reset form
-				setName('');
-				setEmail('');
-				setPassword('');
-				setSeller(false);
-				// redirect to main page
-				props.history.push('/');
 			})
 			.catch((err) => {
 				setError({ message: err.response.data.error.message });

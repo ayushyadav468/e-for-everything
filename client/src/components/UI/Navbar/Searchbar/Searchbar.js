@@ -1,18 +1,60 @@
+import { connect } from 'react-redux';
+import { USER_LOGOUT } from '../../../../store/action/actions';
 import { NavLink, Link } from 'react-router-dom';
 import styles from './Searchbar.module.css';
 
-const Searchbar = () => {
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		logout: () => dispatch({ type: USER_LOGOUT }),
+	};
+};
+
+const Searchbar = (props) => {
+	let user;
+	// if user is logged in
+	// check if keys are present in props.user
+	// and check if constructor is of object type (for edge cases)
+	if (
+		Object.keys(props.user).length !== 0 &&
+		props.user.constructor === Object
+	) {
+		user = { ...props.user };
+		console.log(user);
+	}
+	const logoutHandler = () => {
+		// dispach LOG_OUT action to redux
+		props.logout();
+		// redirect to main page
+		props.history.push('/');
+	};
+
 	const signIn = (
 		<NavLink
 			to='/login'
 			style={{ display: 'block' }}
 			className={styles.signInDiv}
 		>
-			<p>Sign In/Up</p>
-			<div className={styles.signInContent}>
-				<Link to='#'>Settings</Link>
-				<Link to='#'>Log Out</Link>
-			</div>
+			{user ? (
+				<>
+					<p>
+						<span style={{ fontWeight: 'bold' }}>Welcome,</span> {user.name}
+					</p>
+					<div className={styles.signInContent}>
+						<Link to='#'>Settings</Link>
+						<button onClick={logoutHandler} className={styles.logOutButton}>
+							Logout
+						</button>
+					</div>
+				</>
+			) : (
+				<p>Sign In/Up</p>
+			)}
 		</NavLink>
 	);
 	return (
@@ -114,4 +156,4 @@ const Searchbar = () => {
 	);
 };
 
-export default Searchbar;
+export default connect(mapStateToProps, mapDispatchToProps)(Searchbar);
