@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
-import { USER_LOGOUT } from '../../../../store/action/actions';
-import { NavLink, Link } from 'react-router-dom';
+import { useState } from 'react';
 import styles from './Searchbar.module.css';
+import { NavLink, Link } from 'react-router-dom';
+import { USER_LOGOUT } from '../../../../store/action/actions';
+import DialogBox from '../../DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
 	return {
@@ -11,11 +13,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		logout: () => dispatch({ type: USER_LOGOUT }),
+		userLogout: () => dispatch({ type: USER_LOGOUT }),
 	};
 };
 
 const Searchbar = (props) => {
+	const [showDialogBox, setShowDialogBox] = useState(false);
+
 	let user;
 	// if user is logged in
 	// check if keys are present in props.user
@@ -25,21 +29,19 @@ const Searchbar = (props) => {
 		props.user.constructor === Object
 	) {
 		user = { ...props.user };
-		console.log(user);
 	}
 	const logoutHandler = () => {
 		// dispach LOG_OUT action to redux
-		props.logout();
-		// redirect to main page
-		props.history.push('/');
+		props.userLogout();
+		// show dialog box
+		setShowDialogBox(true);
+		setTimeout(() => {
+			setShowDialogBox(false);
+		}, 2000);
 	};
 
 	const signIn = (
-		<NavLink
-			to='/login'
-			style={{ display: 'block' }}
-			className={styles.signInDiv}
-		>
+		<div className={styles.signInDiv}>
 			{user ? (
 				<>
 					<p>
@@ -53,9 +55,11 @@ const Searchbar = (props) => {
 					</div>
 				</>
 			) : (
-				<p>Sign In/Up</p>
+				<NavLink to='/login' style={{ display: 'block' }}>
+					<p>Sign In/Up</p>
+				</NavLink>
 			)}
-		</NavLink>
+		</div>
 	);
 	return (
 		<ul className={styles.searchBar}>
@@ -152,6 +156,7 @@ const Searchbar = (props) => {
 					</svg>
 				</NavLink>
 			</li>
+			<DialogBox showDialogBox={showDialogBox}>Logout successful</DialogBox>
 		</ul>
 	);
 };

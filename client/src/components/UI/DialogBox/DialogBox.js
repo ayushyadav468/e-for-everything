@@ -3,7 +3,7 @@ import styles from './DialogBox.module.css';
 const DialogBox = (props) => (
 	<div
 		className={styles.dialogBox}
-		show={props.show}
+		show={props.showDialogBox}
 		clicked={props.clicked}
 		style={{
 			display: props.showBox ? 'block' : 'none',
