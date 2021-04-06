@@ -29,6 +29,8 @@ const userSchema = new mongoose.Schema({
 		min: 6,
 		max: 1024,
 	},
+	cartProducts: [mongoose.Schema.Types.ObjectId],
+	favProducts: [mongoose.Schema.Types.ObjectId],
 	dateAdded: {
 		type: Date,
 		default: Date.now,

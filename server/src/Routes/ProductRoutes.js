@@ -65,6 +65,34 @@ router.get('/:productID', (req, res) => {
 		});
 });
 
+// GET multiple product by id
+router.patch('/multiple', (req, res) => {
+	// 	{
+	//     "productIDs": [
+	//         "604d8a4ef5a3e7197c1ecaea",
+	//         "604d8ae4f5a3e7197c1ecaeb",
+	//     ]
+	// }
+	const productIDs = req.body.productIDs;
+	// find() function finds multiple product using productIDs
+	Product.find()
+		.where('_id')
+		.in(productIDs)
+		.select('-ownerID -rating -dateAdded -reviews -__v')
+		.exec()
+		.then((result) => {
+			// result => array of objects
+			const response = {
+				count: result.length,
+				products: [...result],
+			};
+			res.status(200).json(response);
+		})
+		.catch((err) => {
+			res.status(500).json(err);
+		});
+});
+
 // POST a product
 router.post('/', (req, res) => {
 	// Get details about product from body of request

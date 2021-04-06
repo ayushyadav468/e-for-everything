@@ -102,4 +102,44 @@ router.delete('/:userID', (req, res) => {
 		});
 });
 
+// Add to Cart route
+router.patch('/:userID/cart/', (req, res) => {
+	const userID = req.params.userID;
+	const productID = req.body.productID;
+	User.findByIdAndUpdate(
+		userID,
+		{ $addToSet: { cartProducts: productID } },
+		{ new: true }
+	)
+		.select('-__v -dateAdded -password')
+		.exec()
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => {
+			console.log('Error in adding cart products' + err.message);
+			res.status(500).json(err);
+		});
+});
+
+// Add to favourite route
+router.patch('/:userID/fav/', (req, res) => {
+	const userID = req.params.userID;
+	const productID = req.body.productID;
+	User.findByIdAndUpdate(
+		userID,
+		{ $addToSet: { favProducts: productID } },
+		{ new: true }
+	)
+		.select('-__v -dateAdded -password')
+		.exec()
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => {
+			console.log('Error in adding favoutite products' + err.message);
+			res.status(500).json(err);
+		});
+});
+
 module.exports = router;

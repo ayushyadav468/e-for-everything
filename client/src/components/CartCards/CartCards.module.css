@@ -1,0 +1,8 @@
+.cartCardsDiv {
+	width: 100%;
+}
+.emptyCardPara {
+	text-align: center;
+	font-size: 2rem;
+	margin-bottom: 2rem;
+}

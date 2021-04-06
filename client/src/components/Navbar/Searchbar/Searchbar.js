@@ -45,7 +45,7 @@ const Searchbar = (props) => {
 			{user ? (
 				<>
 					<p>
-						<span style={{ fontWeight: 'bold' }}>Welcome,</span> {user.name}
+						<strong>Welcome,</strong> {user.name}
 					</p>
 					<div className={styles.signInContent}>
 						<Link to='#'>Settings</Link>

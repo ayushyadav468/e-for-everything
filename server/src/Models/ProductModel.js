@@ -25,31 +25,8 @@ const productSchema = new mongoose.Schema({
 	largeImage: {
 		type: String,
 	},
-	reviews: [
-		{
-			_id: mongoose.Schema.Types.ObjectId,
-			userID: {
-				type: mongoose.Schema.Types.ObjectId,
-				required: true,
-			},
-			reviewBody: {
-				type: String,
-				required: true,
-			},
-			helpFullCount: {
-				type: Number,
-				default: 0,
-			},
-			incorrectCount: {
-				type: Number,
-				default: 0,
-			},
-			dateAdded: {
-				type: Date,
-				default: Date.now,
-			},
-		},
-	],
+	// Array of review IDs
+	reviews: [mongoose.Schema.Types.ObjectId],
 	// USER ID of the person who added this product
 	ownerID: {
 		type: mongoose.Schema.Types.ObjectId,

@@ -3,6 +3,7 @@ import axios from '../../axiosInstance';
 import styles from './DiscriptionCard.module.css';
 import Spinner from '../UI/Spinner/Spinner';
 import ReviewCards from '../ReviewCards/ReviewCards';
+import QuantityBox from '../UI/QuantityBox/QuantityBox';
 import DialogBox from '../UI/DialogBox/DialogBox';
 
 const DiscriptionCard = (props) => {
@@ -30,27 +31,6 @@ const DiscriptionCard = (props) => {
 
 		fetchData();
 	}, [productID]);
-
-	const onQuantityChange = (type) => {
-		switch (type) {
-			case '-':
-				if (productQuantity > 0) {
-					setProductQuantity(productQuantity - 1);
-				} else {
-					setShowDialogBox(true);
-					setTimeout(() => {
-						setShowDialogBox(false);
-					}, 1000);
-				}
-				break;
-			case '+':
-				setProductQuantity(productQuantity + 1);
-				break;
-			default:
-				break;
-		}
-		return;
-	};
 
 	let discriptionCard;
 	if (isLoading) {
@@ -82,21 +62,11 @@ const DiscriptionCard = (props) => {
 							<strong>{product.rating}</strong>/5.0
 						</p>
 					</div>
-					<div className={styles.productQuantity}>
-						<button
-							className={styles.productQuantityBtn}
-							onClick={() => onQuantityChange('-')}
-						>
-							<strong>-</strong>
-						</button>
-						<p className={styles.productQuantityDisplay}>{productQuantity}</p>
-						<button
-							className={styles.productQuantityBtn}
-							onClick={() => onQuantityChange('+')}
-						>
-							<strong>+</strong>
-						</button>
-					</div>
+					<QuantityBox
+						productQuantity={productQuantity}
+						setProductQuantity={setProductQuantity}
+						setShowDialogBox={setShowDialogBox}
+					/>
 					<div className={styles.productBtnDiv}>
 						<button
 							className={[styles.productBtn, styles.productAddToCartBtn].join(
