@@ -103,7 +103,7 @@ router.delete('/:userID', (req, res) => {
 });
 
 // Add to Cart route
-router.patch('/:userID/cart/', (req, res) => {
+router.patch('/:userID/cart', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
 	User.findByIdAndUpdate(
@@ -123,7 +123,7 @@ router.patch('/:userID/cart/', (req, res) => {
 });
 
 // Add to favourite route
-router.patch('/:userID/fav/', (req, res) => {
+router.patch('/:userID/fav', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
 	User.findByIdAndUpdate(

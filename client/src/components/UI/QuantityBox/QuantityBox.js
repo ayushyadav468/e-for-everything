@@ -5,6 +5,7 @@ const QuantityBox = (props) => {
 	//     productQuantity : variable for quantity to be displayed
 	//     setProductQuantity() : state method to set product quantity
 	//     setShowDialogBox() : state method to show dialog box
+	//		 setMessage() : state method to show dialog message
 	//   }
 
 	const onQuantityChange = (type) => {
@@ -13,10 +14,7 @@ const QuantityBox = (props) => {
 				if (props.productQuantity > 0) {
 					props.setProductQuantity(props.productQuantity - 1);
 				} else {
-					props.setShowDialogBox(true);
-					setTimeout(() => {
-						props.setShowDialogBox(false);
-					}, 1000);
+					props.dialogBox("Can't reduce below 0");
 				}
 				break;
 			case '+':

@@ -37,7 +37,9 @@ const CartCard = (props) => {
 			<QuantityBox
 				productQuantity={props.productQuantity}
 				setProductQuantity={props.setProductQuantity}
-				setShowDialogBox={props.setShowDialogBox}
+				dialogBox={(messageToBeDisplayed) =>
+					props.dialogBox(messageToBeDisplayed)
+				}
 			/>
 			<p className={styles.productPrice}>
 				<strong>Rs</strong>

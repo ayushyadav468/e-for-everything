@@ -1,4 +1,9 @@
 import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import {
+	ADD_PRODUCT_TO_FAV,
+	ADD_PRODUCT_TO_CART,
+} from '../../store/action/actions';
 import axios from '../../axiosInstance';
 import styles from './DiscriptionCard.module.css';
 import Spinner from '../UI/Spinner/Spinner';
@@ -6,13 +11,37 @@ import ReviewCards from '../ReviewCards/ReviewCards';
 import QuantityBox from '../UI/QuantityBox/QuantityBox';
 import DialogBox from '../UI/DialogBox/DialogBox';
 
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addToCart: (productID) =>
+			dispatch({ type: ADD_PRODUCT_TO_CART, payload: productID }),
+		addToFavourite: (productID) =>
+			dispatch({ type: ADD_PRODUCT_TO_FAV, payload: productID }),
+	};
+};
+
 const DiscriptionCard = (props) => {
 	const [product, setProduct] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [productQuantity, setProductQuantity] = useState(0);
+	const [message, setMessage] = useState('');
 	// getting product id from URL
 	const productID = props.match.params.productID;
+	let userID;
+	// check if user is logged in
+	if (
+		Object.keys(props.user).length !== 0 &&
+		props.user.constructor === Object
+	) {
+		userID = props.user._id;
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -31,6 +60,53 @@ const DiscriptionCard = (props) => {
 
 		fetchData();
 	}, [productID]);
+
+	const dialogBox = (messageToBeDisplayed) => {
+		setShowDialogBox(true);
+		setMessage(messageToBeDisplayed);
+		setTimeout(() => {
+			setShowDialogBox(false);
+		}, 2000);
+	};
+
+	// const addProductToFavouriteHandler = () => {
+	// 	if (userID) {
+	// 		axios
+	// 			.patch('/api/user/' + userID + '/fav/', {
+	// 				productID: productID,
+	// 			})
+	// 			.then((response) => {
+	// 				props.addToFavourite(productID);
+	// 				dialogBox('Product added to favrouites');
+	// 			})
+	// 			.catch((err) => {
+	// 				dialogBox('Error occured in saving product to favrouites');
+	// 			});
+	// 	} else {
+	// 		dialogBox('Not Log In');
+	// 	}
+	// };
+
+	const addProductToCartHandler = () => {
+		if (userID) {
+			axios
+				.patch('/api/user/' + userID + '/cart/', {
+					productID: productID,
+				})
+				.then((response) => {
+					// console.log(response);
+					// Dispach ADD_PRODUCT_TO_CART action to redux
+					props.addToCart(productID);
+					dialogBox('Product added to cart');
+				})
+				.catch((err) => {
+					console.log(err);
+					dialogBox('Error occured in saving product to cart');
+				});
+		} else {
+			dialogBox('Not Log In');
+		}
+	};
 
 	let discriptionCard;
 	if (isLoading) {
@@ -65,13 +141,16 @@ const DiscriptionCard = (props) => {
 					<QuantityBox
 						productQuantity={productQuantity}
 						setProductQuantity={setProductQuantity}
-						setShowDialogBox={setShowDialogBox}
+						dialogBox={(messageToBeDisplayed) =>
+							dialogBox(messageToBeDisplayed)
+						}
 					/>
 					<div className={styles.productBtnDiv}>
 						<button
 							className={[styles.productBtn, styles.productAddToCartBtn].join(
 								' '
 							)}
+							onClick={addProductToCartHandler}
 						>
 							Add to Cart
 						</button>
@@ -82,7 +161,7 @@ const DiscriptionCard = (props) => {
 						</button>
 					</div>
 				</div>
-				<DialogBox showBox={showDialogBox}>Can't reduce below zero</DialogBox>
+				<DialogBox showBox={showDialogBox}>{message}</DialogBox>
 			</div>
 		);
 	}
@@ -95,4 +174,4 @@ const DiscriptionCard = (props) => {
 	);
 };
 
-export default DiscriptionCard;
+export default connect(mapStateToProps, mapDispatchToProps)(DiscriptionCard);

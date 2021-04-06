@@ -17,7 +17,7 @@ const CartCards = (props) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [productQuantity, setProductQuantity] = useState(0);
 	const [showDialogBox, setShowDialogBox] = useState(false);
-	const [error, setError] = useState('');
+	const [message, setMessage] = useState('');
 
 	let userID;
 	// check if user is logged in
@@ -47,20 +47,28 @@ const CartCards = (props) => {
 	useEffect(() => {
 		if (userID) {
 			fetchData();
-			setError('');
+			setMessage('');
 		} else {
-			setError('Please login to see product in card');
+			setMessage('Please login to see product in card');
 		}
-	}, []);
+	}, [userID]);
 
 	const deleteHandler = () => {
 		// function to handle delete button's on click in cartCard
 		console.log('delete button clicked');
 	};
 
+	const dialogBox = (messageToBeDisplayed) => {
+		setShowDialogBox(true);
+		message = messageToBeDisplayed;
+		setTimeout(() => {
+			setShowDialogBox(false);
+		}, 2000);
+	};
+
 	let cartCards;
 	if (!userID) {
-		cartCards = <p className={styles.emptyCardPara}>{error}</p>;
+		cartCards = <p className={styles.emptyCardPara}>{message}</p>;
 	} else {
 		if (isLoading) {
 			cartCards = <Spinner />;
@@ -73,7 +81,9 @@ const CartCards = (props) => {
 							product={product}
 							productQuantity={productQuantity}
 							setProductQuantity={setProductQuantity}
-							setShowDialogBox={setShowDialogBox}
+							dialogBox={(messageToBeDisplayed) =>
+								dialogBox(messageToBeDisplayed)
+							}
 							deleteHandler={deleteHandler}
 						/>
 					);
