@@ -93,7 +93,7 @@ const Searchbar = (props) => {
 			</li>
 			<li className={styles.signIn}>{signIn}</li>
 			<li className={styles.fav}>
-				<NavLink to='#'>
+				<NavLink to='/fav'>
 					<svg
 						width='512'
 						height='431'
@@ -109,7 +109,7 @@ const Searchbar = (props) => {
 				</NavLink>
 			</li>
 			<li className={styles.cart}>
-				<NavLink to='#'>
+				<NavLink to='/cart'>
 					<svg
 						width='491'
 						height='471'
