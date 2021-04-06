@@ -85,19 +85,36 @@
 	display: none;
 	position: absolute;
 	z-index: 1;
-	border-radius: 0 0 10px 10px;
+	border-radius: 5px 5px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 	background-color: #fff;
 }
 
 .signInContent a {
-	font-size: 0.8rem;
+	font-size: 0.9rem;
 	display: block;
-	padding: 1rem 4rem 1rem 1rem;
-	text-align: left;
+	width: 8rem;
+	border-radius: 5px 5px;
+	padding: 1rem;
+	text-align: center;
 }
 
-.signInContent a:hover {
+.logOutButton {
+	font-family: 'Playfair Display';
+	color: #333113;
+	background-color: #fff000;
+	width: 8rem;
+	font-size: 0.9rem;
+	display: block;
+	padding: 1rem;
+	border-radius: 4px 4px;
+	font-weight: 700;
+	text-align: center;
+	border: none;
+}
+
+.signInContent a:hover,
+.logOutButton:hover {
 	color: #fff;
 	background-color: #333113;
 }
