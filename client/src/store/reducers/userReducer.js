@@ -11,20 +11,39 @@ const userReducer = (state = initialState, action) => {
 			state = {};
 			break;
 		case actionTypes.ADD_PRODUCT_TO_CART:
-			const user = { ...state };
-			console.log(user);
-			const newCartProducts = [
-				...user.cartProducts.filter(
+			// check if productID is already in the cart
+			// filter function retruns a new array
+			// it checks if the id is present or not
+			// if it is present don't add it again
+			const addedCartProducts = [
+				...state.cartProducts.filter(
 					(productID) => productID !== action.payload
 				),
 				action.payload,
 			];
-			console.log(newCartProducts);
-			const newUser = { cartProducts: [...newCartProducts], ...user };
-			console.log(newUser);
-			state = { ...newUser };
+			const addedProductNewUser = {
+				...state,
+				cartProducts: [...addedCartProducts],
+			};
+			// const deletedProductNewUser = {
+			// 	...state,
+			//	This will also change the array immutablily as concat returns a new array
+			// 	cartProducts: state.cartProducts.concat(action.payload),
+			// };
+			state = { ...addedProductNewUser };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_CART:
+			const deletedCartProducts = [
+				...state.cartProducts.filter(
+					(productID) => productID !== action.payload
+				),
+			];
+			const deletedProductNewUser = {
+				...state,
+				cartProducts: [...deletedCartProducts],
+			};
+
+			state = { ...deletedProductNewUser };
 			break;
 		case actionTypes.ADD_PRODUCT_TO_FAV:
 			break;

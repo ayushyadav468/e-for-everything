@@ -14,14 +14,17 @@ const CartCard = (props) => {
 	//   productQuantity, state variable for quantity
 	//   setProductQuantity(), state function for quantity change
 	//   setShowDialogBox(), state function for dialog box
-	//   deleteHandler(), function to handle delete button's on click
+	//   deleteHandler(productID), function to handle delete button's on click
 	// }
 
 	const srcSet =
 		props.product.largeImage + ' 1260w,' + props.product.smallImage + ' 640w';
 	return (
 		<div className={styles.cartCardDiv}>
-			<Link to={'/' + props.product._id} className={styles.cartCardLink}>
+			<Link
+				to={'/product/' + props.product._id}
+				className={styles.cartCardLink}
+			>
 				<img
 					className={styles.productImage}
 					src={props.product.smallImage}
@@ -45,7 +48,10 @@ const CartCard = (props) => {
 				<strong>Rs</strong>
 				{props.product.productPrice}
 			</p>
-			<button onClick={props.deleteHandler} className={styles.productDelBtn}>
+			<button
+				onClick={() => props.deleteHandler(props.product._id)}
+				className={styles.productDelBtn}
+			>
 				Delete
 			</button>
 		</div>

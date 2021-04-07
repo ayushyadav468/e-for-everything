@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { DELETE_PRODUCT_FROM_CART } from '../../store/action/actions';
 import axios from '../../axiosInstance';
 import styles from './CartCards.module.css';
 import CartCard from './CartCard/CartCard';
@@ -9,6 +10,13 @@ import DialogBox from '../UI/DialogBox/DialogBox';
 const mapStateToProps = (state) => {
 	return {
 		user: state.user,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		removeProduct: (productID) =>
+			dispatch({ type: DELETE_PRODUCT_FROM_CART, payload: productID }),
 	};
 };
 
@@ -53,14 +61,23 @@ const CartCards = (props) => {
 		}
 	}, [userID]);
 
-	const deleteHandler = () => {
-		// function to handle delete button's on click in cartCard
-		console.log('delete button clicked');
+	// function to handle delete button's on click in cartCard
+	const deleteHandler = (productID) => {
+		// change productsData state to re-render page
+		const updatedProducts = { ...productsData };
+		// if (updatedProducts[i]._id === productID) {}
+		const newProductData = Object.values(updatedProducts).filter(
+			(product) => product._id !== productID
+		);
+		setProductsData(newProductData);
+		// Dispatch an action to remove product from cart
+		props.removeProduct(productID);
+		dialogBox('Item removed from cart');
 	};
 
 	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
-		message = messageToBeDisplayed;
+		setMessage(messageToBeDisplayed);
 		setTimeout(() => {
 			setShowDialogBox(false);
 		}, 2000);
@@ -84,7 +101,7 @@ const CartCards = (props) => {
 							dialogBox={(messageToBeDisplayed) =>
 								dialogBox(messageToBeDisplayed)
 							}
-							deleteHandler={deleteHandler}
+							deleteHandler={(productID) => deleteHandler(productID)}
 						/>
 					);
 				});
@@ -101,9 +118,9 @@ const CartCards = (props) => {
 	return (
 		<div className={styles.cartCardsDiv}>
 			{cartCards}
-			<DialogBox showBox={showDialogBox}>Can't reduce below zero</DialogBox>
+			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
 		</div>
 	);
 };
 
-export default connect(mapStateToProps, null)(CartCards);
+export default connect(mapStateToProps, mapDispatchToProps)(CartCards);
