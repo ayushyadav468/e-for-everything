@@ -1,9 +1,0 @@
-.dispPage {
-	margin-top: 170px;
-}
-
-@media screen and (min-width: 992px) {
-	.dispPage {
-		margin-top: 125px;
-	}
-}

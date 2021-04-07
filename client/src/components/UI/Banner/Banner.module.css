@@ -4,6 +4,7 @@
 	color: white;
 	padding: 3rem 2rem;
 	text-align: left;
+	margin-top: 170px;
 }
 
 .bannerMainHeading {
@@ -52,5 +53,11 @@
 	}
 	.bannerBtn {
 		font-size: 1.4rem;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.banner {
+		margin-top: 125px;
 	}
 }

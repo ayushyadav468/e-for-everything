@@ -5,11 +5,11 @@ import DiscriptionCard from '../../components/DiscriptionCard/DiscriptionCard';
 
 const DiscriptionPage = (props) => {
 	return (
-		<div className={styles.dispPage}>
+		<>
 			<Navbar />
 			<DiscriptionCard {...props} />
 			<Footer />
-		</div>
+		</>
 	);
 };
 

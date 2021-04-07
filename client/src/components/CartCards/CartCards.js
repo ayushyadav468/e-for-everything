@@ -65,7 +65,7 @@ const CartCards = (props) => {
 	const deleteHandler = (productID) => {
 		// change productsData state to re-render page
 		const updatedProducts = { ...productsData };
-		// if (updatedProducts[i]._id === productID) {}
+		// get a new object with values and remove product 'productID'
 		const newProductData = Object.values(updatedProducts).filter(
 			(product) => product._id !== productID
 		);

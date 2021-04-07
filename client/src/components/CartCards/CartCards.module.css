@@ -1,8 +1,16 @@
 .cartCardsDiv {
 	width: 100%;
+	margin-top: 180px;
 }
+
 .emptyCardPara {
 	text-align: center;
 	font-size: 2rem;
 	margin-bottom: 2rem;
+}
+
+@media screen and (min-width: 992px) {
+	.cartCardsDiv {
+		margin-top: 125px;
+	}
 }

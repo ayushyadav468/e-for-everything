@@ -1,9 +1,0 @@
-.rootPage {
-	margin-top: 170px;
-}
-
-@media screen and (min-width: 992px) {
-	.rootPage {
-		margin-top: 125px;
-	}
-}

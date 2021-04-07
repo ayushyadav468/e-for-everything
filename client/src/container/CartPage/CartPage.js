@@ -5,11 +5,11 @@ import CartCards from '../../components/CartCards/CartCards';
 
 const CartPage = () => {
 	return (
-		<div className={styles.cartPage}>
+		<>
 			<Navbar />
 			<CartCards />
 			<Footer />
-		</div>
+		</>
 	);
 };
 

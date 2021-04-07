@@ -6,12 +6,12 @@ import ProductCards from '../../components/ProductCards/ProductCards';
 
 const RootPage = () => {
 	return (
-		<div className={styles.rootPage}>
+		<>
 			<Navbar />
 			<Banner />
 			<ProductCards />
 			<Footer />
-		</div>
+		</>
 	);
 };
 
