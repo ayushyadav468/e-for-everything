@@ -1,4 +1,3 @@
-import styles from './RootPage.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/UI/Footer/Footer';
 import Banner from '../../components/UI/Banner/Banner';

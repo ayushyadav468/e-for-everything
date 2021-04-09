@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { DELETE_PRODUCT_FROM_CART } from '../../store/action/actions';
-import axios from '../../axiosInstance';
+import { DELETE_PRODUCT_FROM_CART } from '../../../store/action/actions';
+import axios from '../../../axiosInstance';
 import styles from './CartCards.module.css';
-import CartCard from './CartCard/CartCard';
-import Spinner from '../UI/Spinner/Spinner';
-import DialogBox from '../UI/DialogBox/DialogBox';
+import CartCard from '../../../components/CartCard/CartCard';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
 	return {
@@ -36,29 +36,29 @@ const CartCards = (props) => {
 		userID = props.user._id;
 	}
 
-	const fetchData = async () => {
-		setIsLoading(true);
-		const result = await axios
-			.patch('/api/product/multiple/', {
-				productIDs: [...props.user.cartProducts],
-			})
-			.then((response) => {
-				setProductsData(response.data.products);
-			})
-			.catch((err) => {
-				console.log(err.data);
-			});
-		setIsLoading(false);
-		return result;
-	};
-
 	useEffect(() => {
+		const fetchData = async () => {
+			setIsLoading(true);
+			await axios
+				.patch('/api/product/multiple/', {
+					productIDs: [...props.user.cartProducts],
+				})
+				.then((response) => {
+					setProductsData(response.data.products);
+				})
+				.catch((err) => {
+					console.log(err.data);
+				});
+			setIsLoading(false);
+		};
+
 		if (userID) {
 			fetchData();
 			setMessage('');
 		} else {
 			setMessage('Please login to see product in card');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userID]);
 
 	// function to handle delete button's on click in cartCard

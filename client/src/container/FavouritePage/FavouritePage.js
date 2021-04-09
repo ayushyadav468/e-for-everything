@@ -1,12 +1,12 @@
-import styles from './FavouritePage.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/UI/Footer/Footer';
+import CartCards from '../../components/CartCards/CartCards';
 
 const FavouritePage = () => {
 	return (
 		<>
 			<Navbar />
-			<h1>Favourite</h1>
+			<CartCards />
 			<Footer />
 		</>
 	);

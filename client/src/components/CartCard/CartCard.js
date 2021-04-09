@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styles from './CartCard.module.css';
-import QuantityBox from '../../UI/QuantityBox/QuantityBox';
+import QuantityBox from '../UI/QuantityBox/QuantityBox';
 
 const CartCard = (props) => {
 	// props: {
