@@ -4,7 +4,7 @@
 }
 
 .logInCard {
-	width: 50%;
+	width: clamp(350px, 50%, 600px);
 	height: 70%;
 	position: absolute;
 	top: 15%;

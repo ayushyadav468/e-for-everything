@@ -58,12 +58,13 @@ const Register = (props) => {
 					};
 					// Dispach LOG_IN action to redux
 					props.userLogin(user);
-					// redirect to main page
-					props.history.push('/');
+					// redirect to the page user came to register
+					props.history.go(-2);
 				}
 			})
 			.catch((err) => {
-				setError({ message: err.response.data.error.message });
+				console.log(err.response);
+				setError({ message: err.response });
 				// reset form
 				setEmail('');
 				setPassword('');

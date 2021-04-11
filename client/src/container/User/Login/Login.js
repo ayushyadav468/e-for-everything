@@ -43,8 +43,8 @@ const Login = (props) => {
 				// reset form
 				setEmail('');
 				setPassword('');
-				// redirect to main page
-				props.history.push('/');
+				// redirect to the page user came to login
+				props.history.go(-1);
 			})
 			.catch((err) => {
 				setError({ message: err.response.data.error.message });
@@ -94,7 +94,13 @@ const Login = (props) => {
 					<p className={styles.RegisterPara}>
 						New to <span>e</span>
 					</p>
-					<Link className={styles.RegisterBtn} to='/register'>
+					<Link
+						className={styles.RegisterBtn}
+						to={{
+							pathname: '/register',
+							// state: { goBackFunc: () => props.history.goBack().caller },
+						}}
+					>
 						Create an account
 					</Link>
 				</div>
