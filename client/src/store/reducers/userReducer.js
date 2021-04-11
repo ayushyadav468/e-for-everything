@@ -21,16 +21,16 @@ const userReducer = (state = initialState, action) => {
 				),
 				action.payload,
 			];
-			const addedProductNewUser = {
+			const addedCartProductNewUser = {
 				...state,
 				cartProducts: [...addedCartProducts],
 			};
-			// const deletedProductNewUser = {
+			// const addedCartProductNewUser = {
 			// 	...state,
 			//	This will also change the array immutablily as concat returns a new array
 			// 	cartProducts: state.cartProducts.concat(action.payload),
 			// };
-			state = { ...addedProductNewUser };
+			state = { ...addedCartProductNewUser };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_CART:
 			const deletedCartProducts = [
@@ -38,16 +38,45 @@ const userReducer = (state = initialState, action) => {
 					(productID) => productID !== action.payload
 				),
 			];
-			const deletedProductNewUser = {
+			const deletedCartProductNewUser = {
 				...state,
 				cartProducts: [...deletedCartProducts],
 			};
-
-			state = { ...deletedProductNewUser };
+			state = { ...deletedCartProductNewUser };
 			break;
 		case actionTypes.ADD_PRODUCT_TO_FAV:
+			// check if productID is already in the favourites
+			// filter function retruns a new array
+			// it checks if the id is present or not
+			// if it is present don't add it again
+			const addedFavProducts = [
+				...state.favProducts.filter(
+					(productID) => productID !== action.payload
+				),
+				action.payload,
+			];
+			const addedFavProductNewUser = {
+				...state,
+				favProducts: [...addedFavProducts],
+			};
+			// const deletedProductNewUser = {
+			// 	...state,
+			//	This will also change the array immutablily as concat returns a new array
+			// 	cartProducts: state.cartProducts.concat(action.payload),
+			// };
+			state = { ...addedFavProductNewUser };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_FAV:
+			const deletedFavProducts = [
+				...state.favProducts.filter(
+					(productID) => productID !== action.payload
+				),
+			];
+			const deletedFavProductNewUser = {
+				...state,
+				favProducts: [...deletedFavProducts],
+			};
+			state = { ...deletedFavProductNewUser };
 			break;
 		default:
 			return state;

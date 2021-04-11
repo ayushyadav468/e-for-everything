@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		removeProduct: (productID) =>
+		removeProductFromCart: (productID) =>
 			dispatch({ type: DELETE_PRODUCT_FROM_CART, payload: productID }),
 	};
 };
@@ -56,7 +56,7 @@ const CartCards = (props) => {
 			fetchData();
 			setMessage('');
 		} else {
-			setMessage('Please login to see product in card');
+			setMessage('Please login to see product in cart');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userID]);
@@ -71,7 +71,7 @@ const CartCards = (props) => {
 		);
 		setProductsData(newProductData);
 		// Dispatch an action to remove product from cart
-		props.removeProduct(productID);
+		props.removeProductFromCart(productID);
 		dialogBox('Item removed from cart');
 	};
 
@@ -85,7 +85,7 @@ const CartCards = (props) => {
 
 	let cartCards;
 	if (!userID) {
-		cartCards = <p className={styles.emptyCardPara}>{message}</p>;
+		cartCards = <p className={styles.emptyCartCardPara}>{message}</p>;
 	} else {
 		if (isLoading) {
 			cartCards = <Spinner />;
@@ -107,7 +107,7 @@ const CartCards = (props) => {
 				});
 			} else {
 				cartCards = (
-					<p className={styles.emptyCardPara}>
+					<p className={styles.emptyCartCardPara}>
 						Cart is empty. Add a product in cart
 					</p>
 				);

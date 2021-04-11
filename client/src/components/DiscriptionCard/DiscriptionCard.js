@@ -69,23 +69,25 @@ const DiscriptionCard = (props) => {
 		}, 2000);
 	};
 
-	// const addProductToFavouriteHandler = () => {
-	// 	if (userID) {
-	// 		axios
-	// 			.patch('/api/user/' + userID + '/fav/', {
-	// 				productID: productID,
-	// 			})
-	// 			.then((response) => {
-	// 				props.addToFavourite(productID);
-	// 				dialogBox('Product added to favrouites');
-	// 			})
-	// 			.catch((err) => {
-	// 				dialogBox('Error occured in saving product to favrouites');
-	// 			});
-	// 	} else {
-	// 		dialogBox('Not Log In');
-	// 	}
-	// };
+	const addProductToFavouriteHandler = () => {
+		if (userID) {
+			axios
+				.patch('/api/user/' + userID + '/fav/', {
+					productID: productID,
+				})
+				.then((response) => {
+					// console.log(response);
+					// Dispach ADD_PRODUCT_TO_FAVOURITE action to redux
+					props.addToFavourite(productID);
+					dialogBox('Product added to favrouites');
+				})
+				.catch((err) => {
+					dialogBox('Error occured in saving product to favrouites');
+				});
+		} else {
+			dialogBox('Not Log In');
+		}
+	};
 
 	const addProductToCartHandler = () => {
 		if (userID) {
@@ -147,17 +149,18 @@ const DiscriptionCard = (props) => {
 					/>
 					<div className={styles.productBtnDiv}>
 						<button
+							className={[styles.productBtn, styles.productBuyNowBtn].join(' ')}
+							onClick={addProductToFavouriteHandler}
+						>
+							Favourites
+						</button>
+						<button
 							className={[styles.productBtn, styles.productAddToCartBtn].join(
 								' '
 							)}
 							onClick={addProductToCartHandler}
 						>
 							Add to Cart
-						</button>
-						<button
-							className={[styles.productBtn, styles.productBuyNowBtn].join(' ')}
-						>
-							Buy Now
 						</button>
 					</div>
 				</div>
