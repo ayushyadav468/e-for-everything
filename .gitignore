@@ -29,12 +29,11 @@ yarn-error.log*
 # BACKEND/SERVER SIDE
 
 # dependencies
-/server/node_modules
+/node_modules
 
 # misc
-/server/.env
-/server/.DS_Store
-/server/.env.local
-/server/.env.development.local
-/server/.env.test.local
-/server/.env.production.local
+/.env
+/.env.local
+/.env.development.local
+/.env.test.local
+/.env.production.local
