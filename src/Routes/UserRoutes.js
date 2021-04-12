@@ -103,7 +103,7 @@ router.delete('/:userID', (req, res) => {
 });
 
 // Add to Cart route
-router.patch('/:userID/cart', (req, res) => {
+router.patch('/:userID/addtocart', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
 	User.findByIdAndUpdate(
@@ -122,8 +122,27 @@ router.patch('/:userID/cart', (req, res) => {
 		});
 });
 
+router.patch('/:userID/delfromcart', (req, res) => {
+	const userID = req.params.userID;
+	const productID = req.body.productID;
+	User.findByIdAndUpdate(
+		userID,
+		{ $pull: { cartProducts: productID } },
+		{ new: true }
+	)
+		.select('-__v -dateAdded -password')
+		.exec()
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => {
+			console.log('Error in deleting cart products' + err.message);
+			res.status(500).json(err);
+		});
+});
+
 // Add to favourite route
-router.patch('/:userID/fav', (req, res) => {
+router.patch('/:userID/addtofav', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
 	User.findByIdAndUpdate(
@@ -138,6 +157,25 @@ router.patch('/:userID/fav', (req, res) => {
 		})
 		.catch((err) => {
 			console.log('Error in adding favoutite products' + err.message);
+			res.status(500).json(err);
+		});
+});
+
+router.patch('/:userID/delfromfav', (req, res) => {
+	const userID = req.params.userID;
+	const productID = req.body.productID;
+	User.findByIdAndUpdate(
+		userID,
+		{ $pull: { favProducts: productID } },
+		{ new: true }
+	)
+		.select('-__v -dateAdded -password')
+		.exec()
+		.then((result) => {
+			res.status(200).json(result);
+		})
+		.catch((err) => {
+			console.log('Error in deleting favoutite products' + err.message);
 			res.status(500).json(err);
 		});
 });

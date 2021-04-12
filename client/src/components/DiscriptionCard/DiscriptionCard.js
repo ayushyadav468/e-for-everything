@@ -72,7 +72,7 @@ const DiscriptionCard = (props) => {
 	const addProductToFavouriteHandler = () => {
 		if (userID) {
 			axios
-				.patch('/api/user/' + userID + '/fav/', {
+				.patch('/api/user/' + userID + '/addtofav/', {
 					productID: productID,
 				})
 				.then((response) => {
@@ -92,7 +92,7 @@ const DiscriptionCard = (props) => {
 	const addProductToCartHandler = () => {
 		if (userID) {
 			axios
-				.patch('/api/user/' + userID + '/cart/', {
+				.patch('/api/user/' + userID + '/addtocart/', {
 					productID: productID,
 				})
 				.then((response) => {

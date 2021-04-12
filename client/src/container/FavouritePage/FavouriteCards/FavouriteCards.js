@@ -62,17 +62,25 @@ const CartCards = (props) => {
 	}, [userID]);
 
 	// function to handle delete button's on click in favCard
-	const deleteHandler = (productID) => {
+	const deleteHandler = async (productID) => {
 		// change productsData state to re-render page
 		const updatedProducts = { ...productsData };
 		// get a new object with values and remove product 'productID'
 		const newProductData = Object.values(updatedProducts).filter(
 			(product) => product._id !== productID
 		);
-		setProductsData(newProductData);
-		// Dispatch an action to remove product from favourites
-		props.removeProductFromFav(productID);
-		dialogBox('Item removed from favourites');
+		await axios
+			.patch('/api/user/' + userID + '/delfromfav', { productID: productID })
+			.then((result) => {
+				setProductsData(newProductData);
+				// Dispatch an action to remove product from fav
+				props.removeProductFromFav(productID);
+				dialogBox('Item removed from favourites');
+			})
+			.catch((err) => {
+				console.log(err);
+				dialogBox('Error occured while removing item from favourites');
+			});
 	};
 
 	const dialogBox = (messageToBeDisplayed) => {
