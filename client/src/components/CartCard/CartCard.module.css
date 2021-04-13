@@ -1,30 +1,97 @@
 /* Top level elements */
-/* 
-.cartCardDiv {
 
+.cartCardDiv {
+	color: #000;
+	width: min(95%, 900px);
+	min-height: 200px;
+	margin: 0 auto 1.2rem auto;
+	background-color: #fcfaea;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.cartCardDiv:hover,
+.cartCardDiv:active {
+	box-shadow: 0 0px 12px rgba(0, 0, 0, 0.5);
 }
 
 .cartCardLink {
-
+	width: 100%;
+	text-decoration: none;
 }
 
 .productImage {
+	width: 100%;
+	object-fit: contain;
+	border-radius: 10px 10px 0 0;
+}
 
+.nameDispDiv {
+	display: flex;
+	flex-direction: column;
 }
 
 .productName {
-
+	margin: 0.8rem 0 0 5%;
+	font-size: 1.6rem;
+	font-family: 'Playfair Display';
 }
 
 .productDiscription {
+	font-size: 1rem;
+	margin: 0.8rem 0 0 5%;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	overflow: hidden;
+	max-height: 3.6em;
+	line-height: 1.2em;
+}
 
+.quantityPriceDelDiv {
+	display: flex;
+	flex-direction: row;
+}
+
+.quantityPriceDiv {
+	width: 80%;
+	display: flex;
+	flex-direction: column;
 }
 
 .productPrice {
-
+	margin: 0.5rem 0 0.9rem 7%;
+	font-size: 1.4rem;
+	font-family: 'Montserrat';
 }
 
 .productDelBtn {
+	border: none;
+	background-color: #fcfaea;
+}
 
-} 
-*/
+@media screen and (min-width: 768px) {
+	.cartCardDiv {
+		flex-direction: row;
+	}
+	.cartCardLink {
+		width: 20%;
+	}
+	.productImage {
+		height: 200px;
+	}
+	.nameDispDiv {
+		width: 30%;
+	}
+	.quantityPriceDelDiv {
+		width: 50%;
+		height: 100px;
+		margin: 5% 0;
+		justify-content: space-evenly;
+	}
+	.quantityPriceDiv {
+		width: 90%;
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
+}
