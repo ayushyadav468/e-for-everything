@@ -1,7 +1,8 @@
 import axios from 'axios';
 
+const port = process.env.PORT || 8000;
 const instance = axios.create({
-	baseURL: 'http://localhost:8000',
+	baseURL: 'http://localhost:' + port,
 });
 
 export default instance;

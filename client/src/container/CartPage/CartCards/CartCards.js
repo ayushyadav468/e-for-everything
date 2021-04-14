@@ -23,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
 const CartCards = (props) => {
 	const [productsData, setProductsData] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const [productQuantity, setProductQuantity] = useState(0);
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [message, setMessage] = useState('');
 
@@ -104,8 +103,6 @@ const CartCards = (props) => {
 						<CartCard
 							key={product._id}
 							product={product}
-							productQuantity={productQuantity}
-							setProductQuantity={setProductQuantity}
 							dialogBox={(messageToBeDisplayed) =>
 								dialogBox(messageToBeDisplayed)
 							}
@@ -124,10 +121,10 @@ const CartCards = (props) => {
 	}
 
 	return (
-		<div className={styles.cartCardsDiv}>
-			{cartCards}
+		<>
+			<div className={styles.cartCardsDiv}>{cartCards}</div>
 			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
-		</div>
+		</>
 	);
 };
 

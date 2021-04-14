@@ -1,6 +1,8 @@
 .cartCardsDiv {
 	width: 100%;
-	margin-top: 200px;
+	margin-top: 190px;
+	display: flex;
+	flex-direction: column;
 }
 
 .emptyCartCardPara {
@@ -12,5 +14,14 @@
 @media screen and (min-width: 992px) {
 	.cartCardsDiv {
 		margin-top: 160px;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+}
+
+@media screen and (min-width: 1080px) {
+	.cartCardsDiv {
+		flex-direction: row;
+		flex-wrap: wrap;
 	}
 }
