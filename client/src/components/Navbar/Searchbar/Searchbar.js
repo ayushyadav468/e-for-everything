@@ -30,6 +30,7 @@ const Searchbar = (props) => {
 	) {
 		user = { ...props.user };
 	}
+
 	const logoutHandler = () => {
 		// dispach LOG_OUT action to redux
 		props.userLogout();
@@ -40,6 +41,7 @@ const Searchbar = (props) => {
 		}, 2000);
 	};
 
+	// signIN button
 	const signIn = (
 		<div className={styles.signInDiv}>
 			{user ? (
@@ -48,7 +50,17 @@ const Searchbar = (props) => {
 						<strong>Welcome,</strong> {user.name}
 					</p>
 					<div className={styles.signInContent}>
-						<Link to='#'>Settings</Link>
+						{/* if user is a seller show setting and products link
+								else only show setting
+						*/}
+						{user.seller ? (
+							<>
+								<Link to='#'>Settings</Link>
+								<Link to='#'>Products</Link>
+							</>
+						) : (
+							<Link to='#'>Settings</Link>
+						)}
 						<button onClick={logoutHandler} className={styles.logOutButton}>
 							Logout
 						</button>
@@ -61,21 +73,37 @@ const Searchbar = (props) => {
 			)}
 		</div>
 	);
+
+	const onSeachFormSubmit = (event) => {
+		event.preventDefault();
+		console.log(props);
+		props.history.push(`/shop/?seach:${props.search}`);
+	};
+
 	return (
 		<ul className={styles.searchBar}>
 			<li className={styles.logo}>
 				<NavLink to='/'>LOGO</NavLink>
 			</li>
 			<li className={styles.searchFormContainer}>
-				<form className={styles.searchForm}>
+				<form
+					className={styles.searchForm}
+					onSubmit={(event) => onSeachFormSubmit(event)}
+				>
 					<input
 						type='text'
 						id='search'
 						name='search'
 						placeholder='Search...'
+						value={props.search}
+						onChange={(event) => props.onSearchHandler(event)}
 					/>
-					<button className={styles.searchFormButton}>
-						<svg
+					<input
+						type='submit'
+						className={styles.searchFormButton}
+						value='Search'
+					>
+						{/* <svg
 							className={styles.searchFormSvg}
 							width='40'
 							height='40'
@@ -87,8 +115,8 @@ const Searchbar = (props) => {
 								d='M39.5112 37.155L28.1363 25.78C30.3397 23.0584 31.6663 19.6 31.6663 15.8334C31.6663 7.10336 24.563 0 15.8331 0C7.1032 0 0 7.10328 0 15.8333C0 24.5633 7.10328 31.6666 15.8332 31.6666C19.5998 31.6666 23.0581 30.34 25.7797 28.1366L37.1546 39.5116C37.4796 39.8366 37.9062 40 38.3329 40C38.7597 40 39.1863 39.8366 39.5113 39.5116C40.1629 38.86 40.1629 37.8066 39.5112 37.155ZM15.8332 28.3333C8.9399 28.3333 3.33332 22.7266 3.33332 15.8333C3.33332 8.93992 8.9399 3.33328 15.8332 3.33328C22.7265 3.33328 28.333 8.93992 28.333 15.8333C28.333 22.7266 22.7264 28.3333 15.8332 28.3333Z'
 								fill='#FFFF00'
 							/>
-						</svg>
-					</button>
+						</svg> */}
+					</input>
 				</form>
 			</li>
 			<li className={styles.signIn}>{signIn}</li>

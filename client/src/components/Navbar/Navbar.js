@@ -2,10 +2,10 @@ import styles from './Navbar.module.css';
 import Searchbar from './Searchbar/Searchbar';
 import Menubar from './Menubar/Menubar';
 
-const Navbar = () => {
+const Navbar = (props) => {
 	return (
 		<nav className={styles.navBar}>
-			<Searchbar />
+			<Searchbar {...props} />
 			<Menubar />
 		</nav>
 	);

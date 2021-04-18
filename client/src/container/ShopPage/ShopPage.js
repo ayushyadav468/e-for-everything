@@ -1,16 +1,14 @@
-import styles from './RootPage.module.css';
+import styles from './ShopPage.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/UI/Footer/Footer';
-import Banner from '../../components/UI/Banner/Banner';
 import ProductCards from '../../components/ProductCards/ProductCards';
 
-const RootPage = (props) => {
+const ShopPage = (props) => {
 	return (
 		<>
 			<Navbar {...props} />
-			<div className={styles.rootPageContent}>
-				<Banner />
-				<h2 className={styles.heading}>Featured Products</h2>
+			<div className={styles.shopPageContent}>
+				<h2 className={styles.heading}>Products</h2>
 				<ProductCards search={props.search} />
 			</div>
 			<Footer />
@@ -18,4 +16,4 @@ const RootPage = (props) => {
 	);
 };
 
-export default RootPage;
+export default ShopPage;

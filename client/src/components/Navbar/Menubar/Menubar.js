@@ -1,21 +1,38 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './Menubar.module.css';
 
 const Menubar = () => {
 	return (
 		<ul className={styles.menuBar}>
-			<li className={styles.menuItem}>
-				<Link to='#'>Feature</Link>
-			</li>
-			<li className={styles.menuItem}>
-				<Link to='#'>Shop</Link>
-			</li>
-			<li className={styles.menuItem}>
-				<Link to='#'>Category</Link>
-			</li>
-			<li className={styles.menuItem}>
-				<Link to='#'>About</Link>
-			</li>
+			<NavLink
+				exact
+				to='/'
+				className={styles.menuItem}
+				activeClassName={styles.active}
+			>
+				Feature
+			</NavLink>
+			<NavLink
+				to='/shop'
+				className={styles.menuItem}
+				activeClassName={styles.active}
+			>
+				Shop
+			</NavLink>
+			<NavLink
+				to='/category'
+				className={styles.menuItem}
+				activeClassName={styles.active}
+			>
+				Category
+			</NavLink>
+			<NavLink
+				to='/about'
+				className={styles.menuItem}
+				activeClassName={styles.active}
+			>
+				About
+			</NavLink>
 		</ul>
 	);
 };

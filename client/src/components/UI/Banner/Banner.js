@@ -1,4 +1,5 @@
 import styles from './Banner.module.css';
+import { Link } from 'react-router-dom';
 
 const Banner = () => (
 	<div className={styles.banner}>
@@ -6,9 +7,9 @@ const Banner = () => (
 			Welcome to <strong>e</strong> for everything
 		</h1>
 		<h3 className={styles.bannerSubHeading}>A stop for every need</h3>
-		<a className={styles.bannerBtn} href='/#'>
+		<Link className={styles.bannerBtn} to='/shop'>
 			Shop Now
-		</a>
+		</Link>
 	</div>
 );
 

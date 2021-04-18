@@ -27,20 +27,30 @@ const ProductCards = (props) => {
 	}, []);
 
 	let cards;
+	let filteredProducts;
+
 	if (isLoading) {
 		cards = <Spinner />;
 	} else {
-		cards = products.map((product) => {
+		// Search functionality
+		// check if there is a search in state
+		//(this means that search is trigered from some other page)
+		if (props.search !== '') {
+			filteredProducts = products.filter((product) => {
+				return product.productName
+					.toLowerCase()
+					.includes(props.search.toLowerCase());
+			});
+		} else {
+			filteredProducts = products;
+		}
+
+		cards = filteredProducts.map((product) => {
 			return <ProductCard key={product._id} {...product} />;
 		});
 	}
 
-	return (
-		<div className='Product_Card_Container' style={{ width: '100%' }}>
-			<h2 className={styles.productHeading}>Featured Products</h2>
-			<div className={styles.productCards}>{cards}</div>
-		</div>
-	);
+	return <div className={styles.productCards}>{cards}</div>;
 };
 
 export default ProductCards;

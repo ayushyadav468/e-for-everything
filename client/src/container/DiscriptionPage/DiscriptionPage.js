@@ -5,7 +5,7 @@ import DiscriptionCard from '../../components/DiscriptionCard/DiscriptionCard';
 const DiscriptionPage = (props) => {
 	return (
 		<>
-			<Navbar />
+			<Navbar {...props} />
 			<DiscriptionCard {...props} />
 			<Footer />
 		</>

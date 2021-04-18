@@ -32,8 +32,10 @@ const DiscriptionCard = (props) => {
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [productQuantity, setProductQuantity] = useState(0);
 	const [message, setMessage] = useState('');
+
 	// getting product id from URL
 	const productID = props.match.params.productID;
+
 	let userID;
 	// check if user is logged in
 	if (
