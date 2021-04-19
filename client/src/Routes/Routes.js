@@ -3,12 +3,15 @@ import { Switch, Route } from 'react-router-dom';
 import Login from '../container/User/Login/Login';
 import RootPage from '../container/RootPage/RootPage';
 import ShopPage from '../container/ShopPage/ShopPage';
-import CategoryPage from '../container/CategoryPage/CategoryPage';
+import CartPage from '../container/CartPage/CartPage';
 import AboutPage from '../container/AboutPage/AboutPage';
 import Register from '../container/User/Register/Register';
-import DiscriptionPage from '../container/DiscriptionPage/DiscriptionPage';
-import CartPage from '../container/CartPage/CartPage';
+import CategoryPage from '../container/CategoryPage/CategoryPage';
 import FavouritePage from '../container/FavouritePage/FavouritePage';
+import UserProducts from '../container/User/UserProducts/UserProducts';
+import UserSettings from '../container/User/UserSettings/UserSettings';
+import DiscriptionPage from '../container/DiscriptionPage/DiscriptionPage';
+import ProductSettings from '../container/User/ProductSettings/ProductSettings';
 
 const Routes = () => {
 	const [search, setSearch] = useState('');
@@ -39,6 +42,36 @@ const Routes = () => {
 				path='/fav'
 				render={(routeProps) => (
 					<FavouritePage
+						{...routeProps}
+						search={search}
+						onSearchHandler={onSearchHandler}
+					/>
+				)}
+			/>
+			<Route
+				path='/user/setting'
+				render={(routeProps) => (
+					<UserSettings
+						{...routeProps}
+						search={search}
+						onSearchHandler={onSearchHandler}
+					/>
+				)}
+			/>
+			<Route
+				path='/user/product/:productID'
+				render={(routeProps) => (
+					<ProductSettings
+						{...routeProps}
+						search={search}
+						onSearchHandler={onSearchHandler}
+					/>
+				)}
+			/>
+			<Route
+				path='/user/product/'
+				render={(routeProps) => (
+					<UserProducts
 						{...routeProps}
 						search={search}
 						onSearchHandler={onSearchHandler}

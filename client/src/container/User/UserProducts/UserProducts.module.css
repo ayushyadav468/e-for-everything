@@ -1,0 +1,22 @@
+.userProductsContent {
+	margin-top: 170px;
+}
+
+.heading {
+	text-align: center;
+	font-family: 'Playfair Display';
+	font-size: 2.2rem;
+	margin: 1.5rem 0;
+}
+
+@media screen and (min-width: 992px) {
+	.userProductsContent {
+		margin-top: 125px;
+	}
+}
+
+@media screen and (min-width: 1080px) {
+	.heading {
+		font-size: 3.4rem;
+	}
+}
