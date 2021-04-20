@@ -1,6 +1,7 @@
 import styles from './ProductSettings.module.css';
 import Navbar from '../../../components/Navbar/Navbar';
 import Footer from '../../../components/UI/Footer/Footer';
+import ProductSettingsCard from '../../../components/ProductSettingsCard/ProductSettingsCard';
 
 const ProductSettings = (props) => {
 	return (
@@ -8,7 +9,7 @@ const ProductSettings = (props) => {
 			<Navbar {...props} />
 			<div className={styles.productSettingsContent}>
 				<h2 className={styles.heading}>Product settings</h2>
-				{/* main content */}
+				<ProductSettingsCard {...props} />
 			</div>
 			<Footer />
 		</>

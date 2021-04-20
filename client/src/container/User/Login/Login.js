@@ -48,7 +48,7 @@ const Login = (props) => {
 			})
 			.catch((err) => {
 				console.log(err.response);
-				setError({ message: err.response });
+				setError({ message: err.response.data.error.message });
 				// reset form
 				setEmail('');
 				setPassword('');

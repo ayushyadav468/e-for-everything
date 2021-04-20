@@ -110,8 +110,7 @@ const UserSettingsCard = (props) => {
 				...updatedUser,
 			})
 			.then((result) => {
-				console.log(result.data);
-				// props.addUser(result.data);
+				props.addUser(result.data);
 				dialogBox('User updated');
 			})
 			.catch((error) => {
