@@ -1,6 +1,7 @@
 import styles from './UserSettings.module.css';
 import Navbar from '../../../components/Navbar/Navbar';
 import Footer from '../../../components/UI/Footer/Footer';
+import UserSettingsCard from '../../../components/UserSettingsCard/UserSettingsCard';
 
 const UserSettings = (props) => {
 	return (
@@ -8,7 +9,7 @@ const UserSettings = (props) => {
 			<Navbar {...props} />
 			<div className={styles.userSettingsContent}>
 				<h2 className={styles.heading}>User settings</h2>
-				{/* main content */}
+				<UserSettingsCard />
 			</div>
 			<Footer />
 		</>

@@ -23,8 +23,11 @@ const Routes = () => {
 
 	return (
 		<Switch>
-			<Route path='/login' render={() => <Login />} />
-			<Route path='/register' render={() => <Register />} />
+			<Route path='/login' render={(routeProps) => <Login {...routeProps} />} />
+			<Route
+				path='/register'
+				render={(routeProps) => <Register {...routeProps} />}
+			/>
 			{/* routeProps must be passed to rendered component
 					to access history and location
 			*/}

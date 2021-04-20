@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { useState } from 'react';
 import styles from './Register.module.css';
 import axios from '../../../axiosInstance';
-import { USER_LOGIN } from '../../../store/action/actions';
+import { ADD_USER } from '../../../store/action/actions';
 import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 // To get USER state
@@ -14,7 +14,7 @@ import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		userLogin: (user) => dispatch({ type: USER_LOGIN, payload: user }),
+		addUser: (user) => dispatch({ type: ADD_USER, payload: user }),
 	};
 };
 
@@ -57,7 +57,7 @@ const Register = (props) => {
 						...response.data,
 					};
 					// Dispach LOG_IN action to redux
-					props.userLogin(user);
+					props.addUser(user);
 					// redirect to the page user came to register
 					props.history.go(-2);
 				}

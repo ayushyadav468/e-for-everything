@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
-	name: {
+	firstName: {
 		type: String,
 		required: true,
+		min: 3,
+		max: 255,
+	},
+	lastName: {
+		type: String,
 		min: 3,
 		max: 255,
 	},
@@ -18,16 +23,31 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 		min: 6,
-		max: 1024,
+		max: 255,
 	},
 	seller: {
 		type: Boolean,
 		required: true,
 	},
-	address: {
+	addLine1: {
 		type: String,
 		min: 6,
 		max: 1024,
+	},
+	addLine2: {
+		type: String,
+		min: 6,
+		max: 1024,
+	},
+	country: {
+		type: String,
+		min: 2,
+		max: 255,
+	},
+	zipCode: {
+		type: Number,
+		min: 2,
+		max: 10,
 	},
 	cartProducts: [mongoose.Schema.Types.ObjectId],
 	favProducts: [mongoose.Schema.Types.ObjectId],

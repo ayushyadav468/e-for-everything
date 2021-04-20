@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import axios from '../../../axiosInstance';
-import { USER_LOGIN } from '../../../store/action/actions';
+import { ADD_USER } from '../../../store/action/actions';
 import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 // To get USER state
@@ -15,7 +15,7 @@ import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		userLogin: (user) => dispatch({ type: USER_LOGIN, payload: user }),
+		addUser: (user) => dispatch({ type: ADD_USER, payload: user }),
 	};
 };
 
@@ -39,7 +39,7 @@ const Login = (props) => {
 			.then((response) => {
 				const user = { ...response.data };
 				// save user in redux state
-				props.userLogin(user);
+				props.addUser(user);
 				// reset form
 				setEmail('');
 				setPassword('');

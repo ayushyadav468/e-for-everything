@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { useState } from 'react';
 import styles from './Searchbar.module.css';
 import { NavLink, Link } from 'react-router-dom';
-import { USER_LOGOUT } from '../../../store/action/actions';
+import { REMOVE_USER } from '../../../store/action/actions';
 import DialogBox from '../../UI/DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		userLogout: () => dispatch({ type: USER_LOGOUT }),
+		userLogout: () => dispatch({ type: REMOVE_USER }),
 	};
 };
 
@@ -55,11 +55,11 @@ const Searchbar = (props) => {
 						*/}
 						{user.seller ? (
 							<>
-								<Link to='#'>Settings</Link>
-								<Link to='#'>Products</Link>
+								<Link to='/user/setting'>Settings</Link>
+								<Link to='/user/product/'>Products</Link>
 							</>
 						) : (
-							<Link to='#'>Settings</Link>
+							<Link to='/user/setting'>Settings</Link>
 						)}
 						<button onClick={logoutHandler} className={styles.logOutButton}>
 							Logout

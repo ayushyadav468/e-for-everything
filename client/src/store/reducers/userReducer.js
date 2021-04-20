@@ -4,10 +4,10 @@ const initialState = {};
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.USER_LOGIN:
+		case actionTypes.ADD_USER:
 			state = { ...action.payload };
 			break;
-		case actionTypes.USER_LOGOUT:
+		case actionTypes.REMOVE_USER:
 			state = {};
 			break;
 		case actionTypes.ADD_PRODUCT_TO_CART:
