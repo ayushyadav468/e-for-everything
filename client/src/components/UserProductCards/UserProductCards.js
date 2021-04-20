@@ -1,17 +1,33 @@
 import { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from '../../axiosInstance';
-import styles from './ProductCards.module.css';
-import ProductCard from './ProductCard/ProductCard';
 import Spinner from '../UI/Spinner/Spinner';
+import styles from './UserProductCards.module.css';
+import ProductCard from '../ProductCards/ProductCard/ProductCard';
 
-const ProductCards = (props) => {
+const mapStateToProps = (state) => {
+	return {
+		user: state.user,
+	};
+};
+
+const UserProductCards = (props) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [products, setProducts] = useState([]);
+
+	let userID;
+	// check if user is logged in
+	if (
+		Object.keys(props.user).length !== 0 &&
+		props.user.constructor === Object
+	) {
+		userID = props.user._id;
+	}
 
 	const fetchData = async () => {
 		setIsLoading(true);
 		const result = await axios
-			.get('/api/product')
+			.get('/api/product/user/' + userID)
 			.then((response) => {
 				setProducts(response.data.products);
 			})
@@ -24,7 +40,7 @@ const ProductCards = (props) => {
 
 	useEffect(() => {
 		fetchData();
-	}, []);
+	}, [userID]);
 
 	let cards;
 	let filteredProducts;
@@ -46,11 +62,11 @@ const ProductCards = (props) => {
 		}
 
 		cards = filteredProducts.map((product) => {
-			return <ProductCard key={product._id} {...product} edit={false} />;
+			return <ProductCard key={product._id} {...product} edit={true} />;
 		});
 	}
 
 	return <div className={styles.productCards}>{cards}</div>;
 };
 
-export default ProductCards;
+export default connect(mapStateToProps, null)(UserProductCards);

@@ -16,6 +16,7 @@ const ProductSettingsCard = (props) => {
 	const [smallImage, setSmallImage] = useState('');
 	const [largeImage, setLargeImage] = useState('');
 	const [productDiscription, setProductDiscription] = useState('');
+
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [message, setMessage] = useState('');
 
@@ -31,11 +32,19 @@ const ProductSettingsCard = (props) => {
 	// getting product id from URL
 	const productID = props.match.params.productID;
 
+	const setProductData = (product) => {
+		setProductName(product.productName);
+		setProductPrice(product.productPrice);
+		setSmallImage(product.smallImage);
+		setLargeImage(product.largeImage);
+		setProductDiscription(product.productDiscription);
+	};
+
 	const fetchProductData = async () => {
 		await axios
 			.get('/api/product/' + productID)
 			.then((response) => {
-				console.log(response.data.product);
+				setProductData(response.data.product);
 			})
 			.catch((err) => {
 				console.log(err.data);
@@ -76,12 +85,11 @@ const ProductSettingsCard = (props) => {
 			productDiscription: productDiscription,
 		};
 		axios
-			.patch('/api/product/' + productID, {
+			.patch('/api/product/' + userID + '/' + productID, {
 				...updatedProduct,
 			})
 			.then((result) => {
 				console.log(result.data);
-				// props.addUser(result.data);
 				dialogBox('Product updated');
 			})
 			.catch((error) => {

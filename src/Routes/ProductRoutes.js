@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 			}
 		})
 		.catch((err) => {
-			console.log('Error in get route of product ' + err.message);
+			console.log('Error in get route of product/all ' + err.message);
 			res.status(500).json(err);
 		});
 });
@@ -60,7 +60,32 @@ router.get('/:productID', (req, res) => {
 			}
 		})
 		.catch((err) => {
-			console.log('Error in get route of product ' + err.message);
+			console.log('Error in get route of product/:productID ' + err.message);
+			res.status(500).json(err);
+		});
+});
+
+// GET all products by a seller
+router.get('/user/:userID', (req, res) => {
+	const userID = req.params.userID;
+	Product.find({ ownerID: userID })
+		.select('-__v -dateAdded')
+		.exec()
+		.then((result) => {
+			if (result) {
+				const response = {
+					count: result.length,
+					products: [...result],
+				};
+				res.status(200).json(response);
+			} else {
+				res
+					.status(404)
+					.json({ error: { message: 'No product found for the provided ID' } });
+			}
+		})
+		.catch((err) => {
+			console.log('Error in get route of product/user ' + err.message);
 			res.status(500).json(err);
 		});
 });
@@ -123,12 +148,6 @@ router.post('/', (req, res) => {
 								count: docs.length,
 								product: {
 									...docs._doc,
-									request: {
-										type: 'GET',
-										discription: "Get this product's information",
-										url:
-											'http://' + req.get('host') + '/api/product/' + docs._id,
-									},
 								},
 							};
 							res.status(201).json(response);
@@ -154,7 +173,7 @@ router.post('/', (req, res) => {
 });
 
 // PATCH(Update) a product by ID
-router.patch('/:productID/:ownerID', (req, res) => {
+router.patch('/:ownerID/:productID', (req, res) => {
 	const productID = req.params.productID;
 	Product.findById(productID, (err, product) => {
 		if (err) {
@@ -186,11 +205,6 @@ router.patch('/:productID/:ownerID', (req, res) => {
 							count: docs.length,
 							product: {
 								...docs._doc,
-								request: {
-									type: 'GET',
-									discription: 'Get this product information',
-									url: 'http://' + req.get('host') + '/api/product/' + docs._id,
-								},
 							},
 						};
 						res.status(200).json(response);
@@ -211,7 +225,7 @@ router.patch('/:productID/:ownerID', (req, res) => {
 });
 
 // DELETE a product by ID
-router.delete('/:productID/:ownerID', (req, res) => {
+router.delete('/:ownerID/:productID', (req, res) => {
 	const productID = req.params.productID;
 	Product.findById(productID, (err, product) => {
 		if (error) {
@@ -226,17 +240,7 @@ router.delete('/:productID/:ownerID', (req, res) => {
 				Product.findByIdAndDelete(productID)
 					.exec()
 					.then((docs) => {
-						const response = {
-							count: docs.length,
-							product: {
-								request: {
-									type: 'GET',
-									discription: 'Get all products',
-									url: 'http://' + req.get('host') + '/api/product/',
-								},
-							},
-						};
-						res.status(200).json(response);
+						res.status(200);
 					})
 					.catch((err) => {
 						console.log('Error in delete route of product ' + err.message);

@@ -2,8 +2,14 @@ import styles from './ProductCard.module.css';
 import { Link } from 'react-router-dom';
 
 const ProductCard = (props) => {
+	let linkURL;
+	if (props.edit) {
+		linkURL = '/user/product/' + props._id;
+	} else {
+		linkURL = '/product/' + props._id;
+	}
 	return (
-		<Link to={'/product/' + props._id} className={styles.productCard}>
+		<Link to={linkURL} className={styles.productCard}>
 			<img
 				className={styles.productImage}
 				src={props.smallImage}
