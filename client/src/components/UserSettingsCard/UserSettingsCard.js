@@ -104,7 +104,7 @@ const UserSettingsCard = (props) => {
 			country: country,
 			zipCode: zipCode,
 		};
-
+		console.log(updatedUser);
 		axios
 			.patch('/api/user/' + userID, {
 				...updatedUser,
@@ -197,7 +197,7 @@ const UserSettingsCard = (props) => {
 					<label>
 						Zip Code
 						<input
-							type='number'
+							type='text'
 							value={zipCode}
 							onChange={(event) => onZipCodeChangeHandler(event)}
 						/>

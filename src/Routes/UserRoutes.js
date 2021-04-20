@@ -70,13 +70,14 @@ router.post('/register', (req, res) => {
 
 router.patch('/:userID', (req, res) => {
 	const userID = req.params.userID;
-	console.log(req.body);
 	// Send patch request as
-	// [{'propName': name of the prop as mention in model schema, 'value': value of the prop }]
-	// If you want to send multiple props add more object to the array
+	// {
+	//		key1: value1,
+	//		key2: value2,
+	// }
 	const updateProps = {};
-	for (let ops of req.body) {
-		updateProps[ops.propName] = ops.value;
+	for (const [key, value] of Object.entries(req.body)) {
+		updateProps[key] = value;
 	}
 	User.findByIdAndUpdate(userID, updateProps, { new: true })
 		.select('-__v -dateAdded -password')

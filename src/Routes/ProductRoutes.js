@@ -167,11 +167,13 @@ router.patch('/:productID/:ownerID', (req, res) => {
 			// check if the owner of the product is same as the user updating the product
 			if (ownerID == product.ownerID) {
 				// Send patch request as
-				// [{'propName': name of the prop as mention in model schema, 'value': value of the prop }]
-				// If you want to send multiple props add more object to the array
+				// {
+				//		key1: value1,
+				//		key2: value2,
+				// }
 				const updateProps = {};
-				for (const ops of req.body) {
-					updateProps[ops.propName] = ops.value;
+				for (const [key, value] of Object.entries(req.body)) {
+					updateProps[key] = value;
 				}
 				// model.findByIdAndUpdate(filter, update, option, callback)
 				// {new: true} returns an updated object otherwise,
