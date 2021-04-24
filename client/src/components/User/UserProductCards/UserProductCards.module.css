@@ -1,0 +1,41 @@
+.addProductDiv {
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	/* outline: 1px solid red; */
+}
+
+.heading {
+	font-family: 'Playfair Display';
+	font-size: 2rem;
+	margin-left: 0.5rem;
+}
+
+.addProductBtn {
+	width: 200px;
+	height: 60px;
+	border: none;
+	outline: none;
+	margin-right: 0.5rem;
+	cursor: pointer;
+	background-color: transparent;
+	overflow: hidden;
+}
+
+.productCards {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 95%;
+	margin: 2rem auto 0 auto;
+}
+
+@media screen and (min-width: 1080px) {
+	.heading {
+		font-size: 2.8rem;
+	}
+}

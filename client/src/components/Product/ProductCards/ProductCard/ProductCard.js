@@ -1,5 +1,5 @@
-import styles from './ProductCard.module.css';
 import { Link } from 'react-router-dom';
+import styles from './ProductCard.module.css';
 
 const ProductCard = (props) => {
 	let linkURL;

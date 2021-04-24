@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { ADD_USER } from '../../store/action/actions';
-import axios from '../../axiosInstance';
-import DialogBox from '../UI/DialogBox/DialogBox';
+import axios from '../../../axiosInstance';
+import { useState, useEffect } from 'react';
 import styles from './UserSettingsCard.module.css';
+import DialogBox from '../../UI/DialogBox/DialogBox';
+import { ADD_USER } from '../../../store/action/actions';
 
 const mapStateToProps = (state) => {
 	return {

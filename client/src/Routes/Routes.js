@@ -6,6 +6,7 @@ import ShopPage from '../container/ShopPage/ShopPage';
 import CartPage from '../container/CartPage/CartPage';
 import AboutPage from '../container/AboutPage/AboutPage';
 import Register from '../container/User/Register/Register';
+import AddProduct from '../container/User/AddProduct/AddProduct';
 import CategoryPage from '../container/CategoryPage/CategoryPage';
 import FavouritePage from '../container/FavouritePage/FavouritePage';
 import UserProducts from '../container/User/UserProducts/UserProducts';
@@ -65,6 +66,16 @@ const Routes = () => {
 				path='/user/product/:productID'
 				render={(routeProps) => (
 					<ProductSettings
+						{...routeProps}
+						search={search}
+						onSearchHandler={onSearchHandler}
+					/>
+				)}
+			/>
+			<Route
+				path='/user/product/add'
+				render={(routeProps) => (
+					<AddProduct
 						{...routeProps}
 						search={search}
 						onSearchHandler={onSearchHandler}

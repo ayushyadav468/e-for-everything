@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import axios from '../../axiosInstance';
-import DialogBox from '../UI/DialogBox/DialogBox';
+import axios from '../../../axiosInstance';
+import { useState, useEffect } from 'react';
+import DialogBox from '../../UI/DialogBox/DialogBox';
 import styles from './ProductSettingsCard.module.css';
 
 const mapStateToProps = (state) => {
@@ -54,10 +54,11 @@ const ProductSettingsCard = (props) => {
 	useEffect(() => {
 		if (userID) {
 			fetchProductData();
+			console.log('user logged in and product edit');
 		} else {
-			setMessage('Please login');
+			console.log('user not logged in');
 		}
-	}, [productID, userID]);
+	}, []);
 
 	const onProductNameChangeHandler = (event) => {
 		setProductName(event.target.value);

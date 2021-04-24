@@ -1,9 +1,9 @@
-.userProductsContent {
+.addProductContent {
 	margin-top: 170px;
 }
 
 @media screen and (min-width: 992px) {
-	.userProductsContent {
+	.addProductContent {
 		margin-top: 135px;
 	}
 }

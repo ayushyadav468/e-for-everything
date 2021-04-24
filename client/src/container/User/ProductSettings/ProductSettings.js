@@ -1,7 +1,7 @@
 import styles from './ProductSettings.module.css';
 import Navbar from '../../../components/Navbar/Navbar';
 import Footer from '../../../components/UI/Footer/Footer';
-import ProductSettingsCard from '../../../components/ProductSettingsCard/ProductSettingsCard';
+import ProductSettingsCard from '../../../components/Product/ProductSettingsCard/ProductSettingsCard';
 
 const ProductSettings = (props) => {
 	return (

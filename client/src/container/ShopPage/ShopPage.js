@@ -1,7 +1,7 @@
 import styles from './ShopPage.module.css';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/UI/Footer/Footer';
-import ProductCards from '../../components/ProductCards/ProductCards';
+import ProductCards from '../../components/Product/ProductCards/ProductCards';
 
 const ShopPage = (props) => {
 	return (

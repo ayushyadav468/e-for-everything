@@ -60,7 +60,7 @@ router.get('/:productID', (req, res) => {
 			}
 		})
 		.catch((err) => {
-			console.log('Error in get route of product/:productID ' + err.message);
+			console.log('Error in get route of product /:productID ' + err.message);
 			res.status(500).json(err);
 		});
 });
