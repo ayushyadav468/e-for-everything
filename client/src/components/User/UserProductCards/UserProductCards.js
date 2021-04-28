@@ -44,40 +44,52 @@ const UserProductCards = (props) => {
 	}, [userID]);
 
 	let cards;
+	let content;
 	let filteredProducts;
-
-	if (isLoading) {
-		cards = <Spinner />;
+	if (!userID) {
+		content = (
+			<>
+				<div className={styles.addProductDiv}>
+					<h2 className={styles.heading}>Please Login</h2>
+				</div>
+			</>
+		);
 	} else {
-		// Search functionality
-		// check if there is a search in state
-		//(this means that search is trigered from some other page)
-		if (props.search !== '') {
-			filteredProducts = products.filter((product) => {
-				return product.productName
-					.toLowerCase()
-					.includes(props.search.toLowerCase());
-			});
+		if (isLoading) {
+			cards = <Spinner />;
 		} else {
-			filteredProducts = products;
+			// Search functionality
+			// check if there is a search in state
+			//(this means that search is trigered from some other page)
+			if (props.search !== '') {
+				filteredProducts = products.filter((product) => {
+					return product.productName
+						.toLowerCase()
+						.includes(props.search.toLowerCase());
+				});
+			} else {
+				filteredProducts = products;
+			}
+			cards = filteredProducts.map((product) => {
+				return <ProductCard key={product._id} {...product} edit={true} />;
+			});
+			content = (
+				<>
+					<div className={styles.addProductDiv}>
+						<h2 className={styles.heading}>
+							Products by {props.user.firstName}
+						</h2>
+						<Link to='/user/product/add' className={styles.addProductBtn}>
+							Add Product
+						</Link>
+					</div>
+					<div className={styles.productCards}>{cards}</div>
+				</>
+			);
 		}
-
-		cards = filteredProducts.map((product) => {
-			return <ProductCard key={product._id} {...product} edit={true} />;
-		});
 	}
 
-	return (
-		<>
-			<div className={styles.addProductDiv}>
-				<h2 className={styles.heading}>Products by {props.user.firstName}</h2>
-				<Link to='/user/product/add' className={styles.addProductBtn}>
-					Add Product
-				</Link>
-			</div>
-			<div className={styles.productCards}>{cards}</div>
-		</>
-	);
+	return <>{content}</>;
 };
 
 export default connect(mapStateToProps, null)(UserProductCards);

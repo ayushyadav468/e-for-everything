@@ -47,7 +47,6 @@ const Login = (props) => {
 				props.history.go(-1);
 			})
 			.catch((err) => {
-				console.log(err.response);
 				setError({ message: err.response.data.error.message });
 				// reset form
 				setEmail('');

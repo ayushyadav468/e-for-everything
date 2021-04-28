@@ -65,8 +65,6 @@ const UserSettingsCard = (props) => {
 	useEffect(() => {
 		if (userID) {
 			setUserData();
-		} else {
-			setMessage('Please login');
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userID]);
@@ -127,86 +125,98 @@ const UserSettingsCard = (props) => {
 		}, 2000);
 	};
 
-	return (
-		<div className={styles.settingsCard}>
-			<h4 className={styles.settingsCardHeading}>Edit</h4>
-			<form
-				className={styles.settingsCardContainer}
-				onSubmit={userUpdateHandler}
-			>
-				<div className={styles.nameDiv}>
-					<label>
-						First Name
-						<input
-							type='text'
-							value={firstName}
-							onChange={(event) => onFirstNameChangeHandler(event)}
-						/>
-					</label>
-					<label>
-						Last Name
-						<input
-							type='text'
-							value={lastName}
-							onChange={(event) => onLastNameChangeHandler(event)}
-						/>
-					</label>
-				</div>
-				<div className={styles.emailPasswordDiv}>
-					<label>
-						Email
-						<input type='email' value={email} readOnly />
-					</label>
-					<label>
-						Password
-						<input
-							type='password'
-							value={password}
-							onChange={(event) => onPasswordChangeHandler(event)}
-						/>
-					</label>
-				</div>
-				<div className={styles.addressDiv}>
-					<label>
-						Address Line 1
-						<input
-							type='text'
-							value={addLine1}
-							onChange={(event) => onAddLine1ChangeHandler(event)}
-						/>
-					</label>
-					<label>
-						Address Line 2
-						<input
-							type='text'
-							value={addLine2}
-							onChange={(event) => onAddLine2ChangeHandler(event)}
-						/>
-					</label>
-				</div>
-				<div className={styles.countryZipCodeDiv}>
-					<label>
-						Country
-						<input
-							type='text'
-							value={country}
-							onChange={(event) => onCountryChangeHandler(event)}
-						/>
-					</label>
-					<label>
-						Zip Code
-						<input
-							type='text'
-							value={zipCode}
-							onChange={(event) => onZipCodeChangeHandler(event)}
-						/>
-					</label>
-				</div>
-				<input type='submit' value='Save' />
-			</form>
-			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
-		</div>
-	);
+	let content;
+	if (userID) {
+		content = (
+			<>
+				<h2 className={styles.heading}>User settings</h2>
+				<h4 className={styles.settingsCardHeading}>Edit</h4>
+				<form
+					className={styles.settingsCardContainer}
+					onSubmit={userUpdateHandler}
+				>
+					<div className={styles.nameDiv}>
+						<label>
+							First Name
+							<input
+								type='text'
+								value={firstName}
+								onChange={(event) => onFirstNameChangeHandler(event)}
+							/>
+						</label>
+						<label>
+							Last Name
+							<input
+								type='text'
+								value={lastName}
+								onChange={(event) => onLastNameChangeHandler(event)}
+							/>
+						</label>
+					</div>
+					<div className={styles.emailPasswordDiv}>
+						<label>
+							Email
+							<input type='email' value={email} readOnly />
+						</label>
+						<label>
+							Password
+							<input
+								type='password'
+								value={password}
+								onChange={(event) => onPasswordChangeHandler(event)}
+							/>
+						</label>
+					</div>
+					<div className={styles.addressDiv}>
+						<label>
+							Address Line 1
+							<input
+								type='text'
+								value={addLine1}
+								onChange={(event) => onAddLine1ChangeHandler(event)}
+							/>
+						</label>
+						<label>
+							Address Line 2
+							<input
+								type='text'
+								value={addLine2}
+								onChange={(event) => onAddLine2ChangeHandler(event)}
+							/>
+						</label>
+					</div>
+					<div className={styles.countryZipCodeDiv}>
+						<label>
+							Country
+							<input
+								type='text'
+								value={country}
+								onChange={(event) => onCountryChangeHandler(event)}
+							/>
+						</label>
+						<label>
+							Zip Code
+							<input
+								type='text'
+								value={zipCode}
+								onChange={(event) => onZipCodeChangeHandler(event)}
+							/>
+						</label>
+					</div>
+					<input type='submit' value='Save' />
+				</form>
+				<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+			</>
+		);
+	} else {
+		content = (
+			<>
+				<h2 className={styles.heading}>Please Login</h2>
+			</>
+		);
+	}
+
+	return <div className={styles.settingsCard}>{content}</div>;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettingsCard);
