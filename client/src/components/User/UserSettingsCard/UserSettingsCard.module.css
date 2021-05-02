@@ -13,7 +13,7 @@
 }
 
 .settingscontainer {
-	width: 98%;
+	width: clamp(310px, 96%, 1000px);
 	margin: auto;
 	padding: 1rem 0.8rem;
 	color: #000;
@@ -26,12 +26,12 @@
 	margin-bottom: 1rem;
 }
 
-.settingsCardContainer {
+.settingsForm {
 	display: flex;
 	flex-direction: column;
 }
 
-.settingsCardContainer label {
+.settingsForm label {
 	font-size: 1rem;
 	width: 100%;
 	margin-bottom: 0.5rem;
@@ -40,9 +40,10 @@
 	justify-content: space-between;
 }
 
-.settingsCardContainer label > input {
+.settingsForm label > input,
+.addressDiv label textarea {
 	font-family: 'Playfair Display';
-	min-width: 240px;
+	min-width: 200px;
 	width: 70%;
 	font-size: 1rem;
 	padding: 0.2rem 0.4rem;
@@ -67,11 +68,6 @@
 }
 
 .addressDiv label textarea {
-	font-family: 'Playfair Display';
-	min-width: 240px;
-	width: 70%;
-	font-size: 1rem;
-	padding: 0.2rem 0.4rem;
 	resize: none;
 }
 
@@ -79,12 +75,13 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	margin-bottom: 1rem;
 }
 
-.settingsCardContainer input[type='submit'] {
-	width: 30%;
-	margin-left: 70%;
-	max-width: 300px;
+.settingsForm input[type='submit'] {
+	width: min(30%, 200px);
+	margin-left: auto;
+	font-size: 1.2rem;
 	padding: 0.6rem 0.8rem;
 	background-color: #fff000;
 	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
@@ -92,10 +89,51 @@
 	border-radius: 10px;
 }
 
-.settingsCardContainer input[type='submit']:hover,
-.settingsCardContainer input[type='submit']:focus {
+.settingsForm input[type='submit']:hover,
+.settingsForm input[type='submit']:focus {
 	background-color: #343114;
 	color: #fff000;
+}
+
+@media screen and (min-width: 712px) {
+	.settingsCardHeading {
+		font-size: 1.8rem;
+		margin-left: 0.5rem;
+	}
+	.settingsForm {
+		width: 95%;
+		margin: auto;
+	}
+	.nameDiv {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.emailPasswordDiv {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.countryZipCodeDiv {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	.settingsForm label {
+		font-size: 1.4rem;
+		width: 48%;
+		margin-bottom: 1rem;
+	}
+	.settingsForm label > input {
+		font-size: 1.4rem;
+	}
+	.settingsForm .addressDiv label {
+		width: 100%;
+	}
+	.settingsForm .addressDiv label textarea {
+		width: 85.5%;
+		font-size: 1.4rem;
+	}
+	.settingsForm input[type='submit'] {
+		font-size: 1.4rem;
+	}
 }
 
 @media screen and (min-width: 1080px) {

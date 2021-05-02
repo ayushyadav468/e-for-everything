@@ -29,12 +29,7 @@ const userSchema = new mongoose.Schema({
 		type: Boolean,
 		required: true,
 	},
-	addLine1: {
-		type: String,
-		min: 6,
-		max: 1024,
-	},
-	addLine2: {
+	address: {
 		type: String,
 		min: 6,
 		max: 1024,

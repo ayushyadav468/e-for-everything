@@ -22,8 +22,7 @@ const UserSettingsCard = (props) => {
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [addLine1, setAddLine1] = useState('');
-	const [addLine2, setAddLine2] = useState('');
+	const [address, setAddress] = useState('');
 	const [country, setCountry] = useState('');
 	const [zipCode, setZipCode] = useState('');
 	const [showDialogBox, setShowDialogBox] = useState(false);
@@ -48,11 +47,8 @@ const UserSettingsCard = (props) => {
 		if (props.user.email !== '') {
 			setEmail(props.user.email);
 		}
-		if (props.user.addLine1 !== '') {
-			setAddLine1(props.user.addLine1);
-		}
-		if (props.user.addLine2 !== '') {
-			setAddLine2(props.user.addLine2);
+		if (props.user.address !== '') {
+			setAddress(props.user.address);
 		}
 		if (props.user.country !== '') {
 			setCountry(props.user.country);
@@ -78,11 +74,8 @@ const UserSettingsCard = (props) => {
 	const onPasswordChangeHandler = (event) => {
 		setPassword(event.target.value);
 	};
-	const onAddLine1ChangeHandler = (event) => {
-		setAddLine1(event.target.value);
-	};
-	const onAddLine2ChangeHandler = (event) => {
-		setAddLine2(event.target.value);
+	const onAddressChangeHandler = (event) => {
+		setAddress(event.target.value);
 	};
 	const onCountryChangeHandler = (event) => {
 		setCountry(event.target.value);
@@ -97,8 +90,7 @@ const UserSettingsCard = (props) => {
 			firstName: firstName,
 			lastName: lastName,
 			password: password,
-			addLine1: addLine1,
-			addLine2: addLine2,
+			address: address,
 			country: country,
 			zipCode: zipCode,
 		};
@@ -131,10 +123,7 @@ const UserSettingsCard = (props) => {
 				<h2 className={styles.heading}>User settings</h2>
 				<div className={styles.settingscontainer}>
 					<h4 className={styles.settingsCardHeading}>Edit</h4>
-					<form
-						className={styles.settingsCardContainer}
-						onSubmit={userUpdateHandler}
-					>
+					<form className={styles.settingsForm} onSubmit={userUpdateHandler}>
 						<div className={styles.nameDiv}>
 							<label>
 								First Name
@@ -171,20 +160,11 @@ const UserSettingsCard = (props) => {
 						</div>
 						<div className={styles.addressDiv}>
 							<label>
-								Address Line 1
+								Address
 								<textarea
 									type='text'
-									value={addLine1}
-									onChange={(event) => onAddLine1ChangeHandler(event)}
-									rows='3'
-								/>
-							</label>
-							<label>
-								Address Line 2
-								<textarea
-									type='text'
-									value={addLine2}
-									onChange={(event) => onAddLine2ChangeHandler(event)}
+									value={address}
+									onChange={(event) => onAddressChangeHandler(event)}
 									rows='3'
 								/>
 							</label>
