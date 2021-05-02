@@ -41,6 +41,7 @@ const UserProductCards = (props) => {
 
 	useEffect(() => {
 		fetchData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [userID]);
 
 	let cards;
@@ -79,9 +80,10 @@ const UserProductCards = (props) => {
 						<h2 className={styles.heading}>
 							Products by {props.user.firstName}
 						</h2>
-						<Link to='/user/product/add' className={styles.addProductBtn}>
-							Add Product
-						</Link>
+						<Link
+							to='/user/product/add'
+							className={styles.addProductBtn}
+						></Link>
 					</div>
 					<div className={styles.productCards}>{cards}</div>
 				</>

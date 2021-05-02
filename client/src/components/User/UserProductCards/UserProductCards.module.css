@@ -1,28 +1,45 @@
 .addProductDiv {
-	width: 90%;
+	width: 95%;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	/* outline: 1px solid red; */
+	background-color: #343114;
+	color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
 }
 
 .heading {
 	font-family: 'Playfair Display';
-	font-size: 2rem;
+	font-size: 1.8rem;
 	margin-left: 0.5rem;
 }
 
 .addProductBtn {
-	width: 200px;
-	height: 60px;
 	border: none;
 	outline: none;
 	margin-right: 0.5rem;
 	cursor: pointer;
-	background-color: transparent;
 	overflow: hidden;
+	width: 50px;
+	height: 50px;
+	background-color: #fff000;
+	border-radius: 100%;
+	padding: 0.2rem 1rem;
+}
+
+.addProductBtn::before {
+	content: '+';
+	color: #343434;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.addProductBtn:hover {
+	background-color: #fff;
+	box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 1);
 }
 
 .productCards {
@@ -31,10 +48,16 @@
 	flex-direction: row;
 	justify-content: space-between;
 	width: 95%;
-	margin: 2rem auto 0 auto;
+	margin: 1.5rem auto 0 auto;
 }
 
-@media screen and (min-width: 1080px) {
+/* @media screen and (min-width: 991px) {
+	.addProductDiv {
+		top: 122px;
+	}
+} */
+
+@media screen and (min-width: 991px) {
 	.heading {
 		font-size: 2.8rem;
 	}
