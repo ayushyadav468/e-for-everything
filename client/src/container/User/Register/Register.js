@@ -20,7 +20,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const Register = (props) => {
 	// Register user
-	const [name, setName] = useState('');
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [seller, setSeller] = useState(false);
@@ -34,7 +35,8 @@ const Register = (props) => {
 		// Prevent default page reload
 		event.preventDefault();
 		const userData = {
-			name: name,
+			firstName: firstName,
+			lastName: lastName,
 			email: email,
 			password: password,
 			seller: seller,
@@ -45,7 +47,8 @@ const Register = (props) => {
 				if (response.status !== 200) {
 					setError({ message: response.data.message });
 					// reset form
-					setName('');
+					setFirstName('');
+					setLastName('');
 					setEmail('');
 					setPassword('');
 					setShowDialogBox(true);
@@ -66,6 +69,8 @@ const Register = (props) => {
 				console.log(err.response);
 				setError({ message: err.response });
 				// reset form
+				setFirstName('');
+				setLastName('');
 				setEmail('');
 				setPassword('');
 				// Show Dialog box for 2 sec
@@ -74,6 +79,26 @@ const Register = (props) => {
 					setShowDialogBox(false);
 				}, 2000);
 			});
+	};
+
+	const onFirstNameChangeHandler = (event) => {
+		setFirstName(event.target.value);
+	};
+
+	const onLastNameChangeHandler = (event) => {
+		setLastName(event.target.value);
+	};
+
+	const onEmailChangeHandler = (event) => {
+		setEmail(event.target.value);
+	};
+
+	const onPasswordChangeHandler = (event) => {
+		setPassword(event.target.value);
+	};
+
+	const onSellerChangeHandler = (event) => {
+		setSeller(event.target.value);
 	};
 
 	return (
@@ -88,14 +113,24 @@ const Register = (props) => {
 					onSubmit={(event) => registerHandler(event)}
 				>
 					<label>
-						Your Name
+						First Name
 						<input
 							type='text'
 							name='name'
-							placeholder='Your Name'
-							value={name}
-							onChange={(event) => setName(event.target.value)}
+							placeholder='First Name'
+							value={firstName}
+							onChange={(event) => onFirstNameChangeHandler(event)}
 							required
+						/>
+					</label>
+					<label>
+						Last Name
+						<input
+							type='text'
+							name='name'
+							placeholder='Last Name'
+							value={lastName}
+							onChange={(event) => onLastNameChangeHandler(event)}
 						/>
 					</label>
 					<label>
@@ -105,7 +140,7 @@ const Register = (props) => {
 							name='emailId'
 							placeholder='Email Id'
 							value={email}
-							onChange={(event) => setEmail(event.target.value)}
+							onChange={(event) => onEmailChangeHandler(event)}
 							required
 						/>
 					</label>
@@ -116,7 +151,7 @@ const Register = (props) => {
 							name='password'
 							placeholder='Password'
 							value={password}
-							onChange={(event) => setPassword(event.target.value)}
+							onChange={(event) => onPasswordChangeHandler(event)}
 							required
 						/>
 					</label>
@@ -128,7 +163,7 @@ const Register = (props) => {
 									type='radio'
 									name='seller'
 									value={true}
-									onClick={(event) => setSeller(event.target.value)}
+									onClick={(event) => onSellerChangeHandler(event)}
 								/>
 								Yes
 							</label>
@@ -137,7 +172,7 @@ const Register = (props) => {
 									type='radio'
 									name='seller'
 									value={false}
-									onClick={(event) => setSeller(event.target.value)}
+									onClick={(event) => onSellerChangeHandler(event)}
 									defaultChecked
 								/>
 								No

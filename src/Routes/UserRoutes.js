@@ -41,7 +41,8 @@ router.post('/register', (req, res) => {
 			} else {
 				const user = new User({
 					_id: new mongoose.Types.ObjectId(),
-					name: req.body.name,
+					firstName: req.body.firstName,
+					lastName: req.body.lastName,
 					email: req.body.email,
 					password: req.body.password,
 					seller: req.body.seller,
@@ -51,7 +52,8 @@ router.post('/register', (req, res) => {
 					.then((user) => {
 						const response = {
 							_id: user._doc._id,
-							name: user._doc.name,
+							firstName: user._doc.firstName,
+							lastName: user._doc.lastName,
 							email: user._doc.email,
 							seller: user._doc.seller,
 						};
