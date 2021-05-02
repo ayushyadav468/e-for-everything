@@ -1,8 +1,101 @@
+.settingsCard {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1rem;
+}
+
 .heading {
 	text-align: center;
 	font-family: 'Playfair Display';
 	font-size: 2.2rem;
-	margin: 1.5rem 0;
+	margin: 1rem 0;
+}
+
+.settingscontainer {
+	width: 98%;
+	margin: auto;
+	padding: 1rem 0.8rem;
+	color: #000;
+	border-radius: 5px;
+	box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.settingsCardHeading {
+	font-size: 1.4rem;
+	margin-bottom: 1rem;
+}
+
+.settingsCardContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.settingsCardContainer label {
+	font-size: 1rem;
+	width: 100%;
+	margin-bottom: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.settingsCardContainer label > input {
+	font-family: 'Playfair Display';
+	min-width: 240px;
+	width: 70%;
+	font-size: 1rem;
+	padding: 0.2rem 0.4rem;
+}
+
+.nameDiv {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.emailPasswordDiv {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.addressDiv {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.addressDiv label textarea {
+	font-family: 'Playfair Display';
+	min-width: 240px;
+	width: 70%;
+	font-size: 1rem;
+	padding: 0.2rem 0.4rem;
+	resize: none;
+}
+
+.countryZipCodeDiv {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.settingsCardContainer input[type='submit'] {
+	width: 30%;
+	margin-left: 70%;
+	max-width: 300px;
+	padding: 0.6rem 0.8rem;
+	background-color: #fff000;
+	box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
+	border: none;
+	border-radius: 10px;
+}
+
+.settingsCardContainer input[type='submit']:hover,
+.settingsCardContainer input[type='submit']:focus {
+	background-color: #343114;
+	color: #fff000;
 }
 
 @media screen and (min-width: 1080px) {
@@ -10,32 +103,3 @@
 		font-size: 3.4rem;
 	}
 }
-
-/* .settingsCard {
-
-}
-
-.settingsCardHeading {
-
-}
-
-.settingsCardContainer {
-
-} 
-
-.nameDiv {
-
-}
-
-.emailPasswordDiv {
-
-}
-
-.addressDiv {
-
-}
-
-.countryZipCodeDiv{
-
-}
-*/
