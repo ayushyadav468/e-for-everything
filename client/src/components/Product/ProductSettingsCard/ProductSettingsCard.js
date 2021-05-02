@@ -109,55 +109,59 @@ const ProductSettingsCard = (props) => {
 
 	return (
 		<div className={styles.productSettingsCard}>
-			<h4 className={styles.productSettingsCardHeading}>Edit</h4>
-			<form
-				className={styles.productSettingsCardContainer}
-				onSubmit={productUpdateHandler}
-			>
-				<div className={styles.nameDiv}>
+			{/* <h2 className={styles.heading}>Product settings</h2> */}
+			<div className={styles.productSettingscontainer}>
+				<h4 className={styles.productSettingsCardHeading}>Edit</h4>
+				<form
+					className={styles.productSettingsForm}
+					onSubmit={productUpdateHandler}
+				>
+					<div className={styles.nameDiv}>
+						<label className={styles.productLabel}>
+							Product Name
+							<input
+								type='text'
+								value={productName}
+								onChange={(event) => onProductNameChangeHandler(event)}
+							/>
+						</label>
+						<label className={styles.priceLabel}>
+							Price
+							<input
+								type='number'
+								value={productPrice}
+								onChange={(event) => onProductPriceChangeHandler(event)}
+							/>
+						</label>
+					</div>
 					<label>
-						Product Name
+						Small Image URL
 						<input
-							type='text'
-							value={productName}
-							onChange={(event) => onProductNameChangeHandler(event)}
+							type='url'
+							value={smallImage}
+							onChange={(event) => onSmallImageChangeHandler(event)}
 						/>
 					</label>
 					<label>
-						Price
+						Large Image URL
 						<input
-							type='number'
-							value={productPrice}
-							onChange={(event) => onProductPriceChangeHandler(event)}
+							type='url'
+							value={largeImage}
+							onChange={(event) => onLargeImageChangeHandler(event)}
 						/>
 					</label>
-				</div>
-				<label>
-					Small Image URL
-					<input
-						type='url'
-						value={smallImage}
-						onChange={(event) => onSmallImageChangeHandler(event)}
-					/>
-				</label>
-				<label>
-					Large Image URL
-					<input
-						type='url'
-						value={largeImage}
-						onChange={(event) => onLargeImageChangeHandler(event)}
-					/>
-				</label>
-				<label>
-					Discription
-					<textarea
-						name='productDiscription'
-						value={productDiscription}
-						onChange={(event) => onProductDiscriptionChangeHandler(event)}
-					/>
-				</label>
-				<input type='submit' value='Save' />
-			</form>
+					<label>
+						Discription
+						<textarea
+							name='productDiscription'
+							rows='5'
+							value={productDiscription}
+							onChange={(event) => onProductDiscriptionChangeHandler(event)}
+						/>
+					</label>
+					<input type='submit' value='Save' />
+				</form>
+			</div>
 			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
 		</div>
 	);
