@@ -17,6 +17,9 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 	}
+	.emptyCartCardPara {
+		margin: auto;
+	}
 }
 
 @media screen and (min-width: 1080px) {
