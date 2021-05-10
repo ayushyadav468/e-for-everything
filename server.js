@@ -5,10 +5,15 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Routes Import
-const userRoutes = require('./src/Routes/UserRoutes');
-const productRoutes = require('./src/Routes/ProductRoutes');
-const reviewRoutes = require('./src/Routes/ReviewRoutes');
+// Public Routes
+const userRoutes = require('./src/Routes/public/userRoutes');
+const productRoutes = require('./src/Routes/public/productRoutes');
+const reviewRoutes = require('./src/Routes/public/reviewRoutes');
+
+// Private Routes
+const userPrivateRoutes = require('./src/Routes/private/userRoutes');
+const productPrivateRoutes = require('./src/Routes/private/productRoutes');
+const reviewPrivateRoutes = require('./src/Routes/private/reviewRoutes');
 
 const app = express();
 app.use(cors());
@@ -35,10 +40,14 @@ connectDB();
 // Middlewares
 app.use(express.json());
 
-// Route Middlewares
+// Public Route Middlewares
 app.use('/api/user', userRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/review', reviewRoutes);
+// Private Route Middlewares
+app.use('/api/user/private', userPrivateRoutes);
+app.use('/api/product/private', productPrivateRoutes);
+app.use('/api/review/private', reviewPrivateRoutes);
 
 // Check for development or production
 if (process.env.NODE_ENV == 'production') {

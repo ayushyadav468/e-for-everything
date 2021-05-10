@@ -2,18 +2,6 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const Product = require('../Models/ProductModel');
 
-router.get('/:productID', (req, res) => {
-	const productID = req.params.productID;
-	Product.findOne({ _id: productID }, (err, product) => {
-		if (err) {
-			console.log('Error in get route of review ' + err.message);
-			res.send(500).json(err);
-		} else {
-			res.status(200).json(product.reviews);
-		}
-	});
-});
-
 // POST a review
 router.post('/:productID', (req, res) => {
 	// Get details about review from body of request
@@ -74,17 +62,17 @@ router.patch('/:productID/:reviewID/helpful', async (req, res) => {
 // 		}
 // 	);
 
-// 	// var productObject;
-// 	// await Product.findById(productID, (err, product) => {
-// 	// 	if (err) {
-// 	// 		console.log('Error in helful route of review' + err);
-// 	// 		res.send(500).json({ error: err });
-// 	// 	} else {
-// 	// 		productObject = JSON.parse(JSON.stringify(product));
-// 	// 		console.log(productObject);
-// 	// 		res.status(200).json({ message: 'Okay done' });
-// 	// 	}
-// 	// });
+// var productObject;
+// await Product.findById(productID, (err, product) => {
+// 	if (err) {
+// 		console.log('Error in helful route of review' + err);
+// 		res.send(500).json({ error: err });
+// 	} else {
+// 		productObject = JSON.parse(JSON.stringify(product));
+// 		console.log(productObject);
+// 		res.status(200).json({ message: 'Okay done' });
+// 	}
+// });
 // });
 
 router.patch('/:productID/incorrect', (req, res) => {
