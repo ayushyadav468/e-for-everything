@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
-const Product = require('../Models/ProductModel');
-const User = require('../Models/UserModel');
+const Product = require('../../Models/ProductModel');
+const User = require('../../Models/UserModel');
 
 // GET all products by a seller
 router.get('/user/:userID', (req, res) => {

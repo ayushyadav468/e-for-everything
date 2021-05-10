@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
-const User = require('../Models/UserModel');
+const User = require('../../Models/UserModel');
+const { patchDataValidation } = require('../../Validation/UserValidation');
 
 router.patch('/:userID', (req, res) => {
 	const userID = req.params.userID;
@@ -13,6 +14,12 @@ router.patch('/:userID', (req, res) => {
 	for (const [key, value] of Object.entries(req.body)) {
 		updateProps[key] = value;
 	}
+	const { error } = patchDataValidation(updateProps);
+	if (error)
+		return res
+			.status(401)
+			.json({ error: { message: error.details[0].message } });
+
 	User.findByIdAndUpdate(userID, updateProps, { new: true })
 		.select('-__v -dateAdded -password')
 		.exec()

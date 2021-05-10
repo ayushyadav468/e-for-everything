@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
-const User = require('../Models/UserModel');
+const User = require('../../Models/UserModel');
 const {
 	loginValidation,
 	registerValidation,
-} = require('../Validation/UserValidation');
+} = require('../../Validation/UserValidation');
 
 router.post('/login', (req, res) => {
 	const { error } = loginValidation(req.body);
@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
 				res.status(200).json(response);
 			} else {
 				res.status(404).json({
-					error: { message: 'No valid entry found' },
+					error: { message: 'Email or password is wrong' },
 				});
 			}
 		})

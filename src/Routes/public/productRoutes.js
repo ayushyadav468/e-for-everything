@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
-const Product = require('../Models/ProductModel');
-const User = require('../Models/UserModel');
-const { productValidation } = require('../Validation/ProductValidation');
+const Product = require('../../Models/ProductModel');
+const User = require('../../Models/UserModel');
+const { productValidation } = require('../../Validation/ProductValidation');
 
 // GET all products
 router.get('/', (req, res) => {

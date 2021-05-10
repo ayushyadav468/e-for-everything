@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
-const Product = require('../Models/ProductModel');
+const Product = require('../../Models/ProductModel');
 
 // POST a review
 router.post('/:productID', (req, res) => {
