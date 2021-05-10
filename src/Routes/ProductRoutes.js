@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const Product = require('../Models/ProductModel');
 const User = require('../Models/UserModel');
+const { productValidation } = require('../Validation/ProductValidation');
 
 // GET all products
 router.get('/', (req, res) => {
@@ -129,6 +130,10 @@ router.post('/', (req, res) => {
 		} else {
 			if (user) {
 				if (user.seller === true) {
+					// product validation
+					const { error } = productValidation(req.body);
+					if (error) return res.status(400).json(error.details[0].message);
+
 					const product = new Product({
 						_id: new mongoose.Types.ObjectId(),
 						ownerID: ownerID,
@@ -142,13 +147,16 @@ router.post('/', (req, res) => {
 					// .save() returns a promise
 					product
 						.save()
-						.select('-__v -dateAdded')
 						.then((docs) => {
 							const response = {
-								count: docs.length,
-								product: {
-									...docs._doc,
-								},
+								ownerID: docs._doc.ownerID,
+								productName: docs._doc.productName,
+								productPrice: docs._doc.productPrice,
+								productDiscription: docs._doc.productDiscription,
+								smallImage: docs._doc.smallImage,
+								largeImage: docs._doc.largeImage,
+								rating: docs._doc.rating,
+								reviews: docs._doc.reviews,
 							};
 							res.status(201).json(response);
 						})
