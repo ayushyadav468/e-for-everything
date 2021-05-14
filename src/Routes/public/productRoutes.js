@@ -63,4 +63,31 @@ router.get('/:productID', (req, res) => {
 		});
 });
 
+// GET multiple product by id
+// *{
+// *  "productIDs": [
+// *      "604d8a4ef5a3e7197c1ecaea",
+// *      "604d8ae4f5a3e7197c1ecaeb",
+// *   ]
+// *}
+router.patch('/multiple', (req, res) => {
+	const productIDs = req.body.productIDs;
+	// find() function finds multiple product using productIDs
+	Product.find()
+		.where('_id')
+		.in(productIDs)
+		.select('-ownerID -rating -dateAdded -reviews -__v')
+		.exec()
+		.then((result) => {
+			// result => array of objects
+			const response = {
+				count: result.length,
+				products: [...result],
+			};
+			res.status(200).json(response);
+		})
+		.catch((err) => {
+			res.status(500).json(err);
+		});
+});
 module.exports = router;

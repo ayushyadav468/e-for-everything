@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const router = require('express').Router();
+const verifyToken = require('../middleware/verifyToken');
 const Product = require('../../Models/ProductModel');
 const User = require('../../Models/UserModel');
 
 // GET all products by a seller
-router.get('/user/:userID', (req, res) => {
-	const userID = req.params.userID;
+router.get('/user', verifyToken, (req, res) => {
+	const userID = req.user.userID;
 	Product.find({ ownerID: userID })
 		.select('-__v -dateAdded')
 		.exec()
@@ -28,38 +29,10 @@ router.get('/user/:userID', (req, res) => {
 		});
 });
 
-// GET multiple product by id
-router.patch('/multiple', (req, res) => {
-	// 	{
-	//     "productIDs": [
-	//         "604d8a4ef5a3e7197c1ecaea",
-	//         "604d8ae4f5a3e7197c1ecaeb",
-	//     ]
-	// }
-	const productIDs = req.body.productIDs;
-	// find() function finds multiple product using productIDs
-	Product.find()
-		.where('_id')
-		.in(productIDs)
-		.select('-ownerID -rating -dateAdded -reviews -__v')
-		.exec()
-		.then((result) => {
-			// result => array of objects
-			const response = {
-				count: result.length,
-				products: [...result],
-			};
-			res.status(200).json(response);
-		})
-		.catch((err) => {
-			res.status(500).json(err);
-		});
-});
-
 // POST a product
-router.post('/', (req, res) => {
+router.post('/', verifyToken, (req, res) => {
 	// Get details about product from body of request
-	const ownerID = req.body.ownerID;
+	const ownerID = req.user.userID;
 	User.find({ ownerID: ownerID }, (err, user) => {
 		if (err) {
 			console.log('Error in finding user ' + err.message);
@@ -120,7 +93,7 @@ router.post('/', (req, res) => {
 });
 
 // PATCH(Update) a product by ID
-router.patch('/:ownerID/:productID', (req, res) => {
+router.patch('/:productID', verifyToken, (req, res) => {
 	const productID = req.params.productID;
 	Product.find({ _id: productID }, (err, product) => {
 		if (err) {
@@ -129,7 +102,7 @@ router.patch('/:ownerID/:productID', (req, res) => {
 			);
 			res.status(500).json(err);
 		} else {
-			const ownerID = req.params.ownerID;
+			const ownerID = req.user.userID;
 			// check if the owner of the product is same as the user updating the product
 			if (ownerID == product.ownerID) {
 				// Send patch request as
@@ -174,7 +147,7 @@ router.patch('/:ownerID/:productID', (req, res) => {
 });
 
 // DELETE a product by ID
-router.delete('/:ownerID/:productID', (req, res) => {
+router.delete('/:productID', (req, res) => {
 	const productID = req.params.productID;
 	Product.find({ _id: productID }, (err, product) => {
 		if (error) {
@@ -183,7 +156,7 @@ router.delete('/:ownerID/:productID', (req, res) => {
 			);
 			res.status(500).json(err);
 		} else {
-			const ownerID = req.params.ownerID;
+			const ownerID = req.user.userID;
 			// check if the owner of the product is same as the user updating the product
 			if (ownerID == product.ownerID) {
 				Product.findByIdAndDelete(productID)

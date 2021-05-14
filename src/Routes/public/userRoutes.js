@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = require('../../Models/UserModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const {
 	loginValidation,
 	registerValidation,
@@ -31,14 +32,16 @@ router.post('/login', async (req, res) => {
 		);
 		if (!validatePassword)
 			return res.status(400).json({ error: { message: 'Password not valid' } });
+
+		const authToken = jwt.sign(
+			{ userID: loginUser._doc._id },
+			process.env.AUTH_TOKEN_SECRET
+		);
 		const response = {
-			_id: loginUser._doc._id,
 			firstName: loginUser._doc.firstName,
 			lastName: loginUser._doc.lastName,
-			email: loginUser._doc.email,
-			seller: loginUser._doc.seller,
 		};
-		res.status(200).json(response);
+		res.header('auth-token', authToken).status(200).json(response);
 	} catch (err) {
 		console.log('Error in logging user ' + err.message);
 		res.status(500).json({ error: { message: err.message } });
@@ -79,14 +82,15 @@ router.post('/register', async (req, res) => {
 	// Saving user
 	try {
 		const savedUser = await newUser.save();
+		const authToken = jwt.sign(
+			{ userID: savedUser._doc._id },
+			process.env.AUTH_TOKEN_SECRET
+		);
 		const response = {
-			_id: savedUser._doc._id,
 			firstName: savedUser._doc.firstName,
 			lastName: savedUser._doc.lastName,
-			email: savedUser._doc.email,
-			seller: savedUser._doc.seller,
 		};
-		res.status(200).json(response);
+		res.header('auth-token', authToken).status(200).json(response);
 	} catch (err) {
 		console.log('Error in saving user ' + err.message);
 		res.status(500).json({ error: { message: err.message } });
