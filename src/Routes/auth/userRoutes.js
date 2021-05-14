@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const router = require('express').Router();
 const User = require('../../Models/UserModel');
 const { patchDataValidation } = require('../../Validation/UserValidation');
@@ -20,10 +19,10 @@ router.patch('/:userID', (req, res) => {
 			.status(401)
 			.json({ error: { message: error.details[0].message } });
 
-	User.findByIdAndUpdate(userID, updateProps, { new: true })
-		.select('-__v -dateAdded -password')
+	User.findOneAndUpdate({ _id: userID }, updateProps, { new: true })
 		.exec()
 		.then((result) => {
+			console.log(`Result: ${result}`); // ! Remove
 			res.status(200).json(result);
 		})
 		.catch((err) => {
@@ -34,7 +33,7 @@ router.patch('/:userID', (req, res) => {
 
 router.delete('/:userID', (req, res) => {
 	const userID = req.params.userID;
-	User.findByIdAndDelete(userID)
+	User.findOneAndDelete({ _id: userID })
 		.exec()
 		.then((result) => {
 			res.status(200).json(result);
@@ -49,8 +48,8 @@ router.delete('/:userID', (req, res) => {
 router.patch('/:userID/addtocart', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
-	User.findByIdAndUpdate(
-		userID,
+	User.findOneAndUpdate(
+		{ _id: userID },
 		{ $addToSet: { cartProducts: productID } },
 		{ new: true }
 	)
@@ -68,8 +67,8 @@ router.patch('/:userID/addtocart', (req, res) => {
 router.patch('/:userID/delfromcart', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
-	User.findByIdAndUpdate(
-		userID,
+	User.findOneAndUpdate(
+		{ _id: userID },
 		{ $pull: { cartProducts: productID } },
 		{ new: true }
 	)
@@ -88,8 +87,8 @@ router.patch('/:userID/delfromcart', (req, res) => {
 router.patch('/:userID/addtofav', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
-	User.findByIdAndUpdate(
-		userID,
+	User.findOneAndUpdate(
+		{ _id: userID },
 		{ $addToSet: { favProducts: productID } },
 		{ new: true }
 	)
@@ -107,8 +106,8 @@ router.patch('/:userID/addtofav', (req, res) => {
 router.patch('/:userID/delfromfav', (req, res) => {
 	const userID = req.params.userID;
 	const productID = req.body.productID;
-	User.findByIdAndUpdate(
-		userID,
+	User.findOneAndUpdate(
+		{ _id: userID },
 		{ $pull: { favProducts: productID } },
 		{ new: true }
 	)

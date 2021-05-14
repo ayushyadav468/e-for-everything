@@ -11,9 +11,9 @@ const productRoutes = require('./src/Routes/public/productRoutes');
 const reviewRoutes = require('./src/Routes/public/reviewRoutes');
 
 // Private Routes
-const userPrivateRoutes = require('./src/Routes/private/userRoutes');
-const productPrivateRoutes = require('./src/Routes/private/productRoutes');
-const reviewPrivateRoutes = require('./src/Routes/private/reviewRoutes');
+const userPrivateRoutes = require('./src/Routes/auth/userRoutes');
+const productPrivateRoutes = require('./src/Routes/auth/productRoutes');
+const reviewPrivateRoutes = require('./src/Routes/auth/reviewRoutes');
 
 const app = express();
 app.use(cors());
@@ -45,9 +45,9 @@ app.use('/api/user', userRoutes);
 app.use('/api/product', productRoutes);
 app.use('/api/review', reviewRoutes);
 // Private Route Middlewares
-app.use('/api/user/private', userPrivateRoutes);
-app.use('/api/product/private', productPrivateRoutes);
-app.use('/api/review/private', reviewPrivateRoutes);
+app.use('/api/auth/user', userPrivateRoutes);
+app.use('/api/auth/product', productPrivateRoutes);
+app.use('/api/auth/review', reviewPrivateRoutes);
 
 // Check for development or production
 if (process.env.NODE_ENV == 'production') {

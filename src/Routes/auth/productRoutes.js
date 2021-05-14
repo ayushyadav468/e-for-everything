@@ -60,7 +60,7 @@ router.patch('/multiple', (req, res) => {
 router.post('/', (req, res) => {
 	// Get details about product from body of request
 	const ownerID = req.body.ownerID;
-	User.findById(ownerID, (err, user) => {
+	User.find({ ownerID: ownerID }, (err, user) => {
 		if (err) {
 			console.log('Error in finding user ' + err.message);
 			res.status(500).json(err);
@@ -122,7 +122,7 @@ router.post('/', (req, res) => {
 // PATCH(Update) a product by ID
 router.patch('/:ownerID/:productID', (req, res) => {
 	const productID = req.params.productID;
-	Product.findById(productID, (err, product) => {
+	Product.find({ _id: productID }, (err, product) => {
 		if (err) {
 			console.log(
 				'Error in finding product in patch route of products ' + err.message
@@ -144,7 +144,9 @@ router.patch('/:ownerID/:productID', (req, res) => {
 				// model.findByIdAndUpdate(filter, update, option, callback)
 				// {new: true} returns an updated object otherwise,
 				// default functionality is to return object as it was before update
-				Product.findByIdAndUpdate(productID, updateProps, { new: true })
+				Product.findOneAndUpdate({ _id: productID }, updateProps, {
+					new: true,
+				})
 					.select('-__v -dateAdded')
 					.exec()
 					.then((docs) => {
@@ -174,7 +176,7 @@ router.patch('/:ownerID/:productID', (req, res) => {
 // DELETE a product by ID
 router.delete('/:ownerID/:productID', (req, res) => {
 	const productID = req.params.productID;
-	Product.findById(productID, (err, product) => {
+	Product.find({ _id: productID }, (err, product) => {
 		if (error) {
 			console.log(
 				'Error in finding product in patch route of products ' + err.message
