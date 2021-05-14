@@ -25,7 +25,7 @@ router.post('/:productID', (req, res) => {
 					'Error in saving review ID in review field of product model' +
 						err.message
 				);
-				res.send(500).json(err);
+				res.send(500).json({ error: { message: err.message } });
 			} else {
 				// send a 200 message if review and review id in product review field is saved
 				res.status(200).json(model);

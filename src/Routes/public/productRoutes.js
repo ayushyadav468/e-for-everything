@@ -1,8 +1,5 @@
-const mongoose = require('mongoose');
 const router = require('express').Router();
 const Product = require('../../Models/ProductModel');
-const User = require('../../Models/UserModel');
-const { productValidation } = require('../../Validation/ProductValidation');
 
 // GET all products
 router.get('/', (req, res) => {
@@ -26,7 +23,7 @@ router.get('/', (req, res) => {
 		})
 		.catch((err) => {
 			console.log('Error in get route of product/all ' + err.message);
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		});
 });
 
@@ -59,7 +56,7 @@ router.get('/:productID', (req, res) => {
 		})
 		.catch((err) => {
 			console.log('Error in get route of product /:productID ' + err.message);
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		});
 });
 
@@ -87,7 +84,7 @@ router.patch('/multiple', (req, res) => {
 			res.status(200).json(response);
 		})
 		.catch((err) => {
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		});
 });
 module.exports = router;

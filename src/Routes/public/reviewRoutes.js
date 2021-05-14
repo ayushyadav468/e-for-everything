@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const router = require('express').Router();
 const Product = require('../../Models/ProductModel');
 
@@ -7,7 +6,7 @@ router.get('/:productID', (req, res) => {
 	Product.findOne({ _id: productID }, (err, product) => {
 		if (err) {
 			console.log('Error in get route of review ' + err.message);
-			res.send(500).json(err);
+			res.send(500).json({ error: { message: err.message } });
 		} else {
 			res.status(200).json(product.reviews);
 		}

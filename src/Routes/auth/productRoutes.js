@@ -25,7 +25,7 @@ router.get('/user', verifyToken, (req, res) => {
 		})
 		.catch((err) => {
 			console.log('Error in get route of product/user ' + err.message);
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		});
 });
 
@@ -36,13 +36,16 @@ router.post('/', verifyToken, (req, res) => {
 	User.find({ ownerID: ownerID }, (err, user) => {
 		if (err) {
 			console.log('Error in finding user ' + err.message);
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		} else {
 			if (user) {
 				if (user.seller === true) {
 					// product validation
 					const { error } = productValidation(req.body);
-					if (error) return res.status(400).json(error.details[0].message);
+					if (error)
+						return res
+							.status(400)
+							.json({ error: { message: error.details[0].message } });
 
 					const product = new Product({
 						_id: new mongoose.Types.ObjectId(),
@@ -74,7 +77,7 @@ router.post('/', verifyToken, (req, res) => {
 						})
 						.catch((err) => {
 							console.log('Error in post route of product ' + err.message);
-							res.status(500).json(err);
+							res.status(500).json({ error: { message: err.message } });
 						});
 				} else {
 					res.status(403).json({
@@ -100,7 +103,7 @@ router.patch('/:productID', verifyToken, (req, res) => {
 			console.log(
 				'Error in finding product in patch route of products ' + err.message
 			);
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		} else {
 			const ownerID = req.user.userID;
 			// check if the owner of the product is same as the user updating the product
@@ -133,12 +136,12 @@ router.patch('/:productID', verifyToken, (req, res) => {
 					})
 					.catch((err) => {
 						console.log('Error in patch route of product ' + err.message);
-						res.status(500).json(err);
+						res.status(500).json({ error: { message: err.message } });
 					});
 			} else {
 				res.status(403).json({
 					error: {
-						message: 'Permission Denied User is not the owner of this product',
+						message: 'Permission Denied user is not the owner of this product',
 					},
 				});
 			}
@@ -154,7 +157,7 @@ router.delete('/:productID', (req, res) => {
 			console.log(
 				'Error in finding product in patch route of products ' + err.message
 			);
-			res.status(500).json(err);
+			res.status(500).json({ error: { message: err.message } });
 		} else {
 			const ownerID = req.user.userID;
 			// check if the owner of the product is same as the user updating the product
@@ -166,7 +169,7 @@ router.delete('/:productID', (req, res) => {
 					})
 					.catch((err) => {
 						console.log('Error in delete route of product ' + err.message);
-						res.send(500).json(err);
+						res.send(500).json({ error: { message: err.message } });
 					});
 			} else {
 				res.status(403).json({
