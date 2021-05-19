@@ -4,10 +4,13 @@ import Menubar from './Menubar/Menubar';
 
 const Navbar = (props) => {
 	return (
-		<nav className={styles.navBar}>
-			<Searchbar {...props} />
-			<Menubar />
-		</nav>
+		<>
+			<nav className={styles.navBar}>
+				<Searchbar {...props} />
+				<Menubar />
+			</nav>
+			{props.children}
+		</>
 	);
 };
 

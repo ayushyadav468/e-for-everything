@@ -40,6 +40,9 @@ router.post('/login', async (req, res) => {
 		const response = {
 			firstName: loginUser._doc.firstName,
 			lastName: loginUser._doc.lastName,
+			email: loginUser._doc.email,
+			cartProducts: loginUser._doc.cartProducts,
+			favProducts: loginUser._doc.favProducts,
 		};
 		res.header('auth-token', authToken).status(200).json(response);
 	} catch (err) {
@@ -89,6 +92,9 @@ router.post('/register', async (req, res) => {
 		const response = {
 			firstName: savedUser._doc.firstName,
 			lastName: savedUser._doc.lastName,
+			email: savedUser._doc.email,
+			cartProducts: savedUser._doc.cartProducts,
+			favProducts: savedUser._doc.favProducts,
 		};
 		res.header('auth-token', authToken).status(200).json(response);
 	} catch (err) {

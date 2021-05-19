@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { useState } from 'react';
 import styles from './Register.module.css';
 import axios from '../../../axiosInstance';
+import { useHistory } from 'react-router-dom';
 import { ADD_USER } from '../../../store/action/actions';
 import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
@@ -14,7 +15,7 @@ import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addUser: (user) => dispatch({ type: ADD_USER, payload: user }),
+		addUser: (userState) => dispatch({ type: ADD_USER, payload: userState }),
 	};
 };
 
@@ -25,11 +26,11 @@ const Register = (props) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [seller, setSeller] = useState(false);
-
 	const [error, setError] = useState({
 		message: '',
 	});
 	const [showDialogBox, setShowDialogBox] = useState(false);
+	let history = useHistory();
 
 	const registerHandler = async (event) => {
 		// Prevent default page reload
@@ -41,8 +42,12 @@ const Register = (props) => {
 			password: password,
 			seller: seller,
 		};
-		await axios
-			.post('/api/user/register', userData)
+		await axios({
+			method: 'POST',
+			url: '/api/user/register',
+			headers: { 'content-type': 'application/json' },
+			data: { ...userData },
+		})
 			.then((response) => {
 				if (response.status !== 200) {
 					setError({ message: response.data.message });
@@ -56,18 +61,19 @@ const Register = (props) => {
 						setShowDialogBox(false);
 					}, 2000);
 				} else {
-					const user = {
-						...response.data,
+					const userState = {
+						token: response.headers['auth-token'],
+						userData: { ...response.data },
 					};
 					// Dispach LOG_IN action to redux
-					props.addUser(user);
+					props.addUser(userState);
 					// redirect to the page user came to register
-					props.history.go(-2);
+					history.go(-2);
 				}
 			})
 			.catch((err) => {
 				console.log(err.response);
-				setError({ message: err.response });
+				setError({ message: err.response.data.error.message });
 				// reset form
 				setFirstName('');
 				setLastName('');

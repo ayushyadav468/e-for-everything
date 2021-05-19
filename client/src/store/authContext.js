@@ -11,15 +11,18 @@ const AuthContext = React.createContext({
 // All function are defined in AuthContextProvider
 // Its a named export
 export const AuthContextProvider = (props) => {
-	const initialToken = localStorage.getItem('token');
+	// Get token from local storage, if it is not present initialToken = undefined
+	const initialToken = localStorage.getItem('auth-token');
 	const [token, setToken] = useState(initialToken);
 
 	const isLoggedIn = !!token;
 	const logInHandler = (token) => {
 		setToken(token);
+		localStorage.setItem('auth-token', token);
 	};
 	const logOutHandler = () => {
 		setToken(null);
+		localStorage.removeItem('auth-token');
 	};
 	const contextValue = {
 		token: token,

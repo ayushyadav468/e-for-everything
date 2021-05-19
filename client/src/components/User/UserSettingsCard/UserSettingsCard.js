@@ -4,75 +4,73 @@ import { useState, useEffect } from 'react';
 import styles from './UserSettingsCard.module.css';
 import DialogBox from '../../UI/DialogBox/DialogBox';
 import { ADD_USER } from '../../../store/action/actions';
+import ConfirmPassword from '../../ConfirmPassword/ConfirmPassword';
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user,
+		userState: state.userState,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addUser: (user) => dispatch({ type: ADD_USER, payload: user }),
+		addUser: (userData) => dispatch({ type: ADD_USER, payload: userData }),
 	};
 };
 
 const UserSettingsCard = (props) => {
+	const [email, setEmail] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [address, setAddress] = useState('');
 	const [country, setCountry] = useState('');
 	const [zipCode, setZipCode] = useState('');
-	const [showDialogBox, setShowDialogBox] = useState(false);
-	const [message, setMessage] = useState('');
 
-	let userID;
+	const [message, setMessage] = useState('');
+	const [showDialogBox, setShowDialogBox] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 	// check if user is logged in
-	if (
-		Object.keys(props.user).length !== 0 &&
-		props.user.constructor === Object
-	) {
-		userID = props.user._id;
+	const isLoggedIn = props.userState.isLoggedIn;
+	let userData;
+	if (isLoggedIn && Object.keys(props.userState.userData) !== 0) {
+		userData = props.userState.userData;
 	}
 
 	const setUserData = () => {
-		if (props.user.firstName !== '') {
-			setFirstName(props.user.firstName);
+		if (userData.firstName !== '') {
+			setFirstName(userData.firstName);
 		}
-		if (props.user.lastName !== '') {
-			setLastName(props.user.lastName);
+		if (userData.lastName !== '') {
+			setLastName(userData.lastName);
 		}
-		if (props.user.email !== '') {
-			setEmail(props.user.email);
+		if (userData.email !== '') {
+			setEmail(userData.email);
 		}
-		if (props.user.address !== '') {
-			setAddress(props.user.address);
+		if (userData.address !== '') {
+			setAddress(userData.address);
 		}
-		if (props.user.country !== '') {
-			setCountry(props.user.country);
+		if (userData.country !== '') {
+			setCountry(userData.country);
 		}
-		if (props.user.zipCode !== '') {
-			setZipCode(props.user.zipCode);
+		if (userData.zipCode !== '') {
+			setZipCode(userData.zipCode);
 		}
 	};
 
 	useEffect(() => {
-		if (userID) {
+		if (isLoggedIn) {
 			setUserData();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userID]);
+	}, [isLoggedIn]);
 
 	const onFirstNameChangeHandler = (event) => {
 		setFirstName(event.target.value);
 	};
 	const onLastNameChangeHandler = (event) => {
 		setLastName(event.target.value);
-	};
-	const onPasswordChangeHandler = (event) => {
-		setPassword(event.target.value);
 	};
 	const onAddressChangeHandler = (event) => {
 		setAddress(event.target.value);
@@ -83,9 +81,25 @@ const UserSettingsCard = (props) => {
 	const onZipCodeChangeHandler = (event) => {
 		setZipCode(event.target.value);
 	};
+	const passwordConfirmHandler = (event) => {
+		setPassword(event.target.value);
+	};
 
-	const userUpdateHandler = (event) => {
+	const confirmHandler = (event) => {
 		event.preventDefault();
+		setShowConfirmPassword(true);
+	};
+
+	const onSaveBtnClicked = () => {
+		setShowConfirmPassword(false);
+		userUpdateHandler();
+	};
+
+	const onCancelBtnClicked = () => {
+		setShowConfirmPassword(false);
+	};
+
+	const userUpdateHandler = () => {
 		const updatedUser = {
 			firstName: firstName,
 			lastName: lastName,
@@ -94,16 +108,23 @@ const UserSettingsCard = (props) => {
 			country: country,
 			zipCode: zipCode,
 		};
-		axios
-			.patch('/api/user/' + userID, {
-				...updatedUser,
-			})
+		const token = props.userState.token;
+		axios({
+			method: 'PATCH',
+			url: `/api/auth/user/update`,
+			headers: {
+				'content-type': 'application/json',
+				'auth-token': token,
+			},
+			data: { ...updatedUser },
+		})
 			.then((result) => {
+				console.log(result.data);
 				props.addUser(result.data);
 				dialogBox('User updated');
 			})
 			.catch((error) => {
-				console.log(error);
+				console.log(error.response.data.error.message);
 				dialogBox('User not updated. Try again');
 			});
 	};
@@ -117,13 +138,13 @@ const UserSettingsCard = (props) => {
 	};
 
 	let content;
-	if (userID) {
+	if (isLoggedIn) {
 		content = (
 			<>
 				<h2 className={styles.heading}>User settings</h2>
 				<div className={styles.settingscontainer}>
 					<h4 className={styles.settingsCardHeading}>Edit</h4>
-					<form className={styles.settingsForm} onSubmit={userUpdateHandler}>
+					<form className={styles.settingsForm} onSubmit={confirmHandler}>
 						<div className={styles.nameDiv}>
 							<label>
 								First Name
@@ -131,7 +152,7 @@ const UserSettingsCard = (props) => {
 									type='text'
 									required
 									value={firstName}
-									onChange={(event) => onFirstNameChangeHandler(event)}
+									onChange={onFirstNameChangeHandler}
 								/>
 							</label>
 							<label>
@@ -139,23 +160,14 @@ const UserSettingsCard = (props) => {
 								<input
 									type='text'
 									value={lastName}
-									onChange={(event) => onLastNameChangeHandler(event)}
+									onChange={onLastNameChangeHandler}
 								/>
 							</label>
 						</div>
-						<div className={styles.emailPasswordDiv}>
+						<div className={styles.emailDiv}>
 							<label>
 								Email
 								<input type='email' value={email} readOnly />
-							</label>
-							<label>
-								Password
-								<input
-									type='password'
-									value={password}
-									required
-									onChange={(event) => onPasswordChangeHandler(event)}
-								/>
 							</label>
 						</div>
 						<div className={styles.addressDiv}>
@@ -189,7 +201,6 @@ const UserSettingsCard = (props) => {
 						</div>
 						<input type='submit' value='Save' />
 					</form>
-					<DialogBox showBox={showDialogBox}>{message}</DialogBox>
 				</div>
 			</>
 		);
@@ -201,7 +212,26 @@ const UserSettingsCard = (props) => {
 		);
 	}
 
-	return <div className={styles.settingsCard}>{content}</div>;
+	return (
+		<>
+			<ConfirmPassword
+				passwordConfirmHandler={passwordConfirmHandler}
+				saveBtnClicked={() => onSaveBtnClicked()}
+				cancelBtnClicked={() => onCancelBtnClicked()}
+				show={showConfirmPassword}
+			/>
+			{showConfirmPassword ? (
+				<div className={styles.settingsCard} style={{ opacity: '0.2' }}>
+					{content}
+				</div>
+			) : (
+				<div className={styles.settingsCard} style={{ opacity: '1' }}>
+					{content}
+				</div>
+			)}
+			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+		</>
+	);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserSettingsCard);

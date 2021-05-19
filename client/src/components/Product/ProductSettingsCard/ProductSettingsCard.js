@@ -6,7 +6,7 @@ import styles from './ProductSettingsCard.module.css';
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user,
+		userState: state.userState,
 	};
 };
 
@@ -22,11 +22,8 @@ const ProductSettingsCard = (props) => {
 
 	let userID;
 	// check if user is logged in
-	if (
-		Object.keys(props.user).length !== 0 &&
-		props.user.constructor === Object
-	) {
-		userID = props.user._id;
+	if (props.userState.isLoggedIn) {
+		userID = props.userState.user._id;
 	}
 
 	// getting product id from URL
@@ -41,8 +38,11 @@ const ProductSettingsCard = (props) => {
 	};
 
 	const fetchProductData = async () => {
-		await axios
-			.get('/api/product/' + productID)
+		await axios({
+			method: 'GET',
+			url: `/api/product/${productID}`,
+			headers: { 'content-type': 'application/json' },
+		})
 			.then((response) => {
 				setProductData(response.data.product);
 			})

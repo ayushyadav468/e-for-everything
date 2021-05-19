@@ -1,14 +1,36 @@
 import * as actionTypes from '../action/actions';
 
-const initialState = {};
+const getTokenFromLocalStorage = () => {
+	const token = localStorage.getItem('auth-token');
+	if (token !== 'undefined') {
+		return token;
+	} else {
+		return null;
+	}
+};
+
+const initialState = {
+	token: getTokenFromLocalStorage(),
+	isLoggedIn: !!getTokenFromLocalStorage(),
+	userData: {},
+};
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.ADD_USER:
-			state = { ...action.payload };
+			const token = action.payload.token;
+			const isLoggedIn = !!token;
+			const userData = { ...action.payload.userData };
+			localStorage.setItem('auth-token', token);
+			state = { token: token, isLoggedIn: isLoggedIn, userData: userData };
 			break;
 		case actionTypes.REMOVE_USER:
-			state = {};
+			localStorage.removeItem('auth-token');
+			state = {
+				token: null,
+				isLoggedIn: false,
+				userData: {},
+			};
 			break;
 		case actionTypes.ADD_PRODUCT_TO_CART:
 			// check if productID is already in the cart
@@ -16,13 +38,13 @@ const userReducer = (state = initialState, action) => {
 			// it checks if the id is present or not
 			// if it is present don't add it again
 			const addedCartProducts = [
-				...state.cartProducts.filter(
+				...state.userData.cartProducts.filter(
 					(productID) => productID !== action.payload
 				),
 				action.payload,
 			];
 			const addedCartProductNewUser = {
-				...state,
+				...state.userData,
 				cartProducts: [...addedCartProducts],
 			};
 			// const addedCartProductNewUser = {
@@ -30,19 +52,19 @@ const userReducer = (state = initialState, action) => {
 			//	This will also change the array immutablily as concat returns a new array
 			// 	cartProducts: state.cartProducts.concat(action.payload),
 			// };
-			state = { ...addedCartProductNewUser };
+			state = { userData: { ...addedCartProductNewUser } };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_CART:
 			const deletedCartProducts = [
-				...state.cartProducts.filter(
+				...state.userData.cartProducts.filter(
 					(productID) => productID !== action.payload
 				),
 			];
 			const deletedCartProductNewUser = {
-				...state,
+				...state.userData,
 				cartProducts: [...deletedCartProducts],
 			};
-			state = { ...deletedCartProductNewUser };
+			state = { userData: { ...deletedCartProductNewUser } };
 			break;
 		case actionTypes.ADD_PRODUCT_TO_FAV:
 			// check if productID is already in the favourites
@@ -50,13 +72,13 @@ const userReducer = (state = initialState, action) => {
 			// it checks if the id is present or not
 			// if it is present don't add it again
 			const addedFavProducts = [
-				...state.favProducts.filter(
+				...state.userData.favProducts.filter(
 					(productID) => productID !== action.payload
 				),
 				action.payload,
 			];
 			const addedFavProductNewUser = {
-				...state,
+				...state.userData,
 				favProducts: [...addedFavProducts],
 			};
 			// const deletedProductNewUser = {
@@ -64,19 +86,19 @@ const userReducer = (state = initialState, action) => {
 			//	This will also change the array immutablily as concat returns a new array
 			// 	cartProducts: state.cartProducts.concat(action.payload),
 			// };
-			state = { ...addedFavProductNewUser };
+			state = { userData: { ...addedFavProductNewUser } };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_FAV:
 			const deletedFavProducts = [
-				...state.favProducts.filter(
+				...state.userData.favProducts.filter(
 					(productID) => productID !== action.payload
 				),
 			];
 			const deletedFavProductNewUser = {
-				...state,
+				...state.userData,
 				favProducts: [...deletedFavProducts],
 			};
-			state = { ...deletedFavProductNewUser };
+			state = { userData: { ...deletedFavProductNewUser } };
 			break;
 		default:
 			return state;

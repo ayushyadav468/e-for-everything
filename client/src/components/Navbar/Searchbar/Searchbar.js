@@ -1,39 +1,84 @@
+import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useState } from 'react';
+import axios from '../../../axiosInstance';
 import styles from './Searchbar.module.css';
-import { NavLink, Link } from 'react-router-dom';
-import { REMOVE_USER } from '../../../store/action/actions';
+import { NavLink, Link, useHistory } from 'react-router-dom';
 import DialogBox from '../../UI/DialogBox/DialogBox';
+import { ADD_USER, REMOVE_USER } from '../../../store/action/actions';
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user,
+		userState: state.userState,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		addUser: (userState) => dispatch({ type: ADD_USER, payload: userState }),
 		userLogout: () => dispatch({ type: REMOVE_USER }),
 	};
 };
 
 const Searchbar = (props) => {
+	const [user, setUser] = useState(null);
 	const [showDialogBox, setShowDialogBox] = useState(false);
+	let history = useHistory();
 
-	let user;
-	// if user is logged in
-	// check if keys are present in props.user
-	// and check if constructor is of object type (for edge cases)
-	if (
-		Object.keys(props.user).length !== 0 &&
-		props.user.constructor === Object
-	) {
-		user = { ...props.user };
-	}
+	const checkUser = async () => {
+		// if user is logged in
+		if (props.userState.isLoggedIn) {
+			// check if keys are present in props.user
+			if (Object.keys(props.userState.userData).length !== 0) {
+				setUser({ ...props.userState.userData });
+			} else {
+				// if page reloads/refresh
+				const token = props.userState.token;
+				await axios({
+					method: 'GET',
+					url: '/api/auth/user/',
+					headers: {
+						'content-type': 'application/json',
+						'auth-token': token,
+					},
+				})
+					.then((response) => {
+						if (response.status !== 200) {
+							setShowDialogBox(true);
+							setTimeout(() => {
+								setShowDialogBox(false);
+							}, 2000);
+						} else {
+							const userState = {
+								token: response.headers['auth-token'],
+								userData: { ...response.data },
+							};
+							// Dispach LOG_IN action to redux
+							props.addUser(userState);
+							setUser({ ...response.data });
+						}
+					})
+					.catch((err) => {
+						console.log(err.response);
+						// Show Dialog box for 2 sec
+						setShowDialogBox(true);
+						setTimeout(() => {
+							setShowDialogBox(false);
+						}, 2000);
+					});
+			}
+		} else {
+			setUser(null);
+		}
+	};
+
+	useEffect(() => {
+		checkUser();
+	}, []);
 
 	const logoutHandler = () => {
 		// dispach LOG_OUT action to redux
 		props.userLogout();
+		setUser(null);
 		// show dialog box
 		setShowDialogBox(true);
 		setTimeout(() => {
@@ -47,7 +92,7 @@ const Searchbar = (props) => {
 			{user ? (
 				<>
 					<p>
-						<strong>Welcome,</strong> {user.name}
+						<strong>Welcome,</strong> {user.firstName}
 					</p>
 					<div className={styles.signInContent}>
 						{/* if user is a seller show setting and products link
@@ -76,7 +121,7 @@ const Searchbar = (props) => {
 
 	const onSeachFormSubmit = (event) => {
 		event.preventDefault();
-		props.history.push(`/shop/?seach:${props.search}`);
+		history.push(`/shop/?seach:${props.search}`);
 	};
 
 	return (

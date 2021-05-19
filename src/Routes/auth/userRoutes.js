@@ -4,6 +4,34 @@ const bcrypt = require('bcrypt');
 const verifyToken = require('../middleware/verifyToken');
 const { patchDataValidation } = require('../../Validation/UserValidation');
 
+// To get a verified user detail
+// This is intended to be used
+// If local storage has auth-token
+// and user data in state is empty
+router.get('/', verifyToken, async (req, res) => {
+	// verified user
+	const userID = req.user.userID;
+	const authToken = req.authToken;
+	User.findOne({ _id: userID })
+		.exec()
+		.then((result) => {
+			if (result) {
+				const response = {
+					firstName: result._doc.firstName,
+					lastName: result._doc.lastName,
+					email: result._doc.email,
+					cartProducts: result._doc.cartProducts,
+					favProducts: result._doc.favProducts,
+				};
+				res.header('auth-token', authToken).status(200).json(response);
+			}
+		})
+		.catch((err) => {
+			console.log('Error in get route of user on reload ' + err.message);
+			res.status(500).json({ error: { message: err.message } });
+		});
+});
+
 // User Update Route
 // * Send patch request as
 // * {
@@ -13,36 +41,60 @@ const { patchDataValidation } = require('../../Validation/UserValidation');
 router.patch('/update', verifyToken, async (req, res) => {
 	// Verified user
 	const userID = req.user.userID;
+	const authToken = req.authToken;
 	// Get updated properties data from req.body
 	const updateProps = {};
+	let userPassword;
 	for (const [key, value] of Object.entries(req.body)) {
-		updateProps[key] = value;
+		if (key === 'password') {
+			userPassword = value;
+		} else {
+			updateProps[key] = value;
+		}
 	}
-	// Validate updated data
+	// Validate data to be updated
 	const { error } = patchDataValidation(updateProps);
-	if (error)
+	if (error) {
+		console.log(error);
 		return res
 			.status(401)
 			.json({ error: { message: error.details[0].message } });
-
-	// Hasing password
-	const salt = await bcrypt.genSalt(10);
-	const hashedPassword = await bcrypt.hash(req.body.password, salt);
-	updateProps['password'] = hashedPassword;
+	}
 
 	// Find user with userID
-	User.findOneAndUpdate({ _id: userID }, updateProps, { new: true })
+	await User.findOneAndUpdate({ _id: userID }, updateProps, { new: true })
 		.exec()
-		.then((result) => {
-			if (result !== null) {
-				res.status(200).json(result);
+		.then(async (user) => {
+			if (user !== null) {
+				const validatePassword = await bcrypt.compare(
+					userPassword,
+					user._doc.password
+				);
+				if (!validatePassword) throw new Error('Password not valid');
+				else return user;
 			} else {
-				res.status(400).json({ error: { message: 'User not found' } });
+				throw new Error('User not found');
 			}
 		})
-		.catch((err) => {
-			console.log('Error in patch route of user ' + err.message);
-			res.status(500).json({ error: { message: err.message } });
+		.then((updatedUser) => {
+			const response = {
+				firstName: updatedUser._doc.firstName,
+				lastName: updatedUser._doc.lastName,
+				email: updatedUser._doc.email,
+				cartProducts: updatedUser._doc.cartProducts,
+				favProducts: updatedUser._doc.favProducts,
+				address: updatedUser._doc.address,
+				country: updatedUser._doc.country,
+				zipCode: updatedUser._doc.zipCode,
+			};
+			res.header('auth-token', authToken).status(200).json(response);
+		})
+		.catch((error) => {
+			console.log('Error in update route of user ' + error.message);
+			res
+				.header('auth-token', authToken)
+				.status(500)
+				.json({ error: { message: error.message } });
 		});
 });
 

@@ -47,6 +47,8 @@
 	width: 70%;
 	font-size: 1rem;
 	padding: 0.2rem 0.4rem;
+	border: 1px solid black;
+	border-radius: 5px;
 }
 
 .nameDiv {
@@ -108,10 +110,6 @@
 		flex-direction: row;
 		justify-content: space-between;
 	}
-	.emailPasswordDiv {
-		flex-direction: row;
-		justify-content: space-between;
-	}
 	.countryZipCodeDiv {
 		flex-direction: row;
 		justify-content: space-between;
@@ -124,9 +122,11 @@
 	.settingsForm label > input {
 		font-size: 1.4rem;
 	}
+	.emailDiv label,
 	.settingsForm .addressDiv label {
 		width: 100%;
 	}
+	.emailDiv label input,
 	.settingsForm .addressDiv label textarea {
 		width: 85.5%;
 		font-size: 1.4rem;

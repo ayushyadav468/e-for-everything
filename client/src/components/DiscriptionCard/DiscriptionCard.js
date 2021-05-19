@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import {
 	ADD_PRODUCT_TO_FAV,
 	ADD_PRODUCT_TO_CART,
@@ -13,7 +14,7 @@ import DialogBox from '../UI/DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user,
+		userState: state.userState,
 	};
 };
 
@@ -34,27 +35,29 @@ const DiscriptionCard = (props) => {
 	const [message, setMessage] = useState('');
 
 	// getting product id from URL
-	const productID = props.match.params.productID;
+	const productID = useParams().productID;
 
 	let userID;
 	// check if user is logged in
-	if (
-		Object.keys(props.user).length !== 0 &&
-		props.user.constructor === Object
-	) {
-		userID = props.user._id;
+	if (props.userState.isLoggedIn) {
+		userID = props.userState.user._id;
 	}
 
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
-			const result = await axios
-				.get('/api/product/' + productID)
+			const result = await axios({
+				method: 'GET',
+				url: `/api/product/${productID}`,
+				headers: { 'content-type': 'application/json' },
+			})
 				.then((response) => {
 					setProduct(response.data.product);
 				})
 				.catch((err) => {
 					console.log(err.data);
+					// ! Check err object
+					dialogBox(err.data);
 				});
 			setIsLoading(false);
 			return result;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
 import axios from '../../../axiosInstance';
+import { useHistory } from 'react-router-dom';
 import { ADD_USER } from '../../../store/action/actions';
 import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
@@ -15,7 +16,7 @@ import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		addUser: (user) => dispatch({ type: ADD_USER, payload: user }),
+		addUser: (userState) => dispatch({ type: ADD_USER, payload: userState }),
 	};
 };
 
@@ -26,6 +27,7 @@ const Login = (props) => {
 		message: '',
 	});
 	const [showDialogBox, setShowDialogBox] = useState(false);
+	let history = useHistory();
 
 	const loginHandler = async (event) => {
 		// prevent default page reload
@@ -34,17 +36,24 @@ const Login = (props) => {
 			email: email,
 			password: password,
 		};
-		await axios
-			.post('/api/user/login', userData)
+		await axios({
+			method: 'POST',
+			url: '/api/user/login',
+			headers: { 'content-type': 'application/json' },
+			data: { ...userData },
+		})
 			.then((response) => {
-				const user = { ...response.data };
+				const userState = {
+					token: response.headers['auth-token'],
+					userData: { ...response.data },
+				};
 				// save user in redux state
-				props.addUser(user);
+				props.addUser(userState);
 				// reset form
 				setEmail('');
 				setPassword('');
 				// redirect to the page user came to login
-				props.history.go(-1);
+				history.go(-1);
 			})
 			.catch((err) => {
 				setError({ message: err.response.data.error.message });

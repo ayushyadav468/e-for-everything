@@ -16,7 +16,11 @@ const productPrivateRoutes = require('./src/Routes/auth/productRoutes');
 const reviewPrivateRoutes = require('./src/Routes/auth/reviewRoutes');
 
 const app = express();
-app.use(cors());
+// To access auth-token in frontend
+const corsOptions = {
+	exposedHeaders: 'auth-token',
+};
+app.use(cors(corsOptions));
 dotenv.config();
 
 // Connect to Database

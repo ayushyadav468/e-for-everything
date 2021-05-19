@@ -28,8 +28,6 @@ const patchDataValidation = (data) => {
 	const patchDataSchema = Joi.object({
 		firstName: Joi.string().min(3).required(),
 		lastName: Joi.string().min(3),
-		email: Joi.string().email().min(6).required(),
-		password: Joi.string().min(6).required(),
 		address: Joi.string(),
 		country: Joi.string(),
 		zipCode: Joi.string(),
