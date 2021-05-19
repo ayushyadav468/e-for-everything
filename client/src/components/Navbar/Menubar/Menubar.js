@@ -20,13 +20,6 @@ const Menubar = () => {
 				Shop
 			</NavLink>
 			<NavLink
-				to='/category'
-				className={styles.menuItem}
-				activeClassName={styles.active}
-			>
-				Category
-			</NavLink>
-			<NavLink
 				to='/about'
 				className={styles.menuItem}
 				activeClassName={styles.active}

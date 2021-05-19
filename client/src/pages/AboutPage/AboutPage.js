@@ -7,7 +7,25 @@ const AboutPage = (props) => {
 		<>
 			<Navbar {...props} />
 			<div className={styles.aboutPageContent}>
-				<h2 className={styles.heading}>About Page</h2>
+				<div className={styles.aboutPageContainer}>
+					<h2 className={styles.heading}>
+						Thank you for visiting e for everthing
+					</h2>
+					<h5 className={styles.subHeading}>
+						This is a personal project of Ayush Yadav
+					</h5>
+					<p className={styles.para}>
+						You can connect with me at{' '}
+						<a
+							className={styles.link}
+							href='https://ayushy.dev'
+							target='_blank'
+							rel='noreferrer'
+						>
+							ayushy.dev
+						</a>
+					</p>
+				</div>
 			</div>
 			<Footer />
 		</>

@@ -63,8 +63,7 @@ const UserSettingsCard = (props) => {
 		if (isLoggedIn) {
 			setUserData();
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [isLoggedIn]);
+	}, [userData]);
 
 	const onFirstNameChangeHandler = (event) => {
 		setFirstName(event.target.value);

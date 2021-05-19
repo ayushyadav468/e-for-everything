@@ -7,7 +7,6 @@ import CartPage from '../pages/CartPage/CartPage';
 import AboutPage from '../pages/AboutPage/AboutPage';
 import Register from '../pages/User/Register/Register';
 import AddProduct from '../pages/User/AddProduct/AddProduct';
-import CategoryPage from '../pages/CategoryPage/CategoryPage';
 import FavouritePage from '../pages/FavouritePage/FavouritePage';
 import UserProducts from '../pages/User/UserProducts/UserProducts';
 import UserSettings from '../pages/User/UserSettings/UserSettings';
@@ -30,15 +29,13 @@ const Routes = () => {
 			<Route path='/register'>
 				<Register />
 			</Route>
-			{/* routeProps must be passed to rendered component
-					to access history and location
-			*/}
 			<Route path='/cart'>
 				<CartPage search={search} onSearchHandler={onSearchHandler} />
 			</Route>
 			<Route path='/fav'>
 				<FavouritePage search={search} onSearchHandler={onSearchHandler} />
 			</Route>
+			{/* Restricted Routes for user */}
 			<Route path='/user/setting'>
 				<UserSettings search={search} onSearchHandler={onSearchHandler} />
 			</Route>
@@ -49,18 +46,14 @@ const Routes = () => {
 				<AddProduct search={search} onSearchHandler={onSearchHandler} />
 			</Route>
 			<Route path='/user/product/'>
-				{' '}
 				<UserProducts search={search} onSearchHandler={onSearchHandler} />
 			</Route>
 			<Route path='/product/:productID'>
-				{' '}
 				<DiscriptionPage search={search} onSearchHandler={onSearchHandler} />
 			</Route>
+			{/* Un-restricted Routes for user */}
 			<Route path='/shop'>
 				<ShopPage search={search} onSearchHandler={onSearchHandler} />
-			</Route>
-			<Route path='/category'>
-				<CategoryPage search={search} onSearchHandler={onSearchHandler} />
 			</Route>
 			<Route path='/about'>
 				<AboutPage search={search} onSearchHandler={onSearchHandler} />
