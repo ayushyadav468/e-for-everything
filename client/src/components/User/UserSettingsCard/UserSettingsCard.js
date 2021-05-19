@@ -220,15 +220,7 @@ const UserSettingsCard = (props) => {
 				cancelBtnClicked={() => onCancelBtnClicked()}
 				show={showConfirmPassword}
 			/>
-			{showConfirmPassword ? (
-				<div className={styles.settingsCard} style={{ opacity: '0.2' }}>
-					{content}
-				</div>
-			) : (
-				<div className={styles.settingsCard} style={{ opacity: '1' }}>
-					{content}
-				</div>
-			)}
+			<div className={styles.settingsCard}>{content}</div>
 			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
 		</>
 	);

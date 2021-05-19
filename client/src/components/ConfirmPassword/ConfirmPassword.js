@@ -2,7 +2,10 @@ import styles from './ConfirmPassword.module.css';
 
 const Modal = (props) => {
 	return (
-		<>
+		<div
+			className={styles.modalOverlay}
+			style={{ display: props.show ? 'block' : 'none' }}
+		>
 			<div
 				className={styles.modalDiv}
 				style={{
@@ -27,7 +30,7 @@ const Modal = (props) => {
 					</button>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

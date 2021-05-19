@@ -2,7 +2,7 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 }
 
 .heading {
@@ -98,6 +98,9 @@
 }
 
 @media screen and (min-width: 712px) {
+	.settingsCard {
+		margin-bottom: 3rem;
+	}
 	.settingsCardHeading {
 		font-size: 1.8rem;
 		margin-left: 0.5rem;
