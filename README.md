@@ -2,4 +2,4 @@
 
 ### It is an e-commerce website created using ReactJS and NodeJS
 
-Live version - 'URL'
+Live version - https://e-for-everything.herokuapp.com/

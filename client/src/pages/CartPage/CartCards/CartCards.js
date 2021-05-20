@@ -9,7 +9,7 @@ import DialogBox from '../../../components/UI/DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
 	return {
-		user: state.user,
+		userState: state.userState,
 	};
 };
 
@@ -26,22 +26,21 @@ const CartCards = (props) => {
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [message, setMessage] = useState('');
 
-	let userID;
-	// check if user is logged in
-	if (
-		Object.keys(props.user).length !== 0 &&
-		props.user.constructor === Object
-	) {
-		userID = props.user._id;
-	}
+	const isLoggedIn = props.userState.isLoggedIn;
 
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
-			await axios
-				.patch('/api/product/multiple/', {
-					productIDs: [...props.user.cartProducts],
-				})
+			await axios({
+				method: 'PATCH',
+				url: `/api/product/multiple/`,
+				headers: {
+					'content-type': 'application/json',
+				},
+				data: {
+					productIDs: props.userState.userData.cartProducts,
+				},
+			})
 				.then((response) => {
 					setProductsData(response.data.products);
 				})
@@ -51,14 +50,13 @@ const CartCards = (props) => {
 			setIsLoading(false);
 		};
 
-		if (userID) {
+		if (isLoggedIn) {
 			fetchData();
 			setMessage('');
 		} else {
 			setMessage('Please login to see product in cart');
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userID]);
+	}, []);
 
 	// function to handle delete button's on click in cartCard
 	const deleteHandler = async (productID) => {
@@ -68,8 +66,18 @@ const CartCards = (props) => {
 		const newProductData = Object.values(updatedProducts).filter(
 			(product) => product._id !== productID
 		);
-		await axios
-			.patch('/api/user/' + userID + '/delfromcart', { productID: productID })
+		const token = props.userState.token;
+		await axios({
+			method: 'PATCH',
+			url: `/api/auth/user/delfromcart`,
+			headers: {
+				'content-type': 'application/json',
+				'auth-token': token,
+			},
+			data: {
+				productID: productID,
+			},
+		})
 			.then((result) => {
 				setProductsData(newProductData);
 				// Dispatch an action to remove product from cart
@@ -91,7 +99,7 @@ const CartCards = (props) => {
 	};
 
 	let cartCards;
-	if (!userID) {
+	if (!isLoggedIn) {
 		cartCards = <p className={styles.emptyCartCardPara}>{message}</p>;
 	} else {
 		if (isLoading) {

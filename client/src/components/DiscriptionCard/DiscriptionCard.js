@@ -37,12 +37,6 @@ const DiscriptionCard = (props) => {
 	// getting product id from URL
 	const productID = useParams().productID;
 
-	let userID;
-	// check if user is logged in
-	if (props.userState.isLoggedIn) {
-		userID = props.userState.user._id;
-	}
-
 	useEffect(() => {
 		const fetchData = async () => {
 			setIsLoading(true);
@@ -74,14 +68,22 @@ const DiscriptionCard = (props) => {
 		}, 2000);
 	};
 
-	const addProductToFavouriteHandler = () => {
-		if (userID) {
-			axios
-				.patch('/api/user/' + userID + '/addtofav/', {
+	const addProductToFavouriteHandler = async () => {
+		if (props.userState.isLoggedIn) {
+			const token = props.userState.token;
+			await axios({
+				method: 'PATCH',
+				url: `/api/auth/user/addtofav`,
+				headers: {
+					'content-type': 'application/json',
+					'auth-token': token,
+				},
+				data: {
 					productID: productID,
-				})
+				},
+			})
 				.then((response) => {
-					// console.log(response);
+					//! console.log(response);
 					// Dispach ADD_PRODUCT_TO_FAVOURITE action to redux
 					props.addToFavourite(productID);
 					dialogBox('Product added to favrouites');
@@ -94,14 +96,22 @@ const DiscriptionCard = (props) => {
 		}
 	};
 
-	const addProductToCartHandler = () => {
-		if (userID) {
-			axios
-				.patch('/api/user/' + userID + '/addtocart/', {
+	const addProductToCartHandler = async () => {
+		if (props.userState.isLoggedIn) {
+			const token = props.userState.token;
+			await axios({
+				method: 'PATCH',
+				url: `/api/auth/user/addtocart`,
+				headers: {
+					'content-type': 'application/json',
+					'auth-token': token,
+				},
+				data: {
 					productID: productID,
-				})
+				},
+			})
 				.then((response) => {
-					// console.log(response);
+					//! console.log(response);
 					// Dispach ADD_PRODUCT_TO_CART action to redux
 					props.addToCart(productID);
 					dialogBox('Product added to cart');

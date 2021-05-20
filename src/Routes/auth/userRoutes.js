@@ -28,7 +28,10 @@ router.get('/', verifyToken, async (req, res) => {
 		})
 		.catch((err) => {
 			console.log('Error in get route of user on reload ' + err.message);
-			res.status(500).json({ error: { message: err.message } });
+			res
+				.header('auth-token', authToken)
+				.status(500)
+				.json({ error: { message: err.message } });
 		});
 });
 
@@ -101,20 +104,22 @@ router.patch('/update', verifyToken, async (req, res) => {
 // Delete user
 router.delete('/delete', verifyToken, async (req, res) => {
 	const userID = req.user.userID;
+	const authToken = req.authToken;
 	User.findOneAndDelete({ _id: userID })
 		.exec()
 		.then((result) => {
-			res.status(200).json(result);
+			res.header('auth-token', authToken).status(200).json(result);
 		})
 		.catch((err) => {
 			console.log('Error in deleting user ' + err.message);
-			res.status(500).json(err);
+			res.header('auth-token', authToken).status(500).json(err);
 		});
 });
 
 // Add to Cart route
 router.patch('/addtocart', verifyToken, async (req, res) => {
 	const userID = req.user.userID;
+	const authToken = req.authToken;
 	const productID = req.body.productID;
 	User.findOneAndUpdate(
 		{ _id: userID },
@@ -124,16 +129,17 @@ router.patch('/addtocart', verifyToken, async (req, res) => {
 		.select('-__v -dateAdded -password')
 		.exec()
 		.then((result) => {
-			res.status(200).json(result);
+			res.header('auth-token', authToken).status(200).json(result);
 		})
 		.catch((err) => {
 			console.log('Error in adding cart products' + err.message);
-			res.status(500).json(err);
+			res.header('auth-token', authToken).status(500).json(err);
 		});
 });
 
 router.patch('/delfromcart', verifyToken, async (req, res) => {
 	const userID = req.user.userID;
+	const authToken = req.authToken;
 	const productID = req.body.productID;
 	User.findOneAndUpdate(
 		{ _id: userID },
@@ -143,17 +149,18 @@ router.patch('/delfromcart', verifyToken, async (req, res) => {
 		.select('-__v -dateAdded -password')
 		.exec()
 		.then((result) => {
-			res.status(200).json(result);
+			res.header('auth-token', authToken).status(200).json(result);
 		})
 		.catch((err) => {
 			console.log('Error in deleting cart products' + err.message);
-			res.status(500).json(err);
+			res.header('auth-token', authToken).status(500).json(err);
 		});
 });
 
 // Add to favourite route
 router.patch('/addtofav', verifyToken, async (req, res) => {
 	const userID = req.user.userID;
+	const authToken = req.authToken;
 	const productID = req.body.productID;
 	User.findOneAndUpdate(
 		{ _id: userID },
@@ -163,16 +170,17 @@ router.patch('/addtofav', verifyToken, async (req, res) => {
 		.select('-__v -dateAdded -password')
 		.exec()
 		.then((result) => {
-			res.status(200).json(result);
+			res.header('auth-token', authToken).status(200).json(result);
 		})
 		.catch((err) => {
 			console.log('Error in adding favoutite products' + err.message);
-			res.status(500).json(err);
+			res.header('auth-token', authToken).status(500).json(err);
 		});
 });
 
 router.patch('/delfromfav', verifyToken, async (req, res) => {
 	const userID = req.user.userID;
+	const authToken = req.authToken;
 	const productID = req.body.productID;
 	User.findOneAndUpdate(
 		{ _id: userID },
@@ -182,11 +190,11 @@ router.patch('/delfromfav', verifyToken, async (req, res) => {
 		.select('-__v -dateAdded -password')
 		.exec()
 		.then((result) => {
-			res.status(200).json(result);
+			res.header('auth-token', authToken).status(200).json(result);
 		})
 		.catch((err) => {
 			console.log('Error in deleting favoutite products' + err.message);
-			res.status(500).json(err);
+			res.header('auth-token', authToken).status(500).json(err);
 		});
 });
 
