@@ -61,7 +61,7 @@ const CartCards = (props) => {
 		//? whenever userState changes useEffect will run
 		//? on page refresh userState is fetch again from server
 		//? thus it will be good that whenever userState changes
-		//? favrouite's useEffect will run
+		//? favourite's useEffect will run
 	}, [props.userState]);
 
 	// function to handle delete button's on click in favCard
