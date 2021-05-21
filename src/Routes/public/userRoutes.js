@@ -38,11 +38,15 @@ router.post('/login', async (req, res) => {
 			process.env.AUTH_TOKEN_SECRET
 		);
 		const response = {
+			email: loginUser._doc.email,
 			firstName: loginUser._doc.firstName,
 			lastName: loginUser._doc.lastName,
-			email: loginUser._doc.email,
 			cartProducts: loginUser._doc.cartProducts,
 			favProducts: loginUser._doc.favProducts,
+			seller: loginUser._doc.seller,
+			address: loginUser._doc.address,
+			country: loginUser._doc.country,
+			zipCode: loginUser._doc.zipCode,
 		};
 		res.header('auth-token', authToken).status(200).json(response);
 	} catch (err) {
@@ -95,6 +99,10 @@ router.post('/register', async (req, res) => {
 			email: savedUser._doc.email,
 			cartProducts: savedUser._doc.cartProducts,
 			favProducts: savedUser._doc.favProducts,
+			seller: savedUser._doc.seller,
+			address: savedUser._doc.address,
+			country: savedUser._doc.country,
+			zipCode: savedUser._doc.zipCode,
 		};
 		res.header('auth-token', authToken).status(200).json(response);
 	} catch (err) {

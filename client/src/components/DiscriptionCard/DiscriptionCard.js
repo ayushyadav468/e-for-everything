@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
 import {
 	ADD_PRODUCT_TO_FAV,
 	ADD_PRODUCT_TO_CART,
 } from '../../store/action/actions';
 import axios from '../../axiosInstance';
-import styles from './DiscriptionCard.module.css';
 import Spinner from '../UI/Spinner/Spinner';
+import styles from './DiscriptionCard.module.css';
+import DialogBox from '../UI/DialogBox/DialogBox';
 import ReviewCards from '../ReviewCards/ReviewCards';
 import QuantityBox from '../UI/QuantityBox/QuantityBox';
-import DialogBox from '../UI/DialogBox/DialogBox';
 
 const mapStateToProps = (state) => {
 	return {
@@ -63,9 +64,6 @@ const DiscriptionCard = (props) => {
 	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
 		setMessage(messageToBeDisplayed);
-		setTimeout(() => {
-			setShowDialogBox(false);
-		}, 2000);
 	};
 
 	const addProductToFavouriteHandler = async () => {
@@ -83,7 +81,6 @@ const DiscriptionCard = (props) => {
 				},
 			})
 				.then((response) => {
-					//! console.log(response);
 					// Dispach ADD_PRODUCT_TO_FAVOURITE action to redux
 					props.addToFavourite(productID);
 					dialogBox('Product added to favrouites');
@@ -111,7 +108,6 @@ const DiscriptionCard = (props) => {
 				},
 			})
 				.then((response) => {
-					//! console.log(response);
 					// Dispach ADD_PRODUCT_TO_CART action to redux
 					props.addToCart(productID);
 					dialogBox('Product added to cart');
@@ -199,7 +195,9 @@ const DiscriptionCard = (props) => {
 						</button>
 					</div>
 				</div>
-				<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+				<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+					{message}
+				</DialogBox>
 			</div>
 		);
 	}

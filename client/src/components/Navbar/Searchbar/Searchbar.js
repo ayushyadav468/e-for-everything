@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { NavLink, Link, useHistory } from 'react-router-dom';
+
 import axios from '../../../axiosInstance';
 import styles from './Searchbar.module.css';
-import { NavLink, Link, useHistory } from 'react-router-dom';
 import DialogBox from '../../UI/DialogBox/DialogBox';
 import { ADD_USER, REMOVE_USER } from '../../../store/action/actions';
 
@@ -22,6 +23,8 @@ const mapDispatchToProps = (dispatch) => {
 const Searchbar = (props) => {
 	const [user, setUser] = useState(null);
 	const [showDialogBox, setShowDialogBox] = useState(false);
+	const [dialogBoxMessage, setDialogBoxMessage] = useState('');
+
 	let history = useHistory();
 
 	const checkUser = async () => {
@@ -43,10 +46,7 @@ const Searchbar = (props) => {
 				})
 					.then((response) => {
 						if (response.status !== 200) {
-							setShowDialogBox(true);
-							setTimeout(() => {
-								setShowDialogBox(false);
-							}, 2000);
+							dialogBox('Something went wrong');
 						} else {
 							const userState = {
 								token: response.headers['auth-token'],
@@ -60,10 +60,7 @@ const Searchbar = (props) => {
 					.catch((err) => {
 						console.log(err.response);
 						// Show Dialog box for 2 sec
-						setShowDialogBox(true);
-						setTimeout(() => {
-							setShowDialogBox(false);
-						}, 2000);
+						dialogBox(err.response.data.error.message);
 					});
 			}
 		} else {
@@ -80,10 +77,12 @@ const Searchbar = (props) => {
 		props.userLogout();
 		setUser(null);
 		// show dialog box
+		dialogBox('Logout successful');
+	};
+
+	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
-		setTimeout(() => {
-			setShowDialogBox(false);
-		}, 2000);
+		setDialogBoxMessage(messageToBeDisplayed);
 	};
 
 	// signIN button
@@ -228,7 +227,9 @@ const Searchbar = (props) => {
 					</svg>
 				</NavLink>
 			</li>
-			<DialogBox showBox={showDialogBox}>Logout successful</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{dialogBoxMessage}
+			</DialogBox>
 		</ul>
 	);
 };

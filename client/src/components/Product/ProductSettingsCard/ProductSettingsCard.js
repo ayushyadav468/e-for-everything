@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import axios from '../../../axiosInstance';
 import { useState, useEffect } from 'react';
+
+import axios from '../../../axiosInstance';
 import DialogBox from '../../UI/DialogBox/DialogBox';
 import styles from './ProductSettingsCard.module.css';
 
@@ -102,9 +103,6 @@ const ProductSettingsCard = (props) => {
 	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
 		setMessage(messageToBeDisplayed);
-		setTimeout(() => {
-			setShowDialogBox(false);
-		}, 2000);
 	};
 
 	return (
@@ -162,7 +160,9 @@ const ProductSettingsCard = (props) => {
 					<input type='submit' value='Save' />
 				</form>
 			</div>
-			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{message}
+			</DialogBox>
 		</div>
 	);
 };

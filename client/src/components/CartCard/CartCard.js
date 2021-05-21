@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import styles from './CartCard.module.css';
-// import QuantityBox from '../UI/QuantityBox/QuantityBox';
+
+//* props: {
+//*   product: { Details of product to be shown
+//*     largeImage,
+//*     smallImage,
+//*     productName,
+//*     productDiscription,
+//*     productPrice,
+//*   },
+//*   productQuantity, state variable for quantity
+//*   setProductQuantity(), state function for quantity change
+//*   setShowDialogBox(), state function for dialog box
+//*   deleteHandler(productID), function to handle delete button's on click
+//* }
 
 const CartCard = (props) => {
 	const [productQuantity, setProductQuantity] = useState(0);
-	// props: {
-	//   product: { Details of product to be shown
-	//     largeImage,
-	//     smallImage,
-	//     productName,
-	//     productDiscription,
-	//     productPrice,
-	//   },
-	//   productQuantity, state variable for quantity
-	//   setProductQuantity(), state function for quantity change
-	//   setShowDialogBox(), state function for dialog box
-	//   deleteHandler(productID), function to handle delete button's on click
-	// }
 	const onQuantityChange = (type) => {
 		switch (type) {
 			case '-':
@@ -75,7 +76,6 @@ const CartCard = (props) => {
 								<strong>+</strong>
 							</button>
 						</div>
-
 						<p className={styles.productPrice}>
 							<strong>Rs </strong>
 							{props.product.productPrice}

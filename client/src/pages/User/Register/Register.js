@@ -1,5 +1,6 @@
-import { connect } from 'react-redux';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+
 import styles from './Register.module.css';
 import axios from '../../../axiosInstance';
 import { useHistory } from 'react-router-dom';
@@ -21,15 +22,17 @@ const mapDispatchToProps = (dispatch) => {
 
 const Register = (props) => {
 	// Register user
+	const [email, setEmail] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [seller, setSeller] = useState(false);
+
 	const [error, setError] = useState({
 		message: '',
 	});
 	const [showDialogBox, setShowDialogBox] = useState(false);
+
 	let history = useHistory();
 
 	const registerHandler = async (event) => {
@@ -50,7 +53,7 @@ const Register = (props) => {
 		})
 			.then((response) => {
 				if (response.status !== 200) {
-					setError({ message: response.data.message });
+					dialogBox(response.data.message);
 					// reset form
 					setFirstName('');
 					setLastName('');
@@ -72,8 +75,7 @@ const Register = (props) => {
 				}
 			})
 			.catch((err) => {
-				console.log(err.response);
-				setError({ message: err.response.data.error.message });
+				dialogBox(err.response.data.error.message);
 				// reset form
 				setFirstName('');
 				setLastName('');
@@ -85,6 +87,11 @@ const Register = (props) => {
 					setShowDialogBox(false);
 				}, 2000);
 			});
+	};
+
+	const dialogBox = (messageToBeDisplayed) => {
+		setShowDialogBox(true);
+		setError({ message: messageToBeDisplayed });
 	};
 
 	const onFirstNameChangeHandler = (event) => {
@@ -188,7 +195,9 @@ const Register = (props) => {
 					<input type='submit' value='Register' />
 				</form>
 			</div>
-			<DialogBox showBox={showDialogBox}>{error.message}</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{error.message}
+			</DialogBox>
 		</main>
 	);
 };

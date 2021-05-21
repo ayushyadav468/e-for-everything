@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { useState, useEffect } from 'react';
+
 import { DELETE_PRODUCT_FROM_CART } from '../../../store/action/actions';
 import axios from '../../../axiosInstance';
 import styles from './CartCards.module.css';
 import CartCard from '../../../components/CartCard/CartCard';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import DialogBox from '../../../components/UI/DialogBox/DialogBox';
-import { Link } from 'react-router-dom';
 
 const mapStateToProps = (state) => {
 	return {
@@ -23,8 +24,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const CartCards = (props) => {
 	const [price, setPrice] = useState(0);
-	const [address, setAddress] = useState('');
-	const [message, setMessage] = useState('');
+	const [dialogBoxMessage, setDialogBoxMessage] = useState('');
+	const [userData, setUserData] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 	const [productsData, setProductsData] = useState([]);
 	const [showDialogBox, setShowDialogBox] = useState(false);
@@ -46,7 +47,11 @@ const CartCards = (props) => {
 			.then((response) => {
 				setProductsData(response.data.products);
 				//TODO: setPrice by checking response object structure
-				setPrice();
+				let totalPrice = 0;
+				response.data.products.forEach((product) => {
+					totalPrice += product.productPrice;
+				});
+				setPrice(totalPrice);
 			})
 			.catch((err) => {
 				console.log(err.data);
@@ -57,9 +62,11 @@ const CartCards = (props) => {
 	useEffect(() => {
 		if (isLoggedIn) {
 			fetchData();
-			setMessage('');
+			setUserData(props.userState.userData);
+			setDialogBoxMessage('');
 		} else {
-			setMessage('Please login to see product in cart');
+			setUserData({});
+			setDialogBoxMessage('Please login to see product in cart');
 		}
 		//* props.userState(redux) contain detail of user
 		//? whenever userState changes useEffect will run
@@ -93,6 +100,7 @@ const CartCards = (props) => {
 				// Dispatch an action to remove product from cart
 				props.removeProductFromCart(productID);
 				//TODO: setPrice by checking response object structure
+				console.log(newProductData);
 				setPrice();
 				dialogBox('Item removed from cart');
 			})
@@ -104,28 +112,22 @@ const CartCards = (props) => {
 
 	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
-		setMessage(messageToBeDisplayed);
-		setTimeout(() => {
-			setShowDialogBox(false);
-		}, 2000);
+		setDialogBoxMessage(messageToBeDisplayed);
 	};
 
 	let cartCards;
 	let addressJSX;
 	if (!isLoggedIn) {
-		cartCards = <p className={styles.emptyCartCardPara}>{message}</p>;
+		cartCards = <p className={styles.emptyCartCardPara}>{dialogBoxMessage}</p>;
 	} else {
 		if (isLoading) {
 			cartCards = <Spinner />;
 		} else {
-			if (props.userState.userData.address) {
-				setAddress(
-					`${props.userState.userData.address}, ${props.userState.userData.country}, ${props.userState.userData.zipCode}`
-				);
+			if (userData.address) {
 				addressJSX = (
 					<p className={styles.addressPara}>
 						<strong>Address: </strong>
-						{address}
+						{userData.address}
 					</p>
 				);
 			} else {
@@ -173,7 +175,9 @@ const CartCards = (props) => {
 					<button className={styles.buyNowBtn}>Buy Now</button>
 				</div>
 			</div>
-			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{dialogBoxMessage}
+			</DialogBox>
 		</>
 	);
 };

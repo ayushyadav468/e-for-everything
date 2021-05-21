@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import styles from './Login.module.css';
 import axios from '../../../axiosInstance';
 import { useHistory } from 'react-router-dom';
@@ -56,15 +57,16 @@ const Login = (props) => {
 				history.go(-1);
 			})
 			.catch((err) => {
-				setError({ message: err.response.data.error.message });
+				dialogBox(err.response.data.error.message);
 				// reset form
 				setEmail('');
 				setPassword('');
-				setShowDialogBox(true);
-				setTimeout(() => {
-					setShowDialogBox(false);
-				}, 2000);
 			});
+	};
+
+	const dialogBox = (messageToBeDisplayed) => {
+		setShowDialogBox(true);
+		setError({ message: messageToBeDisplayed });
 	};
 
 	return (
@@ -114,7 +116,9 @@ const Login = (props) => {
 					</Link>
 				</div>
 			</div>
-			<DialogBox showBox={showDialogBox}>{error.message}</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{error.message}
+			</DialogBox>
 		</main>
 	);
 };

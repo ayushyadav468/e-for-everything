@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import axios from '../../../axiosInstance';
 import { useState, useEffect } from 'react';
+
+import axios from '../../../axiosInstance';
 import styles from './UserSettingsCard.module.css';
 import DialogBox from '../../UI/DialogBox/DialogBox';
 import { ADD_USER } from '../../../store/action/actions';
@@ -131,9 +132,6 @@ const UserSettingsCard = (props) => {
 	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
 		setMessage(messageToBeDisplayed);
-		setTimeout(() => {
-			setShowDialogBox(false);
-		}, 2000);
 	};
 
 	let content;
@@ -220,7 +218,9 @@ const UserSettingsCard = (props) => {
 				show={showConfirmPassword}
 			/>
 			<div className={styles.settingsCard}>{content}</div>
-			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{message}
+			</DialogBox>
 		</>
 	);
 };

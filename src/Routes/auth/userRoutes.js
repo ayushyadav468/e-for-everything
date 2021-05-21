@@ -22,6 +22,10 @@ router.get('/', verifyToken, async (req, res) => {
 					email: result._doc.email,
 					cartProducts: result._doc.cartProducts,
 					favProducts: result._doc.favProducts,
+					seller: result._doc.seller,
+					address: result._doc.address,
+					country: result._doc.country,
+					zipCode: result._doc.zipCode,
 				};
 				res.header('auth-token', authToken).status(200).json(response);
 			}
@@ -86,6 +90,7 @@ router.patch('/update', verifyToken, async (req, res) => {
 				email: updatedUser._doc.email,
 				cartProducts: updatedUser._doc.cartProducts,
 				favProducts: updatedUser._doc.favProducts,
+				seller: updatedUser._doc.seller,
 				address: updatedUser._doc.address,
 				country: updatedUser._doc.country,
 				zipCode: updatedUser._doc.zipCode,

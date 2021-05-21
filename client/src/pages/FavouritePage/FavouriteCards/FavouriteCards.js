@@ -99,9 +99,6 @@ const CartCards = (props) => {
 	const dialogBox = (messageToBeDisplayed) => {
 		setShowDialogBox(true);
 		setMessage(messageToBeDisplayed);
-		setTimeout(() => {
-			setShowDialogBox(false);
-		}, 2000);
 	};
 
 	let favCards;
@@ -139,7 +136,9 @@ const CartCards = (props) => {
 	return (
 		<div className={styles.favCardsDiv}>
 			{favCards}
-			<DialogBox showBox={showDialogBox}>{message}</DialogBox>
+			<DialogBox showBox={showDialogBox} setShowDialogBox={setShowDialogBox}>
+				{message}
+			</DialogBox>
 		</div>
 	);
 };
