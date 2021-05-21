@@ -1,6 +1,8 @@
 .favCardsDiv {
 	width: 100%;
 	margin-top: 190px;
+	display: flex;
+	flex-direction: column;
 }
 
 .emptyFavCardPara {
@@ -12,5 +14,17 @@
 @media screen and (min-width: 992px) {
 	.favCardsDiv {
 		margin-top: 160px;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	.emptyCartCardPara {
+		margin: auto;
+	}
+}
+
+@media screen and (min-width: 1080px) {
+	.cartCardsDiv {
+		flex-direction: row;
+		flex-wrap: wrap;
 	}
 }

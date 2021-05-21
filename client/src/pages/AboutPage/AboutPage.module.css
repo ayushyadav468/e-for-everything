@@ -33,7 +33,8 @@
 
 @media screen and (min-width: 992px) {
 	.aboutPageContent {
-		margin-top: 125px;
+		margin-top: 200px;
+		margin-bottom: 4rem;
 	}
 }
 

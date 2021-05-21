@@ -21,43 +21,48 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const CartCards = (props) => {
-	const [productsData, setProductsData] = useState([]);
+	const [message, setMessage] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
+	const [productsData, setProductsData] = useState([]);
 	const [productQuantity, setProductQuantity] = useState(0);
 	const [showDialogBox, setShowDialogBox] = useState(false);
-	const [message, setMessage] = useState('');
 
 	const isLoggedIn = props.userState.isLoggedIn;
 
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			await axios({
-				method: 'PATCH',
-				url: `/api/product/multiple/`,
-				headers: {
-					'content-type': 'application/json',
-				},
-				data: {
-					productIDs: props.userState.userData.favProducts,
-				},
+	const fetchData = async () => {
+		setIsLoading(true);
+		await axios({
+			method: 'PATCH',
+			url: `/api/product/multiple/`,
+			headers: {
+				'content-type': 'application/json',
+			},
+			data: {
+				productIDs: props.userState.userData.favProducts,
+			},
+		})
+			.then((response) => {
+				setProductsData(response.data.products);
 			})
-				.then((response) => {
-					setProductsData(response.data.products);
-				})
-				.catch((err) => {
-					console.log(err.data);
-				});
-			setIsLoading(false);
-		};
+			.catch((err) => {
+				console.log(err.data);
+			});
+		setIsLoading(false);
+	};
 
+	useEffect(() => {
 		if (isLoggedIn) {
 			fetchData();
 			setMessage('');
 		} else {
 			setMessage('Please login to see product in favourites');
 		}
-	}, []);
+		//* props.userState(redux) contain detail of user
+		//? whenever userState changes useEffect will run
+		//? on page refresh userState is fetch again from server
+		//? thus it will be good that whenever userState changes
+		//? favrouite's useEffect will run
+	}, [props.userState]);
 
 	// function to handle delete button's on click in favCard
 	const deleteHandler = async (productID) => {

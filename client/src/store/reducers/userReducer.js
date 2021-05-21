@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import * as actionTypes from '../action/actions';
 
 const getTokenFromLocalStorage = () => {
@@ -47,12 +48,13 @@ const userReducer = (state = initialState, action) => {
 				...state.userData,
 				cartProducts: [...addedCartProducts],
 			};
+			// alternative method
 			// const addedCartProductNewUser = {
 			// 	...state,
 			//	This will also change the array immutablily as concat returns a new array
 			// 	cartProducts: state.cartProducts.concat(action.payload),
 			// };
-			state = { userData: { ...addedCartProductNewUser } };
+			state = {...state,  userData: { ...addedCartProductNewUser } };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_CART:
 			const deletedCartProducts = [
@@ -64,7 +66,7 @@ const userReducer = (state = initialState, action) => {
 				...state.userData,
 				cartProducts: [...deletedCartProducts],
 			};
-			state = { userData: { ...deletedCartProductNewUser } };
+			state = { ...state,  userData: { ...deletedCartProductNewUser } };
 			break;
 		case actionTypes.ADD_PRODUCT_TO_FAV:
 			// check if productID is already in the favourites
@@ -81,12 +83,13 @@ const userReducer = (state = initialState, action) => {
 				...state.userData,
 				favProducts: [...addedFavProducts],
 			};
+			// alternative method
 			// const deletedProductNewUser = {
 			// 	...state,
 			//	This will also change the array immutablily as concat returns a new array
 			// 	cartProducts: state.cartProducts.concat(action.payload),
 			// };
-			state = { userData: { ...addedFavProductNewUser } };
+			state = { ...state, userData: { ...addedFavProductNewUser } };
 			break;
 		case actionTypes.DELETE_PRODUCT_FROM_FAV:
 			const deletedFavProducts = [
@@ -98,7 +101,7 @@ const userReducer = (state = initialState, action) => {
 				...state.userData,
 				favProducts: [...deletedFavProducts],
 			};
-			state = { userData: { ...deletedFavProductNewUser } };
+			state = { ...state, userData: { ...deletedFavProductNewUser } };
 			break;
 		default:
 			return state;
