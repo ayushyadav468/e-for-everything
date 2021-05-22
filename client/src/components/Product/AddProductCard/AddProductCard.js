@@ -84,7 +84,7 @@ const AddProductCard = (props) => {
 			{/* <h2 className={styles.heading}>Product settings</h2> */}
 			{isLoggedIn ? (
 				<div className={styles.addProductContainer}>
-					<h4 className={styles.addProductCardHeading}>Edit</h4>
+					<h4 className={styles.addProductCardHeading}>Add Product</h4>
 					<form className={styles.addProductForm} onSubmit={addProductHandler}>
 						<div className={styles.nameDiv}>
 							<label className={styles.productLabel}>

@@ -125,7 +125,7 @@ const EditProductCard = (props) => {
 		<div className={styles.editProductCard}>
 			{/* <h2 className={styles.heading}>Product settings</h2> */}
 			<div className={styles.editProductContainer}>
-				<h4 className={styles.editProductCardHeading}>Edit</h4>
+				<h4 className={styles.editProductCardHeading}>Edit Product</h4>
 				<form
 					className={styles.editProductForm}
 					onSubmit={productUpdateHandler}
