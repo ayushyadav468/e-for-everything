@@ -16,10 +16,14 @@ const ProductCards = ({ search }) => {
 			headers: { 'content-type': 'application/json' },
 		})
 			.then((response) => {
-				setProducts(response.data.products);
+				if (response.status === 200) {
+					setProducts(response.data.products);
+				} else {
+					console.log(response.data?.error.message);
+				}
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error.response.data?.error.message);
 			});
 		setIsLoading(false);
 		return result;

@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import axios from '../../../axiosInstance';
 import DialogBox from '../../UI/DialogBox/DialogBox';
-import styles from './ProductSettingsCard.module.css';
+import styles from './EditProductCard.module.css';
 
 const mapStateToProps = (state) => {
 	return {
@@ -11,7 +12,7 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const ProductSettingsCard = (props) => {
+const EditProductCard = (props) => {
 	const [productName, setProductName] = useState('');
 	const [productPrice, setProductPrice] = useState(0);
 	const [smallImage, setSmallImage] = useState('');
@@ -21,14 +22,8 @@ const ProductSettingsCard = (props) => {
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [message, setMessage] = useState('');
 
-	let userID;
-	// check if user is logged in
-	if (props.userState.isLoggedIn) {
-		userID = props.userState.user._id;
-	}
-
-	// getting product id from URL
-	const productID = props.match.params.productID;
+	const isLoggedIn = props.userState.isLoggedIn;
+	const productID = useParams().productID;
 
 	const setProductData = (product) => {
 		setProductName(product.productName);
@@ -45,20 +40,29 @@ const ProductSettingsCard = (props) => {
 			headers: { 'content-type': 'application/json' },
 		})
 			.then((response) => {
-				setProductData(response.data.product);
+				if (response.status === 200) {
+					setProductData(response.data.product);
+				} else {
+					console.log(response.data?.error.message);
+				}
 			})
-			.catch((err) => {
-				console.log(err.data);
+			.catch((error) => {
+				console.log(error.response.data?.error.message);
 			});
 	};
 
 	useEffect(() => {
-		if (userID) {
+		if (isLoggedIn) {
 			fetchProductData();
-			console.log('user logged in and product edit');
-		} else {
-			console.log('user not logged in');
 		}
+		// clean up function
+		return () => {
+			setProductName('');
+			setProductPrice(0);
+			setSmallImage('');
+			setLargeImage('');
+			setProductDiscription('');
+		};
 	}, []);
 
 	const onProductNameChangeHandler = (event) => {
@@ -77,7 +81,7 @@ const ProductSettingsCard = (props) => {
 		setProductDiscription(event.target.value);
 	};
 
-	const productUpdateHandler = (event) => {
+	const productUpdateHandler = async (event) => {
 		event.preventDefault();
 		const updatedProduct = {
 			productName: productName,
@@ -86,16 +90,28 @@ const ProductSettingsCard = (props) => {
 			largeImage: largeImage,
 			productDiscription: productDiscription,
 		};
-		axios
-			.patch('/api/product/' + userID + '/' + productID, {
+		const token = props.userState.token;
+		await axios({
+			method: 'PATCH',
+			url: `/api/auth/product/${productID}`,
+			headers: {
+				'content-type': 'application/json',
+				'auth-token': token,
+			},
+			data: {
 				...updatedProduct,
-			})
-			.then((result) => {
-				console.log(result.data);
-				dialogBox('Product updated');
+			},
+		})
+			.then((response) => {
+				if (response.status === 200) {
+					console.log(response.data);
+					dialogBox('Product updated');
+				} else {
+					console.log(response.data?.error.message);
+				}
 			})
 			.catch((error) => {
-				console.log(error);
+				console.log(error.response.data?.error.message);
 				dialogBox('Product not updated. Try again');
 			});
 	};
@@ -106,12 +122,12 @@ const ProductSettingsCard = (props) => {
 	};
 
 	return (
-		<div className={styles.productSettingsCard}>
+		<div className={styles.editProductCard}>
 			{/* <h2 className={styles.heading}>Product settings</h2> */}
-			<div className={styles.productSettingscontainer}>
-				<h4 className={styles.productSettingsCardHeading}>Edit</h4>
+			<div className={styles.editProductContainer}>
+				<h4 className={styles.editProductCardHeading}>Edit</h4>
 				<form
-					className={styles.productSettingsForm}
+					className={styles.editProductForm}
 					onSubmit={productUpdateHandler}
 				>
 					<div className={styles.nameDiv}>
@@ -167,4 +183,4 @@ const ProductSettingsCard = (props) => {
 	);
 };
 
-export default connect(mapStateToProps, null)(ProductSettingsCard);
+export default connect(mapStateToProps, null)(EditProductCard);

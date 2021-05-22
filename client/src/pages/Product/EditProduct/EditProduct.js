@@ -1,15 +1,15 @@
-import styles from './ProductSettings.module.css';
+import styles from './EditProduct.module.css';
 import Navbar from '../../../components/Navbar/Navbar';
 import Footer from '../../../components/UI/Footer/Footer';
-import ProductSettingsCard from '../../../components/Product/ProductSettingsCard/ProductSettingsCard';
+import EditProductCard from '../../../components/Product/EditProductCard/EditProductCard';
 
 const ProductSettings = (props) => {
 	return (
 		<>
 			<Navbar {...props} />
-			<div className={styles.productSettingsContent}>
+			<div className={styles.editProductContent}>
 				<h2 className={styles.heading}>Product settings</h2>
-				<ProductSettingsCard {...props} />
+				<EditProductCard {...props} />
 			</div>
 			<Footer />
 		</>

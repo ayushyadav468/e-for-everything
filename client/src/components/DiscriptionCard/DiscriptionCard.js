@@ -38,27 +38,35 @@ const DiscriptionCard = (props) => {
 	// getting product id from URL
 	const productID = useParams().productID;
 
-	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			const result = await axios({
-				method: 'GET',
-				url: `/api/product/${productID}`,
-				headers: { 'content-type': 'application/json' },
-			})
-				.then((response) => {
+	const fetchData = async () => {
+		setIsLoading(true);
+		const result = await axios({
+			method: 'GET',
+			url: `/api/product/${productID}`,
+			headers: { 'content-type': 'application/json' },
+		})
+			.then((response) => {
+				if (response.status === 200) {
 					setProduct(response.data.product);
-				})
-				.catch((err) => {
-					console.log(err.data);
-					// ! Check err object
-					dialogBox(err.data);
-				});
-			setIsLoading(false);
-			return result;
-		};
+				} else {
+					console.log(response.data?.error.message);
+					dialogBox(response.data?.error.message);
+				}
+			})
+			.catch((error) => {
+				console.log(error.response.data?.error.message);
+				dialogBox(error.response.data?.error.message);
+			});
+		setIsLoading(false);
+		return result;
+	};
 
+	useEffect(() => {
 		fetchData();
+		// Clean up function
+		return () => {
+			setProduct({});
+		};
 	}, [productID]);
 
 	const dialogBox = (messageToBeDisplayed) => {
@@ -81,11 +89,17 @@ const DiscriptionCard = (props) => {
 				},
 			})
 				.then((response) => {
-					// Dispach ADD_PRODUCT_TO_FAVOURITE action to redux
-					props.addToFavourite(productID);
-					dialogBox('Product added to favrouites');
+					if (response.status === 200) {
+						// Dispach ADD_PRODUCT_TO_FAVOURITE action to redux
+						props.addToFavourite(productID);
+						dialogBox('Product added to favrouites');
+					} else {
+						console.log(response.data?.error.message);
+						dialogBox(response.data.error?.message);
+					}
 				})
-				.catch((err) => {
+				.catch((error) => {
+					console.log(error.response.data?.error.message);
 					dialogBox('Error occured in saving product to favrouites');
 				});
 		} else {
@@ -108,12 +122,16 @@ const DiscriptionCard = (props) => {
 				},
 			})
 				.then((response) => {
-					// Dispach ADD_PRODUCT_TO_CART action to redux
-					props.addToCart(productID);
-					dialogBox('Product added to cart');
+					if (response.status === 200) {
+						// Dispach ADD_PRODUCT_TO_CART action to redux
+						props.addToCart(productID);
+						dialogBox('Product added to cart');
+					} else {
+						console.log(response.data?.error.message);
+					}
 				})
-				.catch((err) => {
-					console.log(err);
+				.catch((error) => {
+					console.log(error.response.data?.error.message);
 					dialogBox('Error occured in saving product to cart');
 				});
 		} else {

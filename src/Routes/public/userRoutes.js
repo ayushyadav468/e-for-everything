@@ -23,7 +23,9 @@ router.post('/login', async (req, res) => {
 		// Check if user exist
 		const loginUser = await User.findOne({ email: userEmail });
 		if (!loginUser)
-			return res.status(400).json({ error: { message: 'Email not valid' } });
+			return res
+				.status(400)
+				.json({ error: { message: "Email doesn't exist. Please register" } });
 
 		// check password
 		const validatePassword = await bcrypt.compare(
@@ -31,7 +33,9 @@ router.post('/login', async (req, res) => {
 			loginUser.password
 		);
 		if (!validatePassword)
-			return res.status(400).json({ error: { message: 'Password not valid' } });
+			return res
+				.status(400)
+				.json({ error: { message: 'Email or password is incorrect' } });
 
 		const authToken = jwt.sign(
 			{ userID: loginUser._doc._id },

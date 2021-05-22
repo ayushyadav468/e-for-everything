@@ -1,6 +1,6 @@
 .addProductDiv {
 	width: 95%;
-	margin: 0 auto;
+	margin: 0 auto 2rem auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -15,6 +15,11 @@
 	font-family: 'Playfair Display';
 	font-size: 1.8rem;
 	margin-left: 0.5rem;
+}
+
+.noProductFound {
+	font-size: 1.4rem;
+	margin: 0 auto 2rem auto;
 }
 
 .addProductBtn {

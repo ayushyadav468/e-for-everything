@@ -45,13 +45,17 @@ const CartCards = (props) => {
 			},
 		})
 			.then((response) => {
-				setProductsData(response.data.products);
-				//TODO: setPrice by checking response object structure
-				let totalPrice = 0;
-				response.data.products.forEach((product) => {
-					totalPrice += product.productPrice;
-				});
-				setPrice(totalPrice);
+				if (response.status === 200) {
+					setProductsData(response.data.products);
+					let totalPrice = 0;
+					response.data.products.forEach((product) => {
+						totalPrice += product.productPrice;
+					});
+					setPrice(totalPrice);
+				} else {
+					console.log(response.data?.error.message);
+					dialogBox(response.data?.error.message);
+				}
 			})
 			.catch((err) => {
 				console.log(err.data);
@@ -68,6 +72,12 @@ const CartCards = (props) => {
 			setUserData({});
 			setDialogBoxMessage('Please login to see product in cart');
 		}
+		// clean up function
+		return () => {
+			setPrice(0);
+			setUserData({});
+			setProductsData([]);
+		};
 		//* props.userState(redux) contain detail of user
 		//? whenever userState changes useEffect will run
 		//? on page refresh userState is fetch again from server
@@ -96,13 +106,15 @@ const CartCards = (props) => {
 			},
 		})
 			.then((response) => {
-				setProductsData(newProductData);
-				// Dispatch an action to remove product from cart
-				props.removeProductFromCart(productID);
-				//TODO: setPrice by checking response object structure
-				console.log(newProductData);
-				setPrice();
-				dialogBox('Item removed from cart');
+				if (response.status === 200) {
+					setProductsData(newProductData);
+					// Dispatch an action to remove product from cart
+					props.removeProductFromCart(productID);
+					dialogBox('Item removed from cart');
+				} else {
+					console.log(response.data?.error.message);
+					dialogBox(response.data?.error.message);
+				}
 			})
 			.catch((err) => {
 				console.log(err);

@@ -6,12 +6,12 @@ import ShopPage from '../pages/ShopPage/ShopPage';
 import CartPage from '../pages/CartPage/CartPage';
 import AboutPage from '../pages/AboutPage/AboutPage';
 import Register from '../pages/User/Register/Register';
-import AddProduct from '../pages/User/AddProduct/AddProduct';
+import AddProduct from '../pages/Product/AddProduct/AddProduct';
 import FavouritePage from '../pages/FavouritePage/FavouritePage';
+import EditProduct from '../pages/Product/EditProduct/EditProduct';
 import UserProducts from '../pages/User/UserProducts/UserProducts';
 import UserSettings from '../pages/User/UserSettings/UserSettings';
 import DiscriptionPage from '../pages/DiscriptionPage/DiscriptionPage';
-import ProductSettings from '../pages/User/ProductSettings/ProductSettings';
 
 const Routes = () => {
 	const [search, setSearch] = useState('');
@@ -39,11 +39,11 @@ const Routes = () => {
 			<Route path='/user/setting'>
 				<UserSettings search={search} onSearchHandler={onSearchHandler} />
 			</Route>
-			<Route path='/user/product/:productID'>
-				<ProductSettings search={search} onSearchHandler={onSearchHandler} />
-			</Route>
 			<Route path='/user/product/add'>
 				<AddProduct search={search} onSearchHandler={onSearchHandler} />
+			</Route>
+			<Route path='/user/product/:productID'>
+				<EditProduct search={search} onSearchHandler={onSearchHandler} />
 			</Route>
 			<Route path='/user/product/'>
 				<UserProducts search={search} onSearchHandler={onSearchHandler} />

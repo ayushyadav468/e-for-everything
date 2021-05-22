@@ -1,0 +1,24 @@
+.addProductContent {
+	margin-top: 200px;
+	margin-bottom: 30px;
+}
+
+.heading {
+	text-align: center;
+	font-family: 'Playfair Display';
+	font-size: 2.2rem;
+	margin: 1.5rem 0;
+}
+
+@media screen and (min-width: 992px) {
+	.addProductContent {
+		margin-top: 165px;
+		margin-bottom: 50px;
+	}
+}
+
+@media screen and (min-width: 1080px) {
+	.heading {
+		font-size: 3.4rem;
+	}
+}

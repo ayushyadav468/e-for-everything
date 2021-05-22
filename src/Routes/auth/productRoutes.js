@@ -60,17 +60,17 @@ router.post('/', verifyToken, (req, res) => {
 					// .save() returns a promise
 					product
 						.save()
-						.then((docs) => {
+						.then((savedProduct) => {
 							const response = {
 								product: {
-									ownerID: docs._doc.ownerID,
-									productName: docs._doc.productName,
-									productPrice: docs._doc.productPrice,
-									productDiscription: docs._doc.productDiscription,
-									smallImage: docs._doc.smallImage,
-									largeImage: docs._doc.largeImage,
-									rating: docs._doc.rating,
-									reviews: docs._doc.reviews,
+									ownerID: savedProduct._doc.ownerID,
+									productName: savedProduct._doc.productName,
+									productPrice: savedProduct._doc.productPrice,
+									productDiscription: savedProduct._doc.productDiscription,
+									smallImage: savedProduct._doc.smallImage,
+									largeImage: savedProduct._doc.largeImage,
+									rating: savedProduct._doc.rating,
+									reviews: savedProduct._doc.reviews,
 								},
 							};
 							res.status(201).json(response);
@@ -117,6 +117,7 @@ router.patch('/:productID', verifyToken, (req, res) => {
 				for (const [key, value] of Object.entries(req.body)) {
 					updateProps[key] = value;
 				}
+				//* Add update product data validation
 				// model.findByIdAndUpdate(filter, update, option, callback)
 				// {new: true} returns an updated object otherwise,
 				// default functionality is to return object as it was before update
@@ -125,11 +126,11 @@ router.patch('/:productID', verifyToken, (req, res) => {
 				})
 					.select('-__v -dateAdded')
 					.exec()
-					.then((docs) => {
+					.then((updatedProduct) => {
 						const response = {
-							count: docs.length,
+							count: updatedProduct.length,
 							product: {
-								...docs._doc,
+								...updatedProduct._doc,
 							},
 						};
 						res.status(200).json(response);
@@ -164,8 +165,11 @@ router.delete('/:productID', (req, res) => {
 			if (ownerID == product.ownerID) {
 				Product.findByIdAndDelete(productID)
 					.exec()
-					.then((docs) => {
-						res.status(200);
+					.then((deletedProduct) => {
+						const response = {
+							...deletedProduct._doc,
+						};
+						res.status(200).json(response);
 					})
 					.catch((err) => {
 						console.log('Error in delete route of product ' + err.message);

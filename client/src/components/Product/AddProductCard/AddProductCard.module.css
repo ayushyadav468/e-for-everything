@@ -1,4 +1,4 @@
-.productSettingsCard {
+.addProductCard {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -12,7 +12,7 @@
 	margin: 1rem 0;
 }
 
-.productSettingscontainer {
+.addProductContainer {
 	width: clamp(310px, 96%, 1000px);
 	margin: auto;
 	padding: 1rem 0.8rem;
@@ -21,12 +21,12 @@
 	box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
-.productSettingsCardHeading {
+.addProductCardHeading {
 	font-size: 1.4rem;
 	margin-bottom: 1rem;
 }
 
-.productSettingsForm {
+.addProductForm {
 	display: flex;
 	flex-direction: column;
 }
@@ -37,12 +37,12 @@
 	flex-direction: column;
 }
 
-.productSettingsForm .nameDiv .productLabel,
-.productSettingsForm .nameDiv .priceLabel {
+.addProductForm .nameDiv .productLabel,
+.addProductForm .nameDiv .priceLabel {
 	width: 100%;
 }
 
-.productSettingsForm label {
+.addProductForm label {
 	font-size: 1rem;
 	width: 100%;
 	margin-bottom: 0.5rem;
@@ -51,20 +51,22 @@
 	justify-content: space-between;
 }
 
-.productSettingsForm label > input,
-.productSettingsForm label > textarea {
+.addProductForm label > input,
+.addProductForm label > textarea {
 	font-family: 'Playfair Display';
 	min-width: 200px;
 	width: 70%;
 	font-size: 1rem;
+	border: 1px solid black;
 	padding: 0.2rem 0.4rem;
+	border-radius: 5px;
 }
 
-.productSettingsForm label > textarea {
+.addProductForm label > textarea {
 	resize: none;
 }
 
-.productSettingsForm input[type='submit'] {
+.addProductForm input[type='submit'] {
 	width: min(30%, 200px);
 	margin-top: 1rem;
 	margin-left: auto;
@@ -76,18 +78,18 @@
 	border-radius: 10px;
 }
 
-.productSettingsForm input[type='submit']:hover,
-.productSettingsForm input[type='submit']:focus {
+.addProductForm input[type='submit']:hover,
+.addProductForm input[type='submit']:focus {
 	background-color: #343114;
 	color: #fff000;
 }
 
 @media screen and (min-width: 712px) {
-	.productSettingsCardHeading {
+	.addProductCardHeading {
 		font-size: 1.8rem;
 		margin-left: 0.5rem;
 	}
-	.productSettingsForm {
+	.addProductForm {
 		width: 95%;
 		margin: auto;
 	}
@@ -95,37 +97,37 @@
 		flex-direction: row;
 		justify-content: space-between;
 	}
-	.productSettingsForm .nameDiv .productLabel {
+	.addProductForm .nameDiv .productLabel {
 		width: 50%;
 	}
-	.productSettingsForm .nameDiv .priceLabel {
+	.addProductForm .nameDiv .priceLabel {
 		width: 40%;
 	}
-	.productSettingsForm .nameDiv label {
+	.addProductForm .nameDiv label {
 		width: 48%;
 	}
-	.productSettingsForm label > input {
+	.addProductForm label > input {
 		font-size: 1.2rem;
 	}
-	.productSettingsForm label {
+	.addProductForm label {
 		width: 100%;
 		font-size: 1.2rem;
 		margin-bottom: 1rem;
 	}
-	.productSettingsForm label textarea {
+	.addProductForm label textarea {
 		width: 70%;
 		font-size: 1.2rem;
 	}
-	.productSettingsForm input[type='submit'] {
+	.addProductForm input[type='submit'] {
 		font-size: 1.4rem;
 	}
 }
 
 @media screen and (min-width: 991px) {
-	.productSettingsForm .nameDiv .productLabel {
+	.addProductForm .nameDiv .productLabel {
 		width: 60%;
 	}
-	.productSettingsForm .nameDiv .priceLabel {
+	.addProductForm .nameDiv .priceLabel {
 		width: 30%;
 	}
 }

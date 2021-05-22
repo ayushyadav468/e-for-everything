@@ -64,6 +64,16 @@ const UserSettingsCard = (props) => {
 		if (isLoggedIn) {
 			setUserData();
 		}
+		// clean up function
+		return () => {
+			setEmail('');
+			setFirstName('');
+			setLastName('');
+			setPassword('');
+			setAddress('');
+			setCountry('');
+			setZipCode('');
+		};
 	}, [userData]);
 
 	const onFirstNameChangeHandler = (event) => {
@@ -118,13 +128,17 @@ const UserSettingsCard = (props) => {
 			},
 			data: { ...updatedUser },
 		})
-			.then((result) => {
-				console.log(result.data);
-				props.addUser(result.data);
-				dialogBox('User updated');
+			.then((response) => {
+				if (response.status === 200) {
+					props.addUser(response.data);
+					dialogBox('User updated');
+				} else {
+					console.log(response.data?.error.message);
+					dialogBox('User not updated. Try again');
+				}
 			})
 			.catch((error) => {
-				console.log(error.response.data.error.message);
+				console.log(error.response.data?.error.message);
 				dialogBox('User not updated. Try again');
 			});
 	};

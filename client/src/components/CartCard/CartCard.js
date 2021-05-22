@@ -21,18 +21,21 @@ const CartCard = (props) => {
 	const [productQuantity, setProductQuantity] = useState(0);
 	const onQuantityChange = (type) => {
 		switch (type) {
-			case '-':
+			case '-': {
 				if (productQuantity > 0) {
 					setProductQuantity(productQuantity - 1);
 				} else {
 					props.dialogBox("Can't reduce below 0");
 				}
 				break;
-			case '+':
+			}
+			case '+': {
 				setProductQuantity(productQuantity + 1);
 				break;
-			default:
+			}
+			default: {
 				break;
+			}
 		}
 		return;
 	};

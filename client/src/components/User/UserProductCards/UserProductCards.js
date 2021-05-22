@@ -31,10 +31,14 @@ const UserProductCards = (props) => {
 			},
 		})
 			.then((response) => {
-				setProducts(response.data.products);
+				if (response.status === 200) {
+					setProducts(response.data.products);
+				} else {
+					console.log(response.data?.error.message);
+				}
 			})
-			.catch((err) => {
-				console.log(err);
+			.catch((error) => {
+				console.log(error.response.data?.error.message);
 			});
 		setIsLoading(false);
 		return result;
@@ -44,6 +48,10 @@ const UserProductCards = (props) => {
 		if (isLoggedIn) {
 			fetchData();
 		}
+		// clean up function
+		return () => {
+			setProducts([]);
+		};
 	}, [isLoggedIn]);
 
 	let cards;
@@ -61,21 +69,31 @@ const UserProductCards = (props) => {
 		if (isLoading) {
 			cards = <Spinner />;
 		} else {
-			// Search functionality
-			// check if there is a search in state
-			//(this means that search is trigered from some other page)
-			if (props.search !== '') {
-				filteredProducts = products.filter((product) => {
-					return product.productName
-						.toLowerCase()
-						.includes(props.search.toLowerCase());
-				});
+			if (products.length === 0) {
+				cards = (
+					<p className={styles.noProductFound}>
+						No product by {props.userState.userData.firstName}. Please add a
+						product
+					</p>
+				);
 			} else {
-				filteredProducts = products;
+				// Search functionality
+				// check if there is a search in state
+				//(this means that search is trigered from some other page)
+				if (props.search !== '') {
+					filteredProducts = products.filter((product) => {
+						return product.productName
+							.toLowerCase()
+							.includes(props.search.toLowerCase());
+					});
+				} else {
+					filteredProducts = products;
+				}
+				cards = filteredProducts.map((product) => {
+					return <ProductCard key={product._id} {...product} edit={true} />;
+				});
 			}
-			cards = filteredProducts.map((product) => {
-				return <ProductCard key={product._id} {...product} edit={true} />;
-			});
+
 			content = (
 				<>
 					<div className={styles.addProductDiv}>

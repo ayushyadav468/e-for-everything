@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { useState, useEffect } from 'react';
 import { NavLink, Link, useHistory } from 'react-router-dom';
 
 import axios from '../../../axiosInstance';
@@ -21,15 +21,16 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const Searchbar = (props) => {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState({});
 	const [showDialogBox, setShowDialogBox] = useState(false);
 	const [dialogBoxMessage, setDialogBoxMessage] = useState('');
 
 	let history = useHistory();
+	const isLoggedIn = props.userState.isLoggedIn;
 
 	const checkUser = async () => {
 		// if user is logged in
-		if (props.userState.isLoggedIn) {
+		if (isLoggedIn) {
 			// check if keys are present in props.user
 			if (Object.keys(props.userState.userData).length !== 0) {
 				setUser({ ...props.userState.userData });
@@ -46,7 +47,8 @@ const Searchbar = (props) => {
 				})
 					.then((response) => {
 						if (response.status !== 200) {
-							dialogBox('Something went wrong');
+							dialogBox('Something went wrong while fetching user detail');
+							console.log(response.data?.error.message);
 						} else {
 							const userState = {
 								token: response.headers['auth-token'],
@@ -57,19 +59,23 @@ const Searchbar = (props) => {
 							setUser({ ...response.data });
 						}
 					})
-					.catch((err) => {
-						console.log(err.response);
+					.catch((error) => {
+						console.log(error.response.data?.error.message);
 						// Show Dialog box for 2 sec
-						dialogBox(err.response.data.error.message);
+						dialogBox(error.response.data?.error.message);
 					});
 			}
 		} else {
-			setUser(null);
+			setUser({});
 		}
 	};
 
 	useEffect(() => {
 		checkUser();
+		// Clean up function
+		return () => {
+			setUser({});
+		};
 	}, []);
 
 	const logoutHandler = () => {
@@ -88,7 +94,7 @@ const Searchbar = (props) => {
 	// signIN button
 	const signIn = (
 		<div className={styles.signInDiv}>
-			{user ? (
+			{isLoggedIn ? (
 				<>
 					<p>
 						<strong>Welcome,</strong> {user.firstName}

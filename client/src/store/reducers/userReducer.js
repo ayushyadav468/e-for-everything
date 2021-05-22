@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import * as actionTypes from '../action/actions';
 
 const getTokenFromLocalStorage = () => {
@@ -18,14 +17,15 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case actionTypes.ADD_USER:
+		case actionTypes.ADD_USER: {
 			const token = action.payload.token;
 			const isLoggedIn = !!token;
 			const userData = { ...action.payload.userData };
 			localStorage.setItem('auth-token', token);
 			state = { token: token, isLoggedIn: isLoggedIn, userData: userData };
 			break;
-		case actionTypes.REMOVE_USER:
+		}
+		case actionTypes.REMOVE_USER: {
 			localStorage.removeItem('auth-token');
 			state = {
 				token: null,
@@ -33,7 +33,8 @@ const userReducer = (state = initialState, action) => {
 				userData: {},
 			};
 			break;
-		case actionTypes.ADD_PRODUCT_TO_CART:
+		}
+		case actionTypes.ADD_PRODUCT_TO_CART: {
 			// check if productID is already in the cart
 			// filter function retruns a new array
 			// it checks if the id is present or not
@@ -54,9 +55,10 @@ const userReducer = (state = initialState, action) => {
 			//	This will also change the array immutablily as concat returns a new array
 			// 	cartProducts: state.cartProducts.concat(action.payload),
 			// };
-			state = {...state,  userData: { ...addedCartProductNewUser } };
+			state = { ...state, userData: { ...addedCartProductNewUser } };
 			break;
-		case actionTypes.DELETE_PRODUCT_FROM_CART:
+		}
+		case actionTypes.DELETE_PRODUCT_FROM_CART: {
 			const deletedCartProducts = [
 				...state.userData.cartProducts.filter(
 					(productID) => productID !== action.payload
@@ -66,9 +68,10 @@ const userReducer = (state = initialState, action) => {
 				...state.userData,
 				cartProducts: [...deletedCartProducts],
 			};
-			state = { ...state,  userData: { ...deletedCartProductNewUser } };
+			state = { ...state, userData: { ...deletedCartProductNewUser } };
 			break;
-		case actionTypes.ADD_PRODUCT_TO_FAV:
+		}
+		case actionTypes.ADD_PRODUCT_TO_FAV: {
 			// check if productID is already in the favourites
 			// filter function retruns a new array
 			// it checks if the id is present or not
@@ -91,7 +94,8 @@ const userReducer = (state = initialState, action) => {
 			// };
 			state = { ...state, userData: { ...addedFavProductNewUser } };
 			break;
-		case actionTypes.DELETE_PRODUCT_FROM_FAV:
+		}
+		case actionTypes.DELETE_PRODUCT_FROM_FAV: {
 			const deletedFavProducts = [
 				...state.userData.favProducts.filter(
 					(productID) => productID !== action.payload
@@ -103,8 +107,10 @@ const userReducer = (state = initialState, action) => {
 			};
 			state = { ...state, userData: { ...deletedFavProductNewUser } };
 			break;
-		default:
+		}
+		default: {
 			return state;
+		}
 	}
 	return state;
 };

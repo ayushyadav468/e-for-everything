@@ -1,5 +1,6 @@
-.productSettingsContent {
-	margin-top: 170px;
+.editProductContent {
+	margin-top: 200px;
+	margin-bottom: 30px;
 }
 
 .heading {
@@ -10,8 +11,9 @@
 }
 
 @media screen and (min-width: 992px) {
-	.productSettingsContent {
-		margin-top: 125px;
+	.editProductContent {
+		margin-top: 165px;
+		margin-bottom: 50px;
 	}
 }
 

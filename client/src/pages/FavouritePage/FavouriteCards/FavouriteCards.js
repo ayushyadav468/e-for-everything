@@ -42,10 +42,16 @@ const CartCards = (props) => {
 			},
 		})
 			.then((response) => {
-				setProductsData(response.data.products);
+				if (response.status === 200) {
+					setProductsData(response.data.products);
+				} else {
+					console.log(response.data);
+					dialogBox(response.data?.error.message);
+				}
 			})
 			.catch((err) => {
-				console.log(err.data);
+				console.log(err.data?.error.message);
+				dialogBox(err.data?.error.message);
 			});
 		setIsLoading(false);
 	};
@@ -84,11 +90,16 @@ const CartCards = (props) => {
 				productID: productID,
 			},
 		})
-			.then((result) => {
-				setProductsData(newProductData);
-				// Dispatch an action to remove product from fav
-				props.removeProductFromFav(productID);
-				dialogBox('Item removed from favourites');
+			.then((response) => {
+				if (response.status === 200) {
+					setProductsData(newProductData);
+					// Dispatch an action to remove product from fav
+					props.removeProductFromFav(productID);
+					dialogBox('Item removed from favourites');
+				} else {
+					console.log(response.data);
+					dialogBox(response.data);
+				}
 			})
 			.catch((err) => {
 				console.log(err);
