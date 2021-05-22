@@ -24,7 +24,8 @@
 
 .productImage {
 	width: 100%;
-	object-fit: contain;
+	max-height: 280px;
+	object-fit: cover;
 	border-radius: 10px 10px 0 0;
 }
 
@@ -117,7 +118,6 @@
 		width: 50%;
 		margin: auto;
 	}
-
 	.productDiscription {
 		margin-right: 0;
 		font-size: 0.8rem;
@@ -136,6 +136,15 @@
 }
 
 @media screen and (min-width: 992px) {
+	.cartCardDiv {
+		width: 80%;
+	}
+	.cartCardLink {
+		width: 30%;
+	}
+	.containerDiv {
+		width: 65%;
+	}
 	.productQuantity {
 		width: 8rem;
 	}
@@ -144,36 +153,5 @@
 	}
 	.productQuantityDisplay {
 		font-size: 1.6rem;
-	}
-}
-
-@media screen and (min-width: 1080px) {
-	.cartCardDiv {
-		width: 45%;
-	}
-	.productName {
-		font-size: 1.2rem;
-	}
-	.productDiscription {
-		font-size: 0.8rem;
-	}
-	.productQuantity {
-		width: 6rem;
-	}
-	.productQuantityBtn {
-		font-size: 1.2rem;
-	}
-	.productQuantityDisplay {
-		font-size: 1rem;
-	}
-	.productPrice {
-		font-size: 1rem;
-	}
-	.productDelBtn {
-		padding: 0.5rem 0 0 0.5rem;
-	}
-	.productDelBtn svg {
-		width: 28px;
-		height: 35px;
 	}
 }
